@@ -1,0 +1,62 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-light-green);
+    padding: 0; /* Ensure no padding around the navbar */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 75px;
+    margin-left: 20px;
+    margin-right: 10px; /* Space between logo and nav links */
+}
+
+.nav-links {
+    display: flex ;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 50px;
+}
+
+.nav-links li {
+    margin-right: 20px; /* Space between nav items */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: inherit; /* Ensure link color inherits from parent */
+    padding: 0; /* Remove padding from links */
+    display: flex; /* Flexbox for centering */
+    align-items: center; /* Center link text vertically */
+    height: 100%; /* Make sure link height is 100% of the parent */
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.btn-login,
+.btn-register {
+    margin-left: 5px;
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+.btn-register {
+    margin-right: 20px;
+}
+
+.btn-login:hover,
+.btn-register:hover {
+    background-color: #0056b3;
+}

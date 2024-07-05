@@ -1,0 +1,20 @@
+:root {
+    --color-white: #F1F2EB;
+    --color-gray: #D8DAD3;
+    --color-light-green: #A4C2A5;
+    --color-green: #566246;
+    --color-dark: #4A4A48;
+  }
+
+  body {
+    font-family: 'Skranji';
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+    color: var(--color-dark);
+}
+
+@font-face {
+    font-family: 'Skranji';
+    src: url('.//assets/fonts/Skranji-Bold.ttf');
+}
