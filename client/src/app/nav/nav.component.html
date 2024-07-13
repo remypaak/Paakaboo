@@ -1,16 +1,27 @@
 <nav class="navbar">
     <div class="navbar-left">
         <!-- Logo -->
-        <img src="../../assets/5qen87VsQAeSniDGkE-XnQ-removebg-preview.png" alt="Photo Logo" class="logo-img">
+        <img routerLink="/" src="../../assets/5qen87VsQAeSniDGkE-XnQ-removebg-preview.png" alt="Photo Logo" class="logo-img">
         <!-- Navigation Links -->
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Test1</a></li>
-            <li><a href="#">Test2</a></li>
+            <li><a routerLink="/lists">Challenges</a></li>
+            <li><a routerLink="/moderator">Moderator</a></li>
         </ul>
     </div>
     <div class="navbar-right">
-        <button class="btn-login">Login</button>
-        <button class="btn-register">Sign Up</button>
+        @if (!this.accountService.currentUser()){
+            <form class="form from-input" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
+                <input type="text" formControlName="username" placeholder="Gebruikersnaam" class="form-input">
+                <input type="password" formControlName="password" placeholder="Wachtwoord" class="form-input">
+                <button type="submit" class="btn btn-secondary">Login</button>
+            </form>
+        }@else {
+            <button class="btn btn-secondary" (click)="logout()">Uitloggen</button>
+        }
+        @if (errorMessage){
+            <div class="error-message">
+                {{errorMessage}}
+            </div>
+        }  
     </div>
 </nav>

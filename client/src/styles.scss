@@ -1,20 +1,57 @@
 :root {
-    --color-white: #F1F2EB;
-    --color-gray: #D8DAD3;
-    --color-light-green: #A4C2A5;
-    --color-green: #566246;
-    --color-dark: #4A4A48;
-  }
-
-  body {
-    font-family: 'Skranji';
-    margin: 0;
-    padding: 0; 
-    box-sizing: border-box;
-    color: var(--color-dark);
+  --color-white: #f1f2eb;
+  --color-gray: #d8dad3;
+  --color-light-green: #a4c2a5;
+  --color-green: #566246;
+  --color-dark: #4a4a48;
 }
 
 @font-face {
-    font-family: 'Skranji';
-    src: url('.//assets/fonts/Skranji-Bold.ttf');
+  font-family: "Skranji-Bold";
+  src: url(".//assets/fonts/Skranji-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Skranji";
+    src: url(".//assets/fonts/Skranji-Regular.ttf") format(truetype);
+}
+
+@font-face {
+    font-family: "Vidaloka";
+    src: url(".//assets/fonts/Vidaloka-Regular.ttf") format(truetype);
+}
+
+body {
+  font-family: "Vidaloka";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--color-dark);
+  font-size: clamp(16px, 2vw, 24px);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Vidaloka";
+    font-weight: bold;
+    color: var(--color-dark);
+    line-height: 1; /* Adjust this value as needed */
+  }
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Vidaloka';
+}
+
+.btn-primary {
+  background-color: var(--color-light-green);
+  color: var(--color-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-dark);
+  color: var(--color-white);
 }

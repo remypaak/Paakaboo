@@ -1,0 +1,52 @@
+:host {
+    display: block;
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    text-align: center;
+    padding: 20px;
+}
+
+.how-it-works {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    text-align: center;
+}
+.how-it-works h2 {
+    color: var(--color-gray);
+    font-size: 4rem;
+}
+
+.how-it-works h3 {
+    color: var(--color-gray);
+    font-size: 2rem;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.step {
+    margin: 5rem;
+    max-width: 200px;
+}
+
+.svg-icon {
+    display:block;
+    margin-bottom: 20px;
+    width: 100%;
+    height: auto;
+    max-width: 100%; 
+}
+
+.step:nth-child(3) .svg-icon {
+    display: block;
+    margin-left: -1rem;
+}
+
+.step:nth-child(4) .svg-icon {
+    padding-top: 1.75rem;
+    display: block;
+    padding-bottom: -1rem;
+}

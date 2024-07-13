@@ -12,24 +12,34 @@ export class AccountService {
     currentUser = signal<User | null>(null);
     baseUrl = environment.apiUrl;
     
-    login(model: any): Observable<User> {
-        return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+    login(user: User): Observable<User> {
+        return this.http.post<User>(this.baseUrl + 'account/login', user).pipe(
             tap(user => {
                 if (user){
-                    this.currentUser.set(user)
+                    this.setCurrentUser(user)
                 }
             })
         )
     }
 
-    register(model: any): Observable<User> {
-        return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+    register(user: User): Observable<User> {
+        return this.http.post<User>(this.baseUrl + 'account/register', user).pipe(
             tap(user => {
                 if (user){
-                    this.currentUser.set(user)
+                    this.setCurrentUser(user)
                 }
             })
         )
+    }
+
+    public checkUsername(username: string)
+    {
+        return this.http.get<boolean>(this.baseUrl + 'account/is-username-taken/'+ username)
+    }
+
+    logout(){
+        localStorage.removeItem('user');
+        this.currentUser.set(null);
     }
 
     setCurrentUser(user: User): void {

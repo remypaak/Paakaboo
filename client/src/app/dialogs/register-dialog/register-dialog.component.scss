@@ -1,0 +1,59 @@
+::ng-deep .mdc-dialog__surface {
+    overflow-y: hidden;
+    background-color: var(--color-white) !important;
+}
+
+::ng-deep .mat-dialog-container {
+    overflow-y: hidden !important;
+}
+.sign-up-title {
+    text-align: center;
+    font-size: x-large;
+    color: var(--color-dark);
+}
+
+.mat-dialog-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Make sure it takes the full viewport height */
+}
+
+
+.dialog-container {
+    display: flex;
+    flex: 1;
+}
+
+.image-container {
+    flex: 1;
+    margin-right: 20px; /* Adjust spacing as needed */
+}
+
+.sign-up-image {
+    height: 100%;
+    width: 100%;
+}
+
+.form-container {
+    justify-content: center; /* Center horizontally */
+    flex: 1;
+}
+
+.form {
+    width: 100%; /* Ensure the form takes full width of the container */
+    max-width: 400px; /* Set a max-width to control the size of the form */
+}
+
+.form-group {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn:hover{
+    background-color: var(--color-green);
+}
+.btn:disabled{
+    opacity: 0.7;
+    cursor: not-allowed; 
+}
+

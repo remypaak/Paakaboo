@@ -1,0 +1,142 @@
+.home-container {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  overflow: hidden;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/hero-background.jpg"); /* Update your image path */
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.foreground {
+  display: flex;
+  height: 90vh;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 45%;
+  padding: 20px;
+}
+
+.text-with-arrow{
+    align-items: center; /* Align items vertically */
+    display: flex;
+}
+.text-with-arrow h2 {
+    font-size: 3rem;
+}
+
+.text-with-arrow svg {
+    width: 50px; 
+    height: 50px; 
+    margin-left: 10px; 
+    margin-top: 25px; 
+}
+
+.left-side h1,
+.left-side h3{
+  font-size: 3rem;
+  margin-top: -8rem;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Align items vertically */
+  font-size: 1.5rem;
+}
+
+.timer-numbers {
+  display: flex;
+  gap: 0
+  .4rem;
+}
+.timer-block {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--color-white);
+  border-radius: 5px;
+  text-align: center;
+  width: 3.5vw;
+  height: 3.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.colon-block {
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  background-color: transparent;
+  color: black;
+  height: 3.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  transform: translateY(-25%);
+}
+
+.timer-label {
+  text-align: center;
+}
+
+.right-side {
+  width: 35%;
+  margin-left: 7.5rem;
+}
+
+.right-side .theme-container,
+.right-side .timer-container,
+.right-side .button-container {
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.right-side .theme-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-top: 10rem;
+  margin-bottom: 0;
+}
+
+.theme-container h1 {
+  color: var(--color-white);
+}
+
+.right-side .timer-container,
+.right-side .button-container {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.foreground .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    background: transparent;
+}
+  
+.registration-button {
+    color: var(--color-white);
+    padding: 15px 30px; 
+    font-size: 1.5rem;
+    border: none; 
+    flex-grow: 1;
+}
+  
+.registration-button:hover {
+    background-color: black; 
+}

@@ -1,0 +1,26 @@
+<div class="dialog-container">
+    <div class="image-container">
+        <img src="../../../assets/register-image.jpg" alt="Sign Up Image" class="sign-up-image">
+    </div>
+    <div class="form-container">
+        <div mat-dialog-content>
+            <form class="form" [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
+                <h1 mat-dialog-title class="sign-up-title">Let's get started!</h1>
+                <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Gebruikersnaam'">
+                </app-text-input>
+
+                <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Wachtwoord'"
+                    [type]="'password'">
+                </app-text-input>
+
+                <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])"
+                    [label]="'Confirm Password'" [type]="'password'">
+                </app-text-input>
+                <div class="form-group">
+                    <button class="btn btn-primary" [disabled]="!registerForm.valid"
+                        type="submit">Join the Frame</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
