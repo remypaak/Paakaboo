@@ -52,14 +52,14 @@ public class AccountController(UserManager<AppUser> userManager, RoleManager<Ide
         
         if (user == null || user.UserName == null)
         {
-            return Unauthorized("Invalid username");
+            return BadRequest("De combinatie van gebruikersnaam en wachtwoord is onbekend");
         }
 
         var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
         if (!result.Succeeded)
         {
-            return Unauthorized("Invalid Password");
+            return BadRequest("De combinatie van gebruikersnaam en wachtwoord is onbekend");
         }
 
         return new UserDto
@@ -67,6 +67,19 @@ public class AccountController(UserManager<AppUser> userManager, RoleManager<Ide
             Username = user.UserName,
             Token = await tokenService.CreateToken(user)
         };
+    }
+
+     [HttpGet("is-username-taken/{username}")]
+    public async Task<ActionResult<bool>> IsUsernameTaken(string username)
+    {
+        var normalizedUsername = userManager.NormalizeName(username);
+        var user = await userManager.Users
+                                .FirstOrDefaultAsync(u => u.NormalizedUserName == normalizedUsername);
+        if (user == null)
+        {
+            return Ok(false);
+        }
+        return Ok(true);
     }
 
 }

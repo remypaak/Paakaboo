@@ -1,0 +1,63 @@
+<div class="timer-container">
+    <div class="timer">
+        <div class="timer-segment">
+            <div class="timer-numbers">
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.daysToDday).slice(-2)[0] }}</p>
+                </div>
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.daysToDday).slice(-2)[1] }}</p>
+                </div>
+            </div>
+            <div class="timer-label">Days</div>
+        </div>
+
+        <div class="colon-block">
+            <p>:</p>
+        </div>
+
+        <div class="timer-segment">
+            <div class="timer-numbers">
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.hoursToDday).slice(-2)[0] }}</p>
+                </div>
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.hoursToDday).slice(-2)[1] }}</p>
+                </div>
+            </div>
+            <div class="timer-label">Hours</div>
+        </div>
+
+        <div class="colon-block">
+            <p>:</p>
+        </div>
+
+        <div class="timer-segment">
+            <div class="timer-numbers">
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.minutesToDday).slice(-2)[0] }}</p>
+                </div>
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.minutesToDday).slice(-2)[1] }}</p>
+                </div>
+            </div>
+            <div class="timer-label">Minutes</div>
+        </div>
+
+        <div class="colon-block">
+            <p>:</p>
+        </div>
+
+        <div class="timer-segment">
+            <div class="timer-numbers">
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.secondsToDday).slice(-2)[0] }}</p>
+                </div>
+                <div class="timer-block">
+                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.secondsToDday).slice(-2)[1] }}</p>
+                </div>
+            </div>
+            <div class="timer-label">Seconds</div>
+        </div>
+    </div>
+</div>

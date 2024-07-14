@@ -5,18 +5,18 @@
         <!-- Navigation Links -->
         <ul class="nav-links">
             <li><a routerLink="/lists">Challenges</a></li>
-            <li><a routerLink="/moderator">Moderator</a></li>
+            <li *appHasRole="['Moderator']"><a routerLink="/moderator">Moderator</a></li>
         </ul>
     </div>
     <div class="navbar-right">
         @if (!this.accountService.currentUser()){
             <form class="form from-input" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
-                <input type="text" formControlName="username" placeholder="Gebruikersnaam" class="form-input">
-                <input type="password" formControlName="password" placeholder="Wachtwoord" class="form-input">
-                <button type="submit" class="btn btn-secondary">Login</button>
+                <input type="text" formControlName="username" placeholder="Gebruikersnaam" class="form-input" autocomplete="username">
+                <input type="password" formControlName="password" placeholder="Wachtwoord" class="form-input" autocomplete="new-password">
+                <button [disabled]="!loginForm.valid" type="submit" class="btn btn-secondary">Login</button>
             </form>
         }@else {
-            <button class="btn btn-secondary" (click)="logout()">Uitloggen</button>
+            <button routerLink="/"  class="btn btn-secondary" (click)="logout()">Uitloggen</button>
         }
         @if (errorMessage){
             <div class="error-message">

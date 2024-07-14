@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { User } from '../_models/user';
 import { environment } from '../../environments/environment';
 import { Observable, tap } from 'rxjs';
+import { FaultyLogin } from '../_models/faulty-login';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,17 @@ import { Observable, tap } from 'rxjs';
 export class AccountService {
     private http = inject(HttpClient);
     currentUser = signal<User | null>(null);
+    roles = computed(() => {
+        const user = this.currentUser();
+        if (user && user.token){
+            const role = JSON.parse(atob(user.token.split('.')[1])).role
+            return Array.isArray(role) ? role : [role];
+        }
+        return [];
+      })
     baseUrl = environment.apiUrl;
     
-    login(user: User): Observable<User> {
+    login(user: User): Observable<User | FaultyLogin> {
         return this.http.post<User>(this.baseUrl + 'account/login', user).pipe(
             tap(user => {
                 if (user){
@@ -32,7 +41,7 @@ export class AccountService {
         )
     }
 
-    public checkUsername(username: string)
+    checkUsername(username: string)
     {
         return this.http.get<boolean>(this.baseUrl + 'account/is-username-taken/'+ username)
     }
@@ -45,5 +54,8 @@ export class AccountService {
     setCurrentUser(user: User): void {
         localStorage.setItem('user', JSON.stringify(user));
         this.currentUser.set(user);
+        console.log(this.roles())
       }
+
+    
 }

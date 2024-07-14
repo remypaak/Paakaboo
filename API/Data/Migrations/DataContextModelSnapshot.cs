@@ -104,9 +104,8 @@ namespace API.Data.Migrations
                     b.Property<string>("PublicId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Theme")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ThemeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalScore")
                         .HasColumnType("int");
@@ -119,7 +118,29 @@ namespace API.Data.Migrations
 
                     b.HasIndex("AppUserId1");
 
+                    b.HasIndex("ThemeId");
+
                     b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("API.Entities.Theme", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Themes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -261,7 +282,15 @@ namespace API.Data.Migrations
                         .WithMany("Photos")
                         .HasForeignKey("AppUserId1");
 
+                    b.HasOne("API.Entities.Theme", "Theme")
+                        .WithMany("Photos")
+                        .HasForeignKey("ThemeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AppUser");
+
+                    b.Navigation("Theme");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -316,6 +345,11 @@ namespace API.Data.Migrations
                 });
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
+                {
+                    b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("API.Entities.Theme", b =>
                 {
                     b.Navigation("Photos");
                 });

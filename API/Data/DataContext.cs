@@ -7,6 +7,7 @@ namespace API.Data;
 public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser>(options)
 {
     public DbSet<Photo> Photos { get; set; }
+    public DbSet<Theme> Themes { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

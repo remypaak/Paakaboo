@@ -1,31 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { RegisterDialogComponent } from '../dialogs/register-dialog/register-dialog.component';
-import { CountdownTimerService } from '../_services/countdown.service';
+import { Component } from '@angular/core';
 import { HowToInstructionComponent } from "./how-to-instruction/how-to-instruction.component";
+import { HeroComponent } from "./hero/hero.component";
+import { RightSideComponent } from "./right-side/right-side.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HowToInstructionComponent],
+  imports: [HowToInstructionComponent, HeroComponent, RightSideComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit{
-    public timeLeftService = inject(CountdownTimerService)
-    public dialog = inject(MatDialog);
-
-    ngOnInit(): void {
-        this.timeLeftService.getTimeLeft().subscribe()
-    }
-
-    openRegisterDialog(): void {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = '1000px';
-        dialogConfig.height = '350px';
-        dialogConfig.autoFocus = true;
-        dialogConfig.panelClass = 'custom-dialog-container';
-    
-        this.dialog.open(RegisterDialogComponent, dialogConfig);
+export class HomeComponent{
+    scrollToFooter() {
+        const footerElement = document.getElementsByClassName('footer')[0];
+        if (footerElement) {
+          footerElement.scrollIntoView({ behavior: 'smooth' });
+        }
       }
 }

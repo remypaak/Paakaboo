@@ -15,7 +15,7 @@
 .mat-dialog-container {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Make sure it takes the full viewport height */
+    height: 100vh; 
 }
 
 
@@ -26,7 +26,7 @@
 
 .image-container {
     flex: 1;
-    margin-right: 20px; /* Adjust spacing as needed */
+    margin-right: 20px;
 }
 
 .sign-up-image {
@@ -35,13 +35,13 @@
 }
 
 .form-container {
-    justify-content: center; /* Center horizontally */
+    justify-content: center;
     flex: 1;
 }
 
 .form {
-    width: 100%; /* Ensure the form takes full width of the container */
-    max-width: 400px; /* Set a max-width to control the size of the form */
+    width: 100%; 
+    max-width: 400px;
 }
 
 .form-group {
@@ -49,11 +49,14 @@
     justify-content: flex-end;
 }
 
-.btn:hover{
+button:hover:not(:disabled){
     background-color: var(--color-green);
 }
-.btn:disabled{
-    opacity: 0.7;
-    cursor: not-allowed; 
-}
+button:disabled {
+    background-color: var(--color-gray);
+    color: #a9a9a9;
+    cursor: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' aria-labelledby='notAllowedIconTitle' stroke='%23FF8080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none' color='%23FF8080'%3E%3Ccircle cx='12' cy='12' r='10' fill='d8dad3'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23FF8080' fill='none'/%3E%3Cpath stroke-linecap='square' d='m5 5 14 14' stroke='%23FF8080'/%3E%3C/svg%3E"),
+      not-allowed;
+    border: 1px solid #a9a9a9;
+  }
 

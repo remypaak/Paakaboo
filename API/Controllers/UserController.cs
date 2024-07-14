@@ -3,17 +3,19 @@ using API.Entities;
 using API.Extensions;
 using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [Authorize]
-public class UserController(IUnitOfWork unitOfWork, IPhotoService photoService) : BaseApiController
+public class UserController(IUnitOfWork unitOfWork, IPhotoService photoService, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager) : BaseApiController
 {
+
 
     //TODO: MAP TO PHOTODTO
     [HttpPost("add-photo")]
-    public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] IFormFile file, [FromForm] string theme)
+    public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] IFormFile file)
     {
         var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUserName());
 
@@ -33,7 +35,6 @@ public class UserController(IUnitOfWork unitOfWork, IPhotoService photoService) 
         {
             Url = result.SecureUrl.AbsoluteUri,
             PublicId = result.PublicId,
-            Theme = theme
         };
 
         user.Photos.Add(photo);

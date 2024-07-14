@@ -1,0 +1,40 @@
+ 
+  .right-side {
+    width: 50vw;
+  }
+  
+  .right-side .theme-container,
+  .right-side .button-container {
+    padding: 1.4rem;
+    border-radius: 5px;
+  }
+  
+.theme-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-top: 10rem;
+    width: 60%;
+  }
+  
+  .theme-container h1 {
+    color: var(--color-white);
+  }
+  
+  
+.button-container {
+      margin-top: 0.75;
+      background: transparent;
+      width: 60%;
+      
+  }
+    
+  .registration-button {
+      color: var(--color-white);
+      padding: 15px 30px; 
+      font-size: 1.5rem;
+      border: none; 
+      width: 100%;
+  }
+    
+  .registration-button:hover {
+      background-color: black; 
+  }

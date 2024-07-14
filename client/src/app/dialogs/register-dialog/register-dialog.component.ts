@@ -34,7 +34,7 @@ export class RegisterDialogComponent implements OnInit {
   register() {
     const register = this.registerForm.value;
     const user: User = {
-      username: register.username,
+      userName: register.username,
       password: register.password,
     };
     this.accountService.register(user).subscribe({

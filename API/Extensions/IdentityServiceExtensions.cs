@@ -14,7 +14,7 @@ public static class IdentityServiceExtensions
             .AddEntityFrameworkStores<DataContext>();
         
         services.AddAuthorizationBuilder()
-            .AddPolicy("AdminRole", policy => policy.RequireRole("Admin"));
+            .AddPolicy("RequireModeratorRole", policy => policy.RequireRole("Moderator"));
 
         return services;
     }
