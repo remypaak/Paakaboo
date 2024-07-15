@@ -11,6 +11,6 @@ public class Photo
     public int AppUserId { get; set; }
     public AppUser AppUser { get; set; } = null!;
 
-    public int ThemeId { get; set; }  // Foreign Key to Theme
-    public Theme Theme { get; set; } = null!;  // Navigation property
+    public int? ThemeId { get; set; }  // Foreign Key to Theme
+    public Theme? Theme { get; set; } = null!;  // Navigation property
 }

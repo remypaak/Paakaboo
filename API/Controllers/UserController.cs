@@ -14,36 +14,5 @@ public class UserController(IUnitOfWork unitOfWork, IPhotoService photoService, 
 
 
     //TODO: MAP TO PHOTODTO
-    [HttpPost("add-photo")]
-    public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] IFormFile file)
-    {
-        var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUserName());
-
-        if (user == null)
-        {
-            return BadRequest("Username not present in token");
-        }
-
-        var result = await photoService.AddPhotoAsync(file);
-
-        if (result.Error != null)
-        {
-            return BadRequest(result.Error.Message + ", Not able to upload photo to Cloudinary");
-        }
-
-        var photo = new Photo
-        {
-            Url = result.SecureUrl.AbsoluteUri,
-            PublicId = result.PublicId,
-        };
-
-        user.Photos.Add(photo);
-
-        if (await unitOfWork.Complete())
-        {
-            return Ok(new PhotoDto());
-        }
-
-        return BadRequest("Problem adding photo");
-    }
+    
 }

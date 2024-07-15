@@ -56,8 +56,13 @@
   margin-right: 2rem;
 }
 
+
+button:hover{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.12);
+}
 button:hover:not(:disabled) {
   background-color: black;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.12), 0 4px 6px rgba(0, 0, 0, 0.12); 
 }
 
 .form-input {

@@ -7,4 +7,5 @@ public interface IUserRepository
 {
     void Update(AppUser user);
     Task<AppUser?> GetUserByUsernameAsync(string username);
+    Task GetUserByUsernameAsync(object value);
 }

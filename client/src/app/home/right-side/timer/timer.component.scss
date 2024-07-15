@@ -1,8 +1,8 @@
 .timer-container{
-    background-color:  rgba(255, 255, 255, 0.5);
-    width:60%;
+    background-color:  rgba(241, 242, 235, 0.5);
     padding: 1.4rem;
     border-radius: 2px;
+    margin: 0 auto;
 }
 
 .timer {
@@ -45,13 +45,6 @@
   .timer-label {
     text-align: center;
   }
-  
-  
-  .right-side .timer-container {
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
   
   .right-side .timer-container {
     background-color: rgba(255, 255, 255, 0.5);
