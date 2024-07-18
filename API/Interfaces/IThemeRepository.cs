@@ -8,9 +8,7 @@ public interface IThemeRepository
 
     Task<Theme?> GetThemeByName(string name);
 
-    Task<bool> HasActiveTheme();
-
-    Task<DateTime?> GetActiveThemeEndDate();
+    Task<Theme?> GetActiveTheme();
 
     Task AddTheme(Theme theme);
 

@@ -1,0 +1,51 @@
+@if (isModalOpen) {
+<app-submit-modal (submitPhoto)="onPhotoSubmit($event)" (clickCloseModal)="closeModal()"></app-submit-modal>
+}
+@if(activeTheme$ | async; as activeTheme ){
+<div class="challenge-from-to-date">
+    <p>{{activeTheme.startDate | capitalizeDate}} - {{ activeTheme.submitEndDate| capitalizeDate }}</p>
+</div>
+}
+<div class="page-element">
+    @if(activeTheme$ | async; as activeTheme ){
+    <h2>Week 1: Uit eigen tuin</h2>
+    <div class="content-container">
+        <div class="image-container">
+            @if (photoForActiveTheme$ | async; as photo) {
+            <img src={{this.photoService.submittedPhoto()?.url}} alt="Submitted photo" class="theme-image">
+            }@else {
+            <img src="../../../../assets/garden-example-theme.jpg" alt="Image description" class="theme-image">
+            }
+        </div>
+        <div class="page-right-container">
+            <app-timer class="timer"></app-timer>
+            @if (photoForActiveTheme$ | async; as photo){
+            <button (click)="openModal()" class="btn btn-primary">Opnieuw indienen</button>
+            <div class="submit-from-to-text-container">
+                <hr>
+                <h1>Opnieuw indienen kan tussen:<br></h1>
+                <p>Maandag Juli 15, 2024 tot en met Zondag 21 Juli, 2024 18:00 uur</p>
+                <hr>
+            </div>
+            }
+            @else {
+            <button (click)="openModal()" class="btn btn-primary">Stuur jouw inzending!</button>
+            <div class="submit-from-to-text-container">
+                <hr>
+                <h1>Inzenden kan tussen:<br></h1>
+                <p>Maandag Juli 15, 2024 tot en met Zondag 21 Juli, 2024 18:00 uur</p>
+                <hr>
+            </div>
+            }
+
+        </div>
+    </div>
+    }@else{
+    <div class="no-challenge">
+        <h1>Er is op dit moment nog geen competitie bezig.
+            Vraag een moderator om een nieuwe challenge te starten. Hier een foto van Pikachu om je op te vrolijken</h1>
+            <img src="../../../../../assets/pikachu.jpg" alt="pikachu-photo">
+    </div>
+    }
+
+</div>

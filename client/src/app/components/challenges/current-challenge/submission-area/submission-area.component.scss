@@ -1,0 +1,113 @@
+:host {
+    display: block;
+    height: 92vh;
+    width: 100vw;
+    background-color: var(--color-white);
+  }
+  
+  .challenge-from-to-date {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 90%;
+    height: 8vh;
+  }
+  .challenge-from-to-date p {
+    padding: 0;
+    margin: 0;
+  }
+  
+  
+  .page-element {
+    position: fixed;
+    top: 18%;
+    left: 10%;
+    right: 10%;
+    height: 100%;
+    background-color: var(--color-gray);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1), 0 -2px 5px rgba(0, 0, 0, 0.15), 2px 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .page-element h2 {
+    margin: 0;
+    margin-bottom: 2rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #000;
+  }
+  
+  .content-container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .theme-image {
+    width: 100%;
+    max-height: 66%;
+    border-radius: 8px;
+    margin-right: 20px;
+    object-fit: contain;
+  }
+  .image-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .page-right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    gap: 2rem;
+  }
+  
+  .timer {
+  }
+  
+  .page-right-container button {
+    margin-top: 20px;
+  }
+  .submit-from-to-text-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .submit-from-to-text-container hr {
+    width: 75%;
+  }
+
+  .submit-from-to-text-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: auto;
+  }
+  .submit-from-to-text-container p {
+    margin-top: auto;
+    font-size: 1.5rem;
+    width: 75%;
+    text-align: center;
+  }
+
+  .btn {
+    font-size: 1.5rem;
+    width: 75%;
+  }
+
+  .no-challenge{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .no-challenge h1{
+    font-size: clamp(1rem,2vw + 1rem, 2rem);
+    text-align: center;
+  }
+  .no-challenge img{
+    width: 75%;
+  }

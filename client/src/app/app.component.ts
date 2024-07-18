@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavComponent } from "./nav/nav.component";
+import { NavComponent } from "../app/components/nav/nav.component";
 import { AccountService } from './_services/account.service';
+
 
 @Component({
     selector: 'app-root',

@@ -1,18 +1,19 @@
 ﻿using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class ThemeController(IUnitOfWork unitOfWork) : BaseApiController
+public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper) : BaseApiController
 {
 
      [HttpPost("add-theme")]
         public async Task<IActionResult> AddTheme(ThemeDto themeDto)
         {
-            var hasActiveTheme = await unitOfWork.ThemeRepository.HasActiveTheme();
-            if (hasActiveTheme == true)
+            var activeTheme = await unitOfWork.ThemeRepository.GetActiveTheme();
+            if (activeTheme != null)
             {
                 return BadRequest("There is already an active theme.");
             }
@@ -20,7 +21,9 @@ public class ThemeController(IUnitOfWork unitOfWork) : BaseApiController
             var newTheme = new Theme
             {
                 Name = themeDto.Name,
-                EndDate = themeDto.EndDate,
+                StartDate = themeDto.StartDate.ToUniversalTime(),
+                SubmitEndDate = themeDto.SubmitEndDate.ToUniversalTime(),
+                VoteEndDate = themeDto.VoteEndDate.ToUniversalTime(),
             };
 
             await unitOfWork.ThemeRepository.AddTheme(newTheme);
@@ -34,21 +37,18 @@ public class ThemeController(IUnitOfWork unitOfWork) : BaseApiController
             return BadRequest("Failed to add the theme.");
         }
 
-    [HttpGet("has-active-theme")]
-    public async Task<ActionResult<HasActiveThemeResponseDto>> HasActiveTheme()
-    {
-        var hasActiveTheme = await unitOfWork.ThemeRepository.HasActiveTheme();
-        return Ok(new { hasActiveTheme });
-    }
 
-    [HttpGet("active-theme-end-date")]
-    public async Task<ActionResult<ActiveThemeEndDateResponseDto>> GetActiveThemeEndDate()
+    [HttpGet("get-active-theme")]
+    public async Task<ActionResult<ThemeDto>> GetActiveTheme()
     {
-        var activeThemeEndDate = await unitOfWork.ThemeRepository.GetActiveThemeEndDate();
+        var activeTheme = await unitOfWork.ThemeRepository.GetActiveTheme();
+        if (activeTheme == null)
+        {
+            return NoContent();
+        }
+        var themeDto = mapper.Map<ThemeDto>(activeTheme);
 
-        return Ok(new ActiveThemeEndDateResponseDto {
-            ActiveThemeEndDate = activeThemeEndDate
-        });
+        return Ok(themeDto);
     }
     
     [HttpDelete("{name}")]

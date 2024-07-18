@@ -11,5 +11,11 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser>(
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Photo>()
+        .HasOne(p => p.Theme)
+        .WithMany(t => t.Photos)
+        .HasForeignKey(p => p.ThemeId)
+        .OnDelete(DeleteBehavior.SetNull); 
     }
 }

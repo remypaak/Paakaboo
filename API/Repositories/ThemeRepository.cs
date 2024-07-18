@@ -22,21 +22,18 @@ public class ThemeRepository(DataContext context) : IThemeRepository
         await context.Themes.AddAsync(theme);
     }
 
-    public async Task<bool> HasActiveTheme()
-    {
-        return await context.Themes
-                     .AnyAsync(t => t.EndDate.Date >= DateTime.Now.Date);
-    }
 
-    public async Task<DateTime?> GetActiveThemeEndDate()
-    {
-        var activeTheme = await context.Themes.FirstOrDefaultAsync(t => t.EndDate.Date >= DateTime.Now.Date);
-        if (activeTheme == null)
+    public async Task<Theme?> GetActiveTheme()
+{
+    var activeTheme = await context.Themes
+                                   .FirstOrDefaultAsync(t => t.VoteEndDate.Date >= DateTime.UtcNow.Date);
+    if (activeTheme == null)
         {
             return null;
         }
-        return activeTheme.EndDate;
-    }
+
+    return activeTheme;
+}
 
     public void DeleteTheme(Theme theme)
     {

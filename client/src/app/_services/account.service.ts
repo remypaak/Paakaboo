@@ -3,7 +3,6 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { User } from '../_models/user';
 import { environment } from '../../environments/environment';
 import { Observable, tap } from 'rxjs';
-import { FaultyLogin } from '../_models/faulty-login';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +20,7 @@ export class AccountService {
       })
     baseUrl = environment.apiUrl;
     
-    login(user: User): Observable<User | FaultyLogin> {
+    login(user: User): Observable<User> {
         return this.http.post<User>(this.baseUrl + 'account/login', user).pipe(
             tap(user => {
                 if (user){

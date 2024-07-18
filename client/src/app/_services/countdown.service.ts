@@ -14,7 +14,7 @@ export class CountdownTimerService {
       startWith(0),
       tap(() => {
         if (endDay) {
-          this.timeLeft.set(this.calcDateDiff(new Date(endDay.getTime() + 24 * 60 * 60 * 1000)));
+          this.timeLeft.set(this.calcDateDiff(new Date(endDay)));
         } else {
           const zeroTimeComponents: TimeComponents = {
             secondsToDday: 0,

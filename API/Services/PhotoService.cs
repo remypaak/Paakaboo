@@ -16,6 +16,14 @@ public class PhotoService : IPhotoService
         _cloudinary = new Cloudinary(acc);
     }
 
+     public string GetPhotoUrl(string publicId, int width = 500, int height = 500)
+    {
+        var url = _cloudinary.Api.UrlImgUp
+            .Transform(new Transformation().Width(width).Height(height).Crop("fill").Gravity("auto"))
+            .BuildUrl(publicId);
+        return url;
+    }
+
     public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
     {
         var uploadResult = new ImageUploadResult();

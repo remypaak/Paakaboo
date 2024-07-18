@@ -1,4 +1,7 @@
 export type Theme = {
     name: string;
-    endDate: Date;
+    startDate: Date;
+    // endDate: Date;
+    submitEndDate: Date;
+    voteEndDate: Date;
 }
