@@ -16,14 +16,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { SubmitModalComponent } from './submit-modal/submit-modal.component';
 import { ThemeService } from '../../../../_services/theme.service';
-import { DateAdapter } from '@angular/material/core';
-import {  MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CapitalizeDatePipe } from '../../../../pipe/capitalize-date.pipe';
-import { Theme } from '../../../../_models/theme';
-import { distinctUntilChanged, shareReplay, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
+import { distinctUntilChanged, shareReplay, switchMap } from 'rxjs';
 import { PhotoService } from '../../../../_services/photo.service';
-import { Photo } from '../../../../_models/photo';
 import { AsyncPipe } from '@angular/common';
+import { ThemeResponse } from '../../../../_models/themeResponse';
 
 @Component({
   selector: 'app-submission-area',
@@ -55,7 +52,7 @@ export class SubmissionAreaComponent implements OnInit, OnDestroy {
 
   photoForActiveTheme$ = this.activeTheme$.pipe(
     switchMap(theme => this.photoService.getPhotoForActiveTheme(theme.name)),
-    shareReplay(1)  );
+    shareReplay(1));
 
   currentDate: Date = new Date();
   isModalOpen = false;
@@ -64,7 +61,7 @@ export class SubmissionAreaComponent implements OnInit, OnDestroy {
     
   }
 
-  onPhotoSubmit(theme: Theme) {
+  onPhotoSubmit(theme: ThemeResponse) {
     this.photoForActiveTheme$ = this.photoService.getPhotoForActiveTheme(theme.name);
   }
 

@@ -13,11 +13,14 @@ import { TextInputComponent } from '../../forms/text-input/text-input.component'
 import { User } from '../../../_models/user';
 import { AccountService } from '../../../_services/account.service';
 import { map, switchMap, timer } from 'rxjs';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register-dialog',
   standalone: true,
-  imports: [MatDialogModule, ReactiveFormsModule, TextInputComponent],
+  imports: [MatDialogModule, ReactiveFormsModule, TextInputComponent, MatFormFieldModule, MatInputModule],
   templateUrl: './register-dialog.component.html',
   styleUrl: './register-dialog.component.scss',
 })
@@ -25,6 +28,7 @@ export class RegisterDialogComponent implements OnInit {
   public accountService = inject(AccountService);
   public dialogRef = inject(MatDialogRef<RegisterDialogComponent>);
   private formBuilderService = inject(FormBuilder);
+  private toastrService = inject(ToastrService);
   registerForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
@@ -39,10 +43,12 @@ export class RegisterDialogComponent implements OnInit {
     };
     this.accountService.register(user).subscribe({
       next: () => {
+        this.toastrService.success("Succesvol geregistreerd. Welkom!")
+        this.registerForm.reset();
         this.dialogRef.close();
       },
-      error: (error) => {
-        console.error('Error during registration', error);
+      error: () => {
+        this.toastrService.error("Er is iets misgegaan tijdens de registratie. Neem contact op met de beheerder")
       },
     });
   }
@@ -120,5 +126,12 @@ export class RegisterDialogComponent implements OnInit {
         map(isTaken => (isTaken ? { usernameTaken: true } : null))
       );
     };
+  }
+
+  onFocus(controlName: string): void {
+    const control = this.registerForm.get(controlName);
+    if (control) {
+      control.markAsTouched();
+    }
   }
 }

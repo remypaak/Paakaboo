@@ -1,26 +1,56 @@
+:host {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+
+}
+
 .container {
+    border-radius: 2rem;
+    flex: 1;
+    width: 100%;
+    height: 55%;
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
-    height: 30vh;
-    width: 100%;
-    background-color: var(--color-dark);
+    align-items: center; 
 }
 
 .form-container {
-    background: var(--color-dark); 
-    padding: 30px;
+    border-radius: 2rem;
+    background-color: rgba(232, 238, 242, 0.8);
+    color: var(--color-secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+}
+
+.form {
     width: 100%;
-    max-width: 600px;
-    box-sizing: border-box;
-    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.form-container h2{
+
+.form-container h2 {
+    font-size: 3rem;
     text-align: center;
-    color: var(--color-white);
+    color: var(--color-secondary);
 }
 
+.form-field {
+    width: 50%;
+}
 
+.form-group {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
 label {
     display: block;
@@ -31,24 +61,15 @@ label {
 select {
     width: 100%;
     padding: 8px;
-    border: 1px solid var(--color-dark);
+    border: 1px solid var(--color-secondary);
     border-radius: 4px;
 }
 
 button {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: black;
-}
-button:disabled {
-    background-color: var(--color-gray);
-    cursor: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' aria-labelledby='notAllowedIconTitle' stroke='%23FF8080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none' color='%23FF8080'%3E%3Ccircle cx='16' cy='16' r='14' fill='d8dad3'/%3E%3Ccircle cx='16' cy='16' r='12' stroke='%23FF8080' fill='none'/%3E%3Cpath stroke-linecap='square' d='m8 8 16 16' stroke='%23FF8080'/%3E%3C/svg%3E"), not-allowed;
-    color: #a9a9a9;
 }

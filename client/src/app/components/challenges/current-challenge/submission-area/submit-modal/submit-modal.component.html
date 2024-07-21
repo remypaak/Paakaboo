@@ -63,7 +63,7 @@
                   <img [src]="uploadedImage" alt="Uploaded Image" class="uploaded-image">
                 </div>
                 <div class="button-container">
-                  <button [disabled]="!titleForm.valid" class="btn btn-primary">Post je foto!</button>
+                  <button [disabled]="!titleForm.valid || isSubmitting" class="btn btn-primary">Post je foto!</button>
                 </div>
             </form>
               </div>

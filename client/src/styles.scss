@@ -1,34 +1,45 @@
+@use '@angular/material' as mat;
+
+.dense-1 {
+  @include mat.form-field-density(-1);
+}
+
+.dense-2 {
+  @include mat.form-field-density(-2);
+}
+.dense-3 {
+    @include mat.form-field-density(-3);
+  }
+  
+  .dense-4 {
+    @include mat.form-field-density(-4);
+  }
+  
 
 :root {
-  --color-white: #f1f2eb;
-  --color-gray: #d8dad3;
+  --color-primary: #E8EEF2;
+  --color-secondary: #37393A;
+  --color-accent: #77B6EA;
+  --color-primary-gradient: #C7D3DD; 
+  --color-accent-gradient: #0B80E1;
+  --color-secondary-gradient: #161717;
+  --color-accent-light: #c9e2f7;
   --color-light-green: #a4c2a5;
-  --color-green: #566246;
-  --color-dark: #4a4a48;
   --color-error: #ff8080;
 }
 
 @font-face {
-  font-family: "Skranji-Bold";
-  src: url(".//assets/fonts/Skranji-Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Skranji";
-  src: url(".//assets/fonts/Skranji-Regular.ttf") format(truetype);
-}
-
-@font-face {
-  font-family: "Vidaloka";
-  src: url(".//assets/fonts/Vidaloka-Regular.ttf") format(truetype);
-}
+    font-family: "Sans";
+    src: url(".//assets/fonts/DMSans-VariableFont_opsz\,wght.ttf") format(truetype);
+  }
 
 body {
-  font-family: "Vidaloka";
+
+  font-family: "Sans";
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: var(--color-dark);
+  color: var(--color-secondary);
   font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -38,9 +49,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Vidaloka";
+  font-family: "Sans";
   font-weight: bold;
-  color: var(--color-dark);
+  color: var(--color-secondary);
   line-height: 1;
 }
 
@@ -50,7 +61,8 @@ h6 {
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  font-family: "Vidaloka";
+  font-family: "Sans";
+  font-weight: 700;
   transition: box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.12);
   transition: background-color 0.3s ease;
@@ -58,36 +70,49 @@ h6 {
 
 
 .btn-primary {
-  background-color: var(--color-light-green);
-  color: var(--color-dark);
+  background-color: var(--color-accent);
+  color: var(--color-secondary);
 }
 
 .btn-primary:hover {
-    color: var(--color-gray);
-    background-color: var(--color-green); 
+    color: var(--color-secondary-gradient);
+    background-color: var(--color-accent-gradient); 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.12);
     transition: background-color 0.3s ease;
 }
 
-.btn-secondary {
-  background-color: var(--color-dark);
-  color: var(--color-white);
+.btn-primary:disabled{
+    background-color: var(--color-accent-light);
+    cursor: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' aria-labelledby='notAllowedIconTitle' stroke='%23FF8080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none' color='%23FF8080'%3E%3Ccircle cx='16' cy='16' r='14' fill='d8dad3'/%3E%3Ccircle cx='16' cy='16' r='12' stroke='%23FF8080' fill='none'/%3E%3Cpath stroke-linecap='square' d='m8 8 16 16' stroke='%23FF8080'/%3E%3C/svg%3E"), not-allowed;
+
 }
 
-.btn-secondary:hover {
-    background-color: black;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.12);
-    transition: background-color 0.3s ease;
-}
 
 .toast-error {
   background-color: var(--color-error) !important;
-  color: var(--color-white) !important;
+  color: var(--color-primary) !important;
 }
 
 .toast-success {
   background-color: var(--color-light-green) !important;
-  color: var(--color-dark) !important;
+  color: var(--color-secondary) !important;
 }
 
 
+
+.mdc-floating-label {
+    color: var(--color-primary) !important;
+}
+
+.mdc-line-ripple::after {
+    border-bottom-color: var(--color-accent) !important;
+  }
+
+.mat-mdc-form-field-error {
+    color: var(--color-error) !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    caret-color: var(--color-accent) !important;
+    color: var(--color-primary) !important;
+}

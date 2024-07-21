@@ -19,9 +19,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { PhotoService } from '../../../../../_services/photo.service';
-import { Theme } from '../../../../../_models/theme';
 import { ThemeService } from '../../../../../_services/theme.service';
 import { Subject, switchMap, takeUntil } from 'rxjs';
+import { ThemeResponse } from '../../../../../_models/themeResponse';
 
 @Component({
   selector: 'app-submit-modal',
@@ -33,6 +33,7 @@ import { Subject, switchMap, takeUntil } from 'rxjs';
     MatFormFieldModule,
     MatDatepickerModule,
     MatInputModule,
+    
   ],
   templateUrl: './submit-modal.component.html',
   styleUrl: './submit-modal.component.scss',
@@ -47,13 +48,13 @@ export class SubmitModalComponent implements OnInit, OnDestroy {
   private activeTheme$ = this.themeService.getActiveTheme()
 
   clickCloseModal = output();
-  submitPhoto = output<Theme>();
+  submitPhoto = output<ThemeResponse>();
   titleForm: FormGroup = new FormGroup({});
   isModalOpen = false;
   uploadedImage: string | null = null;
   imageTitle: string = '';
   selectedFile: File | null = null;
-  
+  isSubmitting = false;
   
 
   ngOnInit(): void {
@@ -115,7 +116,8 @@ export class SubmitModalComponent implements OnInit, OnDestroy {
   }
 
   saveImage() {
-    if (this.titleForm.valid && this.selectedFile) {
+    if (this.titleForm.valid && this.selectedFile && !this.isSubmitting) {
+      this.isSubmitting = true;
       const title = this.titleForm.get('title')?.value;
       this.activeTheme$
       .pipe(
@@ -132,6 +134,7 @@ export class SubmitModalComponent implements OnInit, OnDestroy {
             this.submitPhoto.emit(theme);
          }
           this.clickCloseModal.emit();
+          this.isSubmitting = false;
         }
       });
     }

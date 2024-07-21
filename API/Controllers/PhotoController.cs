@@ -11,6 +11,24 @@ namespace API.Controllers;
 [Authorize]
 public class PhotoController(IUnitOfWork unitOfWork, IPhotoService photoService, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager) : BaseApiController
 {
+    [HttpGet("photos-with-votes/{themeId}")]
+    public async Task<ActionResult<List<PhotoWithVotesDto>>> GetPhotosWithVotes(int themeId)
+    {
+        var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUserName());
+
+
+        var photos = await unitOfWork.PhotoRepository.GetPhotosWithVotesByTheme(themeId);
+        var photoDtos = photos.Select(photo => new PhotoWithVotesDto
+        {
+            Id = photo.Id,
+            Title = photo.Title,
+            Url = photo.Url,
+            Points = photo.Votes.FirstOrDefault(v => v.AppUserId == user.Id)?.Points ?? 0,
+            IsUserPhoto = photo.AppUserId == user.Id
+        }).ToList();
+
+        return Ok(photoDtos);
+    }
     [HttpPost("submit-photo")]
     public async Task<ActionResult<PhotoDto>> AddPhoto([FromForm] IFormFile file, [FromForm] string title, [FromForm] string theme)
     {
@@ -69,6 +87,7 @@ public class PhotoController(IUnitOfWork unitOfWork, IPhotoService photoService,
         {
             var photoDto = new PhotoDto
             {
+                Id = photo.Id,
                 Title = photo.Title,
                 Url = photo.Url
             };
@@ -105,7 +124,7 @@ public class PhotoController(IUnitOfWork unitOfWork, IPhotoService photoService,
     {
         var photos = await unitOfWork.PhotoRepository.GetAllPhotosFromTheme(theme);
 
-         if (photos == null || !photos.Any())
+        if (photos == null || !photos.Any())
         {
             return NotFound("No photos found for the given theme");
         }

@@ -1,16 +1,18 @@
 <div class="container">
     <div class="form-container">
         <h2>Voeg een moderator toe</h2>
-        <form [formGroup]="assignRoleForm" (ngSubmit)="assignRole()">
+        <form class="form" [formGroup]="assignRoleForm" (ngSubmit)="assignRole()">
             <div class="form-group">
-                <label for="userDropdown">Selecteer gebruiker:</label>
-                <select id="userDropdown" formControlName="username" (change)="selectedUser = assignRoleForm.get('username')?.value">
-                    @for (user of moderatorService.usersWithoutModeratorRole(); track $index) {
-                        <option [value]="user.userName">
-                            {{ user.userName }}
-                        </option>
-                    }
-                </select>
+                <mat-form-field class="form-field" appearance="fill">
+                    <mat-label>Selecteer gebruiker</mat-label>
+                    <mat-select formControlName="username" (selectionChange)="selectedUser = $event.value">
+                        @for (user of usersWithoutModeratorRole$ | async; track $index) {
+                            <mat-option [value]="user.userName">
+                                {{ user.userName }}
+                            </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
             </div>
             <button class="btn btn-primary" [disabled]="!assignRoleForm.get('username')?.value" type="submit">Voeg toe</button>
         </form>

@@ -57,7 +57,7 @@ const MY_DATE_FORMAT = {
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT },
   ],
   templateUrl: './add-new-challenge.component.html',
-  styleUrl: './add-new-challenge.component.scss',
+  styleUrls: ['./add-new-challenge.component.scss'],
 })
 export class AddNewChallengeComponent implements OnInit, OnDestroy {
   private formBuilderService = inject(FormBuilder);
@@ -65,15 +65,20 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
   private toastrService = inject(ToastrService);
   themeForm: FormGroup = new FormGroup({});
   hasActiveTheme: boolean = false;
+  uploadedImage: string | null = null;
+  showImageError: boolean = false;
 
   ngOnInit(): void {
     this.initializeForm();
     this.setHasActiveTheme();
   }
+
   initializeForm() {
     this.themeForm = this.formBuilderService.group({
       themeName: ['', Validators.required],
       endDate: ['', [Validators.required, this.endDateValidator()]],
+      weekNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      imageControl: [null, Validators.required],
     });
   }
 
@@ -91,15 +96,18 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
     if (this.themeForm.valid) {
       const themeName = this.themeForm.get('themeName')?.value;
       const endDate: Date = this.themeForm.get('endDate')?.value;
+      const weekNumber = +this.themeForm.get('weekNumber')?.value;
 
       const endDateObj = new Date(endDate);
       endDateObj.setHours(endDateObj.getHours() + 16);
       const voteEndDate = new Date(endDateObj);
       voteEndDate.setDate(voteEndDate.getDate() + 1);
+      voteEndDate.setHours(voteEndDate.getHours() - 6);
 
       this.themeService
         .startNewThemeChallenges({
           name: themeName,
+          weekNumber: weekNumber,
           startDate: new Date(),
           submitEndDate: endDateObj,
           voteEndDate: voteEndDate,
@@ -111,8 +119,23 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
               'Het thema voor de volgende challenge is aangemaakt!'
             );
             this.initializeForm();
+            this.uploadedImage = null;
+            this.showImageError = false;
           },
         });
+    }
+  }
+
+  onImageUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.uploadedImage = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+      this.themeForm.patchValue({ imageControl: input.files[0] });
+      this.themeForm.get('imageControl')?.updateValueAndValidity();
     }
   }
 
@@ -120,7 +143,6 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
     return (control: AbstractControl) => {
       const currentDate = new Date();
       const endDate = new Date(control.value);
-      console.log(currentDate, endDate);
 
       if (endDate <= currentDate) {
         return { endDateInvalid: true };
@@ -128,6 +150,16 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
 
       return null;
     };
+  }
+
+  onSubmitButtonHover() {
+    if (
+      this.themeForm.get('weekNumber')?.valid &&
+      this.themeForm.get('endDate')?.valid &&
+      this.themeForm.get('themeName')?.valid
+    ) {
+      this.showImageError = true;
+    }
   }
 
   ngOnDestroy(): void {

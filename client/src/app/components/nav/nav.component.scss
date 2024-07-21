@@ -2,8 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-light-green);
-  padding: 0;
+  background-color: var(--color-primary);
+  padding: 0 20px;
+  border-bottom: 2px solid var(--color-accent);
   height: 8vh;
 }
 
@@ -13,9 +14,7 @@
 }
 
 .logo-img {
-  height: 75px;
-  margin-left: 20px;
-  margin-right: 10px;
+  height: 200px;
 }
 
 .nav-links {
@@ -23,11 +22,10 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  margin-left: 50px;
 }
 
 .nav-links li {
-  margin-right: 20px; 
+  margin-right: 20px;
 }
 
 .nav-links li a {
@@ -41,37 +39,32 @@
 }
 
 .navbar-right {
-  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .form {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem; 
 }
 
 .btn {
+    text-align: center;
   margin-right: 2rem;
+  height: 5vh;
+  width: 7vw;
 }
 
-
-button:hover{
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.12);
+button:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.12);
 }
+
 button:hover:not(:disabled) {
-  background-color: black;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.12), 0 4px 6px rgba(0, 0, 0, 0.12); 
-}
-
-.form-input {
-  text-align: center;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 25px;
-  background-color: var(--color-white);
+  background-color: var(--color-accent-gradient);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.12), 0 4px 6px rgba(0, 0, 0, 0.12);
 }
 
 .error-message {
@@ -88,10 +81,12 @@ button:hover:not(:disabled) {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-button:disabled {
-  background-color: var(--color-gray);
-  color: #a9a9a9;
-  cursor: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' aria-labelledby='notAllowedIconTitle' stroke='%23FF8080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none' color='%23FF8080'%3E%3Ccircle cx='12' cy='12' r='10' fill='d8dad3'/%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23FF8080' fill='none'/%3E%3Cpath stroke-linecap='square' d='m5 5 14 14' stroke='%23FF8080'/%3E%3C/svg%3E"),
-    not-allowed;
-  border: 1px solid #a9a9a9;
+::ng-deep .encapsulate .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
+
+
+input::placeholder { 
+    color: var(--color-primary);
+ }
+

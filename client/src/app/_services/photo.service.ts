@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Photo } from '../_models/photo';
 import { tap } from 'rxjs';
+import { PhotoWithVotes } from '../_models/photoWithVotes';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,10 @@ export class PhotoService {
 
     getAllPhotosForActiveTheme(theme: string){
         return this.http.get<Photo[]>(this.baseUrl + 'photo/all/' + theme)
+    }
+
+    getPhotosWithVotes(themeId: number){
+        return this.http.get<PhotoWithVotes[]>(this.baseUrl + 'photo/photos-with-votes/' + themeId)
     }
 
 }

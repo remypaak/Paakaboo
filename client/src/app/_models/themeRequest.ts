@@ -1,7 +1,7 @@
-export type Theme = {
+export type ThemeRequest = {
     name: string;
+    weekNumber: number;
     startDate: Date;
-    // endDate: Date;
     submitEndDate: Date;
     voteEndDate: Date;
 }

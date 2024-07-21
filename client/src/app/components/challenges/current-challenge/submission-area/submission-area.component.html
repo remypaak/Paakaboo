@@ -8,13 +8,13 @@
 }
 <div class="page-element">
     @if(activeTheme$ | async; as activeTheme ){
-    <h2>Week 1: Uit eigen tuin</h2>
+    <h2>Week 2: Herinneringen uit de kindertijd</h2>
     <div class="content-container">
         <div class="image-container">
             @if (photoForActiveTheme$ | async; as photo) {
             <img src={{this.photoService.submittedPhoto()?.url}} alt="Submitted photo" class="theme-image">
             }@else {
-            <img src="../../../../assets/garden-example-theme.jpg" alt="Image description" class="theme-image">
+            <img src="../../../../../assets/ben-mcleod-MX-I62dPu-c-unsplash (1).jpg" alt="Image description" class="theme-image">
             }
         </div>
         <div class="page-right-container">

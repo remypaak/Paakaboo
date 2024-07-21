@@ -14,4 +14,6 @@ public class Photo
 
     public int? ThemeId { get; set; }  // Foreign Key to Theme
     public Theme? Theme { get; set; } = null!;  // Navigation property
+
+    public List<Vote> Votes { get; set; } = [];
 }

@@ -7,11 +7,13 @@ import { User } from '../../_models/user';
 import { RouterLink } from '@angular/router';
 import { HasRoleDirective } from '../../_directives/has-role.directive';
 import { ToastrService } from 'ngx-toastr';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [ReactiveFormsModule, TextInputComponent, RouterLink, HasRoleDirective],
+  imports: [ReactiveFormsModule, TextInputComponent, RouterLink, HasRoleDirective,MatFormFieldModule, MatInputModule],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss',
 })

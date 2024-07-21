@@ -1,24 +1,29 @@
 :host {
     display: block;
-    background-color: var(--color-dark);
+    background-color: var(--color-primary);
     color: var(--color-white);
     text-align: center;
     padding: 20px;
 }
 
 .how-it-works {
-    background-color: var(--color-dark);
+    background-color: var(--color-primary);
     color: var(--color-white);
     text-align: center;
 }
+
 .how-it-works h2 {
-    color: var(--color-gray);
     font-size: 4rem;
 }
 
 .how-it-works h3 {
-    color: var(--color-gray);
-    font-size: 2rem;
+    font-size: 3rem;
+    
+}
+
+.how-it-works p {
+    padding: 10px;
+    text-align: center;    
 }
 
 .steps-container {
@@ -28,25 +33,30 @@
 }
 
 .step {
-    margin: 5rem;
-    max-width: 200px;
+    width: 25%; 
+    margin: 5rem 0; 
+    text-align: center;
 }
 
 .svg-icon {
-    display:block;
-    margin-bottom: 20px;
-    width: 100%;
+    display: block;
+    margin: 0 auto 20px auto; 
+    max-width: 200px;
     height: auto;
-    max-width: 100%; 
 }
 
 .step:nth-child(3) .svg-icon {
     display: block;
-    margin-left: -1rem;
+    padding-right: 1.7rem;
 }
 
 .step:nth-child(4) .svg-icon {
-    padding-top: 1.75rem;
+    padding-top: 1.5rem;
     display: block;
-    padding-bottom: -1rem;
+}
+
+@media (max-width: 1000px) {
+    .step {
+        width: 50%;
+    }
 }

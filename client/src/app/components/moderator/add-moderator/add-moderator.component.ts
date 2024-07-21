@@ -1,4 +1,3 @@
-// manage-roles.component.ts
 import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -9,11 +8,13 @@ import {
 import { ModeratorService } from '../../../_services/moderator.service';
 import { AddNewChallengeComponent } from '../add-new-challenge/add-new-challenge.component';
 import { ToastrService } from 'ngx-toastr';
+import {MatSelectModule} from '@angular/material/select';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-moderator',
   standalone: true,
-  imports: [ReactiveFormsModule, AddNewChallengeComponent],
+  imports: [ReactiveFormsModule, AddNewChallengeComponent, MatSelectModule, AsyncPipe],
   templateUrl: './add-moderator.component.html',
   styleUrls: ['./add-moderator.component.scss'],
 })
@@ -22,12 +23,12 @@ export class AddModeratorComponent implements OnInit {
   private formBuilderService = inject(FormBuilder);
   private toastrService = inject(ToastrService);
   assignRoleForm: FormGroup = new FormGroup({});
+  usersWithoutModeratorRole$ = this.moderatorService.getUsersWithoutModeratorRole()
 
   selectedUser: string | null = null;
 
   ngOnInit(): void {
     this.initializeForm();
-    this.moderatorService.getUsersWithoutModeratorRole().subscribe();
   }
 
   initializeForm() {

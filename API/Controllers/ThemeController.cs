@@ -21,6 +21,7 @@ public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper) : BaseApiCo
             var newTheme = new Theme
             {
                 Name = themeDto.Name,
+                WeekNumber = themeDto.WeekNumber,
                 StartDate = themeDto.StartDate.ToUniversalTime(),
                 SubmitEndDate = themeDto.SubmitEndDate.ToUniversalTime(),
                 VoteEndDate = themeDto.VoteEndDate.ToUniversalTime(),
@@ -42,7 +43,7 @@ public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper) : BaseApiCo
     public async Task<ActionResult<ThemeDto>> GetActiveTheme()
     {
         var activeTheme = await unitOfWork.ThemeRepository.GetActiveTheme();
-        if (activeTheme == null)
+         if (activeTheme == null)
         {
             return NoContent();
         }

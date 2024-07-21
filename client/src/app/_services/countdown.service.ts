@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
+import { startWith, tap } from 'rxjs/operators';
 import { TimeComponents } from '../_models/time-components';
 
 @Injectable({
@@ -9,12 +9,15 @@ import { TimeComponents } from '../_models/time-components';
 export class CountdownTimerService {
   timeLeft = signal<TimeComponents | null>(null);
 
-  public getTimeLeft(endDay: Date | null): Observable<number> {
+  public getTimeLeft(submitEndDate: Date | null, voteEndDate: Date | null): Observable<number> {
     return interval(1000).pipe(
       startWith(0),
       tap(() => {
-        if (endDay) {
-          this.timeLeft.set(this.calcDateDiff(new Date(endDay)));
+        const currentTime = new Date();
+        if (submitEndDate && currentTime < new Date(submitEndDate)) {
+          this.timeLeft.set(this.calcDateDiff(new Date(submitEndDate)));
+        } else if (voteEndDate && currentTime < new Date(voteEndDate)) {
+          this.timeLeft.set(this.calcDateDiff(new Date(voteEndDate)));
         } else {
           const zeroTimeComponents: TimeComponents = {
             secondsToDday: 0,
@@ -36,6 +39,15 @@ export class CountdownTimerService {
     const secondsInAMinute = 60;
 
     const timeDifference = dDay - Date.now();
+
+    if (timeDifference <= 0) {
+        return {
+          secondsToDday: 0,
+          minutesToDday: 0,
+          hoursToDday: 0,
+          daysToDday: 0,
+        };
+      }
 
     const daysToDday = Math.floor(
       timeDifference /

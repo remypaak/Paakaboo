@@ -4,21 +4,51 @@
     </div>
     <div class="form-container">
         <div mat-dialog-content>
-            <form class="form" [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
-                <h1 mat-dialog-title class="sign-up-title">Let's get started!</h1>
-                <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Gebruikersnaam'">
-                </app-text-input>
+            <form class="form" [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="username">
+                <h1 mat-dialog-title class="sign-up-title">We kunnen bijna beginnen</h1>
+                
+                <mat-form-field class="full-width field-spacing">
+                    <mat-label>Gebruikersnaam</mat-label>
+                    <input matInput formControlName="username" autocomplete="off" (focus)="onFocus('username')">
+                    @if(registerForm.controls['username'].hasError('required')){
+                        <mat-error>Gerbuikersnaam is verplicht</mat-error>
+                    }@else if(registerForm.controls['username'].hasError('usernameTaken')){
+                        <mat-error>Gerbuikersnaam is al in gebruik</mat-error>
+                    }
+                </mat-form-field>
 
-                <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Wachtwoord'"
-                    [type]="'password'">
-                </app-text-input>
+                <mat-form-field class="full-width field-spacing">
+                    <mat-label>Wachtwoord</mat-label>
+                    <input matInput [type]="'password'" formControlName="password" autocomplete="new-password" (focus)="onFocus('password')">
+                    @if(registerForm.controls['password'].hasError('required')){
+                        <mat-error>Wachtwoord is verplicht</mat-error>
+                    }
+                    @else if (registerForm.controls['password'].hasError('minlength')) {
+                        <mat-error>Wachtwoord moet minimaal 6 karakters lang zijn</mat-error>
+                    }
+                    @else if (registerForm.controls['password'].hasError('requireCapitalLetter')) {
+                        <mat-error>Wachtwoord moet minimaal 1 hoofdletter bevatten</mat-error>
+                    }
+                    @else if (registerForm.controls['password'].hasError('requireNumber')) {
+                        <mat-error>Wachtwoord moet minimaal 1 getal bevatten</mat-error>
+                    }
+                    @else if (registerForm.controls['password'].hasError('requireNonAlphanumeric')) {
+                        <mat-error>Wachtwoord moet minimaal 1 speciaal teken bevatten</mat-error>
+                    }
+                </mat-form-field>
 
-                <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])"
-                    [label]="'Confirm Password'" [type]="'password'">
-                </app-text-input>
+                <mat-form-field class="full-width field-spacing">
+                    <mat-label>Wachtwoord</mat-label>
+                    <input matInput [type]="'password'" formControlName="confirmPassword" autocomplete="new-password" (focus)="onFocus('confirmPassword')">
+                    @if(registerForm.controls['confirmPassword'].hasError('required')){
+                        <mat-error>Wachtwoord moet herhaald worden</mat-error>
+                    }@else if(registerForm.controls['confirmPassword'].hasError('isMatching')){
+                        <mat-error>Wachtwoorden komen niet overeen</mat-error>
+                    }
+                </mat-form-field>
+
                 <div class="form-group">
-                    <button class="btn btn-primary" [disabled]="!registerForm.valid"
-                        type="submit">Join the Frame</button>
+                    <button class="btn btn-primary" [disabled]="!registerForm.valid" type="submit">Join het Frame</button>
                 </div>
             </form>
         </div>

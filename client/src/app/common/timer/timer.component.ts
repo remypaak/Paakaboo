@@ -16,9 +16,12 @@ export class TimerComponent implements OnInit, OnDestroy{
     private themeService = inject(ThemeService);
     countDownSubscription: Subscription | null = null;
     
+    //TODO signaal vanuit service was geen goed idee. Slechte locus van functionaliteit nu je de hele tijd moet context switchen
+    //Gewoon een async pipe van maken
     ngOnInit(): void {
         this.countDownSubscription = this.themeService.getActiveTheme().pipe(
-            switchMap(theme => this.timeLeftService.getTimeLeft(theme?.submitEndDate))).subscribe()
+            switchMap(theme => this.timeLeftService.getTimeLeft(theme?.submitEndDate, theme?.voteEndDate))
+        ).subscribe()
     }
 
     ngOnDestroy(): void {

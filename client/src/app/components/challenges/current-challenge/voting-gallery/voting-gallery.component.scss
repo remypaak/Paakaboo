@@ -1,7 +1,7 @@
 .container {
     text-align: center;
     padding: 1rem;
-    background-color: var(--color-gray);
+    background-color: var(--color-primary);
   }
   
   .header {
@@ -13,18 +13,17 @@
   .header h2 {
     margin: 0;
     font-size: 2em;
-    color: var(--color-dark);
+    color: var(--color-secondary);
   }
   
   .header p {
     margin: 10px 0;
-    color: var(--color-dark);
+    color: var(--color-secondary);
   }
   
-  .header button {
+  .header .btn {
     border-radius: 5px;
     font-size: 1em;
-    cursor: pointer;
   }
   
 
@@ -34,11 +33,10 @@
     gap: 1.5rem;
     margin: 0;
     padding: 20px;
-    background-color: var(--color-gray);
   }
   
   .card {
-    background-color: var(--color-dark);
+    background-color: var(--color-primary-gradient);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -56,9 +54,9 @@
   
   .card h3 {
     margin: 15px 0;
-    font-size: 1.5rem;
-    color: var(--color-gray);
-    font-weight: 100;
+    font-size: 2rem;
+    color: var(--color-secondary);
+    font-weight: 400;
     padding: 0.1rem;
   }
   
@@ -68,17 +66,35 @@
     padding: 1rem;
   }
   
-  .voting-buttons button {
+  .voting-buttons .btn {
     border: none;
     border-radius: 5px;
     margin: 0.1rem;
     padding: 10px 0;
-    cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s ease;
   }
 
-  .voting-buttons button:hover {
-    color: var(--color-gray);
+  .voting-buttons .btn.active {
+    background-color: var(--color-accent-gradient);
+    color: var(--color-primary);
   }
-  
+
+  .submit-button[disabled][title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    background: var(--color-error);
+    color: var(--color-secondary);
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    white-space: nowrap;
+    transform: translateY(-100%);
+    z-index: 10;
+    width: 20%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .card.duplicate {
+    border: 10px solid var(--color-error);
+  }

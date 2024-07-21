@@ -1,35 +1,52 @@
 <div class="container">
-    <div class="welcome-container">
-        <h2>Welkom op de moderatorpagina</h2>
-        <p>Enkel zij die zijn gezegend met de hoogste privileges kunnen hierbij. Oftewel iedereen die mee doet. Hier kan
-            wekelijks het nieuwe thema gekozen worden. Ook kan je hier nieuwe moderatoren toevoegen.</p>
-    </div>
-    <div class="form-container">
-        <h3>Kies het thema voor de volgende challenge</h3>
-        <form [formGroup]="themeForm" (ngSubmit)="onSubmit()">
-            <div>
-                <mat-form-field appearance="fill" class="theme-field">
-                    <mat-label>Thema</mat-label>
-                    <input matInput formControlName="themeName" placeholder="Thema">
-                </mat-form-field>
-            </div>
-            <mat-form-field appearance="fill">
-                <mat-label>Einddatum</mat-label>
-                <mat-hint>DD/MM/YYYY</mat-hint>
-                <input matInput formControlName="endDate" [matDatepicker]="picker" placeholder="DD/MM/YYYY">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+    <h3>Kies het thema voor de volgende challenge</h3>
+    <div class="content-container">
+        <form [formGroup]="themeForm" (ngSubmit)="onSubmit()" class="form-content">
+            <mat-form-field appearance="fill" class="theme-field">
+                <mat-label>Thema</mat-label>
+                <input matInput formControlName="themeName" placeholder="Thema">
             </mat-form-field>
-            <button class="btn btn-secondary" type="submit" [disabled]="!themeForm.valid || hasActiveTheme" >Aanmaken</button>
+            <div class="date-upload-container">
+                <mat-form-field appearance="fill" class="end-date-field">
+                    <mat-label>Einddatum</mat-label>
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <input matInput formControlName="endDate" [matDatepicker]="picker" placeholder="DD/MM/YYYY">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <div class="spacer"></div>
+            </div>
+
+            <div class="date-upload-container">
+                <mat-form-field appearance="fill" class="week-number-field">
+                    <mat-label>Weeknummer</mat-label>
+                    <input matInput formControlName="weekNumber" placeholder="Weeknummer">
+                </mat-form-field>
+                <input type="file" (change)="onImageUpload($event)" accept="image/*" hidden #fileInput>
+                <button type="button" class="btn btn-primary upload-button" (click)="fileInput.click()">Upload voorbeeld
+                    foto</button>
+            </div>
             <div class="error-container">
                 @if (themeForm.get('endDate')?.hasError('endDateInvalid')) {
-                    <p class="error-message">
-                        De einddatum moet in de toekomst liggen.
-                      </p>
-                } @if (hasActiveTheme) {
-                    <p class="error-message">Op dit moment is er nog een lopend thema. Er kan geen nieuw thema aangemaakt worden.</p>
+                <p class="error-message">De einddatum moet in de toekomst liggen.</p>
+                }@else if(themeForm.get('weekNumber')?.hasError('pattern')){
+                <p class="error-message">Het weeknummer kan enkel uit cijfers bestaan</p>
+                }@else if (themeForm.get('imageControl')?.hasError('required') && showImageError){
+                <p class="error-message">Een voorbeeldfoto is verplicht</p>
                 }
-              </div>
+                @else if (hasActiveTheme) {
+                <p class="error-message">Op dit moment is er nog een lopend thema. Er kan geen nieuw thema aangemaakt
+                    worden.</p>
+                }
+            </div>
+            <button class="btn btn-primary add-thema-btn" type="submit" (mouseover)="onSubmitButtonHover()"
+                [disabled]="!themeForm.valid || hasActiveTheme">Aanmaken</button>
         </form>
+        @if (uploadedImage) {
+        <div class="image-container">
+            <img [src]="uploadedImage" alt="Example Image" class="uploaded-image">
+        </div>
+        }
+
     </div>
 </div>

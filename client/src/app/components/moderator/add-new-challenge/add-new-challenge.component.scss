@@ -1,93 +1,94 @@
 .container {
-    display: flex;
-    width: 100%;
-    height: 62vh; 
-  }
-  
-  .welcome-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-    background: url('../../../../assets/moderator2.jpg') no-repeat center center;
-    background-size: cover;
-    color: var(--color-white);
-  }
-  
-  .welcome-container h2 {
-    margin-bottom: 20px;
-    color: var(--color-white);
-  }
-  
-  .welcome-container p {
-    font-size: 18px;
-    text-align: center;
-    max-width: 400px;
-  }
-  
-  .form-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: var(--color-gray);
-  }
-  
-  h3 {
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-  }
-
-  
-  input {
-    margin-bottom: 16px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-
-  .theme-field{
-    width
-    : 100%;
-  }
-
-  button:hover{
-    background-color: black;
-  }
-
-  ::ng-deep .mdc-floating-label{
-
-    color: var(--color-gray) !important;
-  }
-  button:disabled {
-    background-color: var(--color-gray);
-    cursor: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' aria-labelledby='notAllowedIconTitle' stroke='%23FF8080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none' color='%23FF8080'%3E%3Ccircle cx='16' cy='16' r='14' fill='d8dad3'/%3E%3Ccircle cx='16' cy='16' r='12' stroke='%23FF8080' fill='none'/%3E%3Cpath stroke-linecap='square' d='m8 8 16 16' stroke='%23FF8080'/%3E%3C/svg%3E"), not-allowed;
-    color: #a9a9a9;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary);
 }
 
+h3 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+.theme-field {
+  width: 55%;
+}
+
+.date-upload-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 55%;
+  box-sizing: border-box;
+}
+
+.end-date-field {
+  flex: 2;
+  margin-right: 20px;
+}
+
+.week-number-field {
+    flex: 1;
+    margin-right: 20px;
+}
+.upload-button {
+    flex: 1;
+  margin-top: auto;
+  margin-bottom: 1.4rem;
+}
+
+.add-thema-btn {
+  width: 50%;
+}
 
 .error-message {
-    text-align: center;
-    color: var(--color-error);
-    margin-top: 0.5rem;
-    width: 100%;
-    background: var(--color-gray);
-    padding: 1rem;
-  }
+  text-align: center;
+  color: var(--color-error);
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+  width: 100%;
+}
 
-  .error-container {
-    height: 1.5rem; 
-  }
+.error-container {
+  width: 55%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
 
+.image-container {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.uploaded-image {
+  max-width: 100%;
+  max-height: 40vh;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-thema-btn{
+    margin-bottom: 20px;
+}
+
+.spacer {
+    flex: 1;
+}
