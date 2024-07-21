@@ -26,7 +26,7 @@ public class ThemeRepository(DataContext context) : IThemeRepository
     public async Task<Theme?> GetActiveTheme()
 {
     var activeTheme = await context.Themes
-                                   .FirstOrDefaultAsync(t => t.VoteEndDate.Date >= DateTime.UtcNow.Date);
+                                   .FirstOrDefaultAsync(t => t.VoteEndDate >= DateTime.UtcNow);
     if (activeTheme == null)
         {
             return null;

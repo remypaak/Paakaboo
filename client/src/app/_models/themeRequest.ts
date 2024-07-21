@@ -1,6 +1,6 @@
 export type ThemeRequest = {
     name: string;
-    weekNumber: number;
+    weekNumber: string;
     startDate: Date;
     submitEndDate: Date;
     voteEndDate: Date;

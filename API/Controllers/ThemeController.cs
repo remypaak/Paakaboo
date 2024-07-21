@@ -6,17 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper) : BaseApiController
+public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService) : BaseApiController
 {
 
      [HttpPost("add-theme")]
-        public async Task<IActionResult> AddTheme(ThemeDto themeDto)
+        public async Task<IActionResult> AddTheme([FromForm] IFormFile file, [FromForm]ThemeDto themeDto)
         {
             var activeTheme = await unitOfWork.ThemeRepository.GetActiveTheme();
             if (activeTheme != null)
             {
                 return BadRequest("There is already an active theme.");
             }
+
+            var result = await photoService.AddPhotoAsync(file);
+
+            if (result.Error != null)
+        {
+            return BadRequest(result.Error.Message + ", Not able to upload photo to Cloudinary");
+        }
+
 
             var newTheme = new Theme
             {
@@ -25,6 +33,8 @@ public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper) : BaseApiCo
                 StartDate = themeDto.StartDate.ToUniversalTime(),
                 SubmitEndDate = themeDto.SubmitEndDate.ToUniversalTime(),
                 VoteEndDate = themeDto.VoteEndDate.ToUniversalTime(),
+                ExampleUrl = result.SecureUrl.AbsoluteUri,
+                ExamplePublicId = result.PublicId,
             };
 
             await unitOfWork.ThemeRepository.AddTheme(newTheme);

@@ -1,7 +1,10 @@
 <div class="right-side">
     <div class="theme-container" style="text-align: center;">
-        <h1>Week {{(activeTheme$ | async)?.weekNumber }} : {{(activeTheme$ | async)?.name}}</h1>
-        
+        @if(activeTheme$ | async; as activeTheme){
+            <h1>Week {{activeTheme.weekNumber }} : {{activeTheme.name}}</h1>
+        }@else{
+            <h1>Er is momenteel geen lopende challenge</h1>
+        }
     </div>
     <div class="timer-container">
         <app-timer class="timer"></app-timer>

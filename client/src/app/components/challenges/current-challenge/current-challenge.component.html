@@ -1,2 +1,16 @@
-<app-submission-area></app-submission-area>
-<!-- <app-voting-gallery></app-voting-gallery> -->
+@if(activeTheme$ | async; as activeTheme){
+    @if(isBeforeSubmitEndDate(activeTheme)){
+        <app-submission-area></app-submission-area>
+    }@else if (isDuringVotingPeriod(activeTheme)){
+        <app-voting-gallery></app-voting-gallery>
+    }
+}@else if (!isLoading){
+    <div class="page-element">
+        <div class="no-challenge">
+            <h1>Er is op dit moment nog geen competitie bezig.
+                Vraag een moderator om een nieuwe challenge te starten. Hier een foto van Pikachu om je op te vrolijken</h1>
+            <img src="../../../../../assets/pikachu.jpg" alt="pikachu-photo">
+        </div>
+    </div>
+    }
+

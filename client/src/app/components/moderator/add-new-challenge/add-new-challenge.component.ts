@@ -67,6 +67,7 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
   hasActiveTheme: boolean = false;
   uploadedImage: string | null = null;
   showImageError: boolean = false;
+  selectedFile: File | null = null;
 
   ngOnInit(): void {
     this.initializeForm();
@@ -93,10 +94,10 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.themeForm.valid) {
+    if (this.themeForm.valid && this.selectedFile) {
       const themeName = this.themeForm.get('themeName')?.value;
       const endDate: Date = this.themeForm.get('endDate')?.value;
-      const weekNumber = +this.themeForm.get('weekNumber')?.value;
+      const weekNumber = this.themeForm.get('weekNumber')?.value;
 
       const endDateObj = new Date(endDate);
       endDateObj.setHours(endDateObj.getHours() + 16);
@@ -105,7 +106,7 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
       voteEndDate.setHours(voteEndDate.getHours() - 6);
 
       this.themeService
-        .startNewThemeChallenges({
+        .startNewThemeChallenges(this.selectedFile, {
           name: themeName,
           weekNumber: weekNumber,
           startDate: new Date(),
@@ -129,6 +130,7 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
   onImageUpload(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
+        this.selectedFile = input.files[0]
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.uploadedImage = e.target.result;

@@ -1,0 +1,28 @@
+.page-element {
+    position: fixed;
+    top: 18%;
+    left: 10%;
+    right: 10%;
+    height: 100%;
+    background-color: var(--color-primary-gradient);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1), 0 -2px 5px rgba(0, 0, 0, 0.15), 2px 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+.no-challenge{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .no-challenge h1{
+    font-size: clamp(1rem,2vw + 1rem, 2rem);
+    text-align: center;
+  }
+  .no-challenge img{
+    width: 75%;
+    height: auto;
+    aspect-ratio: 1280 / 720;
+  }

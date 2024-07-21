@@ -22,6 +22,7 @@ import { PhotoService } from '../../../../../_services/photo.service';
 import { ThemeService } from '../../../../../_services/theme.service';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ThemeResponse } from '../../../../../_models/themeResponse';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-submit-modal',
@@ -33,6 +34,7 @@ import { ThemeResponse } from '../../../../../_models/themeResponse';
     MatFormFieldModule,
     MatDatepickerModule,
     MatInputModule,
+    AsyncPipe
     
   ],
   templateUrl: './submit-modal.component.html',
@@ -45,7 +47,7 @@ export class SubmitModalComponent implements OnInit, OnDestroy {
   private themeService = inject(ThemeService);
 
   private destroy$ = new Subject<void>();
-  private activeTheme$ = this.themeService.getActiveTheme()
+  public activeTheme$ = this.themeService.getActiveTheme()
 
   clickCloseModal = output();
   submitPhoto = output<ThemeResponse>();

@@ -19,9 +19,7 @@ import { AsyncPipe } from '@angular/common';
 export class RightSideComponent {
     public themeService = inject(ThemeService);
     public dialog = inject(MatDialog);
-    activeTheme$ = this.themeService.getActiveTheme().pipe(
-        shareReplay(1)
-    )
+    activeTheme$ = this.themeService.getActiveTheme()
     
 
     openRegisterDialog(): void {

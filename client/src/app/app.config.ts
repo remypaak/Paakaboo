@@ -6,25 +6,15 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule, MomentDateAdapter, provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
-
-const MY_DATE_FORMAT = {
-    parse: {
-      dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
-    },
-    display: {
-      dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
-      monthYearLabel: 'MMMM YYYY',
-      dateA11yLabel: 'DD/MM/YYYY',
-      monthYearA11yLabel: 'MMMM YYYY',
-    },
-  };
+import {  provideNativeDateAdapter } from '@angular/material/core';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { loadingInterceptor } from './_interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient(withInterceptors([jwtInterceptor])), provideAnimationsAsync(),provideAnimations(), provideToastr({
+  providers: [provideRouter(routes), provideHttpClient(withInterceptors([jwtInterceptor, loadingInterceptor])), provideAnimationsAsync(),provideAnimations(), provideToastr({
     positionClass: 'toast-bottom-right',
   }),
-  provideNativeDateAdapter()
+  provideNativeDateAdapter(),
+  importProvidersFrom(NgxSpinnerModule)
   ]
 };
