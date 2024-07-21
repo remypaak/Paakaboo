@@ -110,6 +110,11 @@ public class PhotoController(IUnitOfWork unitOfWork, IPhotoService photoService,
 
         var photo = await unitOfWork.PhotoRepository.GetPhotoByUserAndTheme(user.Id, theme);
 
+        if (photo == null)
+        {
+            return Ok(new { message = "geen foto ingediend" });
+        }
+        
         var photoDto = new PhotoDto
         {
             Title = photo.Title,

@@ -30,11 +30,11 @@ public class PhotoRepository(DataContext context) : IPhotoRepository
         }
     }
 
-    public async Task<Photo> GetPhotoByUserAndTheme(string userId, string themeName)
+    public async Task<Photo?> GetPhotoByUserAndTheme(string userId, string themeName)
     {
         return await context.Photos
                         .Include(p => p.Theme)
-                        .Where(p => p.AppUserId == userId && p.Theme.Name == themeName).FirstAsync();
+                        .Where(p => p.AppUserId == userId && p.Theme.Name == themeName).FirstOrDefaultAsync();
     }
 
 

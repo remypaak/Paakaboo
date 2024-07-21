@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HeroComponent } from '../hero/hero.component';
 import { HowToInstructionComponent } from '../how-to-instruction/how-to-instruction.component';
@@ -16,12 +16,21 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './right-side.component.html',
   styleUrl: './right-side.component.scss'
 })
-export class RightSideComponent {
+export class RightSideComponent implements OnInit{
+    
     public themeService = inject(ThemeService);
     public dialog = inject(MatDialog);
-    activeTheme$ = this.themeService.getActiveTheme()
     
+    
+    ngOnInit(): void {
+        if (!this.themeService.activeTheme()){
+            this.getActiveTheme()
+        }
+    }
 
+    getActiveTheme(){
+        this.themeService.getActiveTheme()
+    }
     openRegisterDialog(): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '70rem';

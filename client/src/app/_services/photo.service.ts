@@ -20,7 +20,9 @@ export class PhotoService {
         formData.append('file', photo)
         formData.append('title', title)
         formData.append('theme', theme)
-        return this.http.post<Photo>(this.baseUrl + 'photo/submit-photo', formData )
+        return this.http.post<Photo>(this.baseUrl + 'photo/submit-photo', formData ).pipe(
+            tap((photo) => this.submittedPhoto.set(photo))
+        )
     }
 
     getPhotoForActiveTheme(theme: string)

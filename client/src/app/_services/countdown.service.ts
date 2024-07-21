@@ -9,7 +9,7 @@ import { TimeComponents } from '../_models/time-components';
 export class CountdownTimerService {
   timeLeft = signal<TimeComponents | null>(null);
 
-  public getTimeLeft(submitEndDate: Date | null, voteEndDate: Date | null): Observable<number> {
+  public getTimeLeft(submitEndDate: Date | undefined, voteEndDate: Date | undefined): Observable<number> {
     return interval(1000).pipe(
       startWith(0),
       tap(() => {

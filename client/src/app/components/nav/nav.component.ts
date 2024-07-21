@@ -9,6 +9,7 @@ import { HasRoleDirective } from '../../_directives/has-role.directive';
 import { ToastrService } from 'ngx-toastr';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { PhotoService } from '../../_services/photo.service';
 
 @Component({
   selector: 'app-nav',
@@ -21,6 +22,7 @@ export class NavComponent implements OnInit {
   public dialog = inject(MatDialog);
   public accountService = inject(AccountService);
   private formBuilderService = inject(FormBuilder);
+  private photoService = inject(PhotoService);
   private toastrService = inject(ToastrService);
   loginForm: FormGroup = new FormGroup({});
   public errorMessage?: string;
@@ -50,13 +52,9 @@ export class NavComponent implements OnInit {
   }
 
   public logout() {
+    this.photoService.submittedPhoto.set(null);
     this.accountService.logout();
     this.loginForm.reset();
   }
 
-  private hideErrorMessageAfterDelay(delay: number) {
-    setTimeout(() => {
-      this.errorMessage = '';
-    }, delay);
-  }
 }

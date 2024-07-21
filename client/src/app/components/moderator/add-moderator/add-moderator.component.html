@@ -6,7 +6,7 @@
                 <mat-form-field class="form-field" appearance="fill">
                     <mat-label>Selecteer gebruiker</mat-label>
                     <mat-select formControlName="username" (selectionChange)="selectedUser = $event.value">
-                        @for (user of usersWithoutModeratorRole$ | async; track $index) {
+                        @for (user of moderatorService.usersWithoutModeratorRole(); track $index) {
                             <mat-option [value]="user.userName">
                                 {{ user.userName }}
                             </mat-option>

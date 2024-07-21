@@ -23,11 +23,13 @@ export class AddModeratorComponent implements OnInit {
   private formBuilderService = inject(FormBuilder);
   private toastrService = inject(ToastrService);
   assignRoleForm: FormGroup = new FormGroup({});
-  usersWithoutModeratorRole$ = this.moderatorService.getUsersWithoutModeratorRole()
 
   selectedUser: string | null = null;
 
   ngOnInit(): void {
+    if (this.moderatorService.usersWithoutModeratorRole().length === 0){
+        this.moderatorService.getUsersWithoutModeratorRole().subscribe()
+    }
     this.initializeForm();
   }
 
@@ -38,14 +40,15 @@ export class AddModeratorComponent implements OnInit {
   }
 
   assignRole() {
-    if (this.selectedUser) {
+    const user = this.selectedUser
+    if (user) {
       this.moderatorService
-        .assignRole(this.selectedUser, 'Moderator')
+        .assignRole(user, 'Moderator')
         .subscribe({
           next: () => {
             this.assignRoleForm.reset();
             this.toastrService.success(`${this.selectedUser} is nu officieel een moderator!`)
-            this.ngOnInit();
+            this.moderatorService.usersWithoutModeratorRole.update( moderators =>  moderators.filter(moderator => moderator.userName !== user))
           },
         });
     }

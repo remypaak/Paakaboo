@@ -24,12 +24,15 @@ export class ThemeService {
         formData.append('startDate', theme.startDate.toISOString())
         formData.append('submitEndDate', theme.submitEndDate.toISOString())
         formData.append('voteEndDate', theme.voteEndDate.toISOString())
-    return this.http.post<ThemeResponse>(this.baseUrl + 'theme/add-theme', formData);
+    return this.http.post<ThemeResponse>(this.baseUrl + 'theme/add-theme', formData).pipe(
+        tap((theme) => this.activeTheme.set(theme))
+    );
   }
 
   getActiveTheme(): Observable<ThemeResponse> {
     if (!this.activeTheme$) {
       return this.activeTheme$ = this.http.get<ThemeResponse>(`${this.baseUrl}theme/get-active-theme`).pipe(
+        tap((theme) => this.activeTheme.set(theme)),
         shareReplay(1)
       )
     }

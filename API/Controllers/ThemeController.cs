@@ -39,10 +39,11 @@ public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoServi
 
             await unitOfWork.ThemeRepository.AddTheme(newTheme);
 
+            var themeDtoResponse = mapper.Map<ThemeDto>(activeTheme);
             // Save changes
             if (await unitOfWork.Complete())
             {
-                return Ok( new {message = "Theme added successfully."});
+                return Ok(themeDtoResponse);
             }
 
             return BadRequest("Failed to add the theme.");

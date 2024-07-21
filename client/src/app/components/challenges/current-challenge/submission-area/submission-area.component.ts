@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SubmitModalComponent } from './submit-modal/submit-modal.component';
 import { ThemeService } from '../../../../_services/theme.service';
 import { CapitalizeDatePipe } from '../../../../pipe/capitalize-date.pipe';
-import { distinctUntilChanged, map, shareReplay, switchMap, tap } from 'rxjs';
+import { distinctUntilChanged, finalize, map, shareReplay, switchMap, tap } from 'rxjs';
 import { PhotoService } from '../../../../_services/photo.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { ThemeResponse } from '../../../../_models/themeResponse';
@@ -33,32 +33,51 @@ import { ThemeResponse } from '../../../../_models/themeResponse';
   styleUrl: './submission-area.component.scss',
 })
 export class SubmissionAreaComponent implements OnInit, OnDestroy {
-  private themeService = inject(ThemeService);
+  public themeService = inject(ThemeService);
   public photoService = inject(PhotoService);
   public datepipe = inject(DatePipe);
-  isLoading = true;
-
-  activeTheme$ = this.themeService
-    .getActiveTheme()
-    .pipe(distinctUntilChanged((prev, curr) => prev.name === curr.name),);
-
-  photoForActiveTheme$ = this.activeTheme$.pipe(
-    switchMap((theme) => this.photoService.getPhotoForActiveTheme(theme.name)),
-    tap(() => this.isLoading = false),
-    shareReplay(1)
-  );
+  isLoading = false;
 
   currentDate: Date = new Date();
   isModalOpen = false;
   datePipe: any;
 
-  ngOnInit(): void {}
-
-  onPhotoSubmit(theme: ThemeResponse) {
-    this.photoForActiveTheme$ = this.photoService.getPhotoForActiveTheme(
-      theme.name
-    );
+  ngOnInit(): void {
+    if (!this.photoService.submittedPhoto())
+    {
+        this.isLoading = true;
+        console.log(this.photoService.submittedPhoto())
+        this.getSubmittedPhoto();
+    }
   }
+
+  getActiveTheme() {
+    this.themeService
+      .getActiveTheme()
+      .pipe(
+        switchMap((theme) => this.photoService.getPhotoForActiveTheme(theme.name)),
+        tap(() => (this.isLoading = false)),
+         )
+      .subscribe();
+  }
+
+  getSubmittedPhoto(){
+    const activeTheme = this.themeService.activeTheme()
+    if (activeTheme){
+        this.photoService.getPhotoForActiveTheme(activeTheme.name).pipe(
+            tap(() => { this.isLoading = false})).subscribe()
+    }
+        
+
+  }
+
+
+
+//   onPhotoSubmit(theme: ThemeResponse) {
+//     this.photoService.getPhotoForActiveTheme(
+//       theme.name
+//     ).subscribe();
+//   }
 
   openModal() {
     this.isModalOpen = true;

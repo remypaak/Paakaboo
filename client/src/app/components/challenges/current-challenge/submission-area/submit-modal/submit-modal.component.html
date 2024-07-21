@@ -1,7 +1,7 @@
 <div id="uploadModal" class="modal">
         <div class="modal-content">
             <div class="modal-header-container">
-                <h1 class="modal-header">Week {{(activeTheme$ | async)?.weekNumber}} : {{(activeTheme$ | async)?.name}}</h1>
+                <h1 class="modal-header">Week {{themeService.activeTheme()?.weekNumber}} : {{themeService.activeTheme()?.name}}</h1>
                 <app-timer class="timer"></app-timer>
                 <span class="close" (click)="closeModal()">&times;</span>
             </div>

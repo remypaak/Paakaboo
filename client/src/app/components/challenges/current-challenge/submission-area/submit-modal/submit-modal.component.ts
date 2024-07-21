@@ -23,6 +23,7 @@ import { ThemeService } from '../../../../../_services/theme.service';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ThemeResponse } from '../../../../../_models/themeResponse';
 import { AsyncPipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-submit-modal',
@@ -40,14 +41,12 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './submit-modal.component.html',
   styleUrl: './submit-modal.component.scss',
 })
-export class SubmitModalComponent implements OnInit, OnDestroy {
+export class SubmitModalComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef = new ElementRef({});
   private formBuilderService = inject(FormBuilder);
   private photoService = inject(PhotoService);
-  private themeService = inject(ThemeService);
-
-  private destroy$ = new Subject<void>();
-  public activeTheme$ = this.themeService.getActiveTheme()
+  public themeService = inject(ThemeService);
+  private toastrService = inject(ToastrService);
 
   clickCloseModal = output();
   submitPhoto = output<ThemeResponse>();
@@ -121,32 +120,23 @@ export class SubmitModalComponent implements OnInit, OnDestroy {
     if (this.titleForm.valid && this.selectedFile && !this.isSubmitting) {
       this.isSubmitting = true;
       const title = this.titleForm.get('title')?.value;
-      this.activeTheme$
-      .pipe(
-        switchMap(theme =>
-          this.photoService.submitPhoto(this.selectedFile!, title, theme.name).pipe(
-            switchMap(() => this.activeTheme$)
-          )
-        ),
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (theme) => {
-         if (theme){
-            this.submitPhoto.emit(theme);
-         }
-          this.clickCloseModal.emit();
-          this.isSubmitting = false;
-        }
-      });
+
+      const activeTheme = this.themeService.activeTheme()
+      if (activeTheme){
+        this.photoService.submitPhoto(this.selectedFile!, title, activeTheme.name).subscribe({
+            next : () => {
+                this.toastrService.success("De foto is succesvol ingediend!")
+                this.submitPhoto.emit(activeTheme)
+                this.clickCloseModal.emit()
+                this.isSubmitting = false
+            },
+            error: () => {
+                this.toastrService.error("Er ging iets mis tijdens het indienen van de foto")
+            }
+        })
+      }
     }
     ;
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.themeService.clearCache();
   }
 
   private addDragOverClass() {

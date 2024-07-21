@@ -1,31 +1,31 @@
 @if (isModalOpen) {
-<app-submit-modal (submitPhoto)="onPhotoSubmit($event)" (clickCloseModal)="closeModal()"></app-submit-modal>
+<app-submit-modal (clickCloseModal)="closeModal()"></app-submit-modal>
 }
-@if(activeTheme$ | async; as activeTheme ){
+@if(themeService.activeTheme()){
 <div class="challenge-from-to-date">
-    <p>{{activeTheme.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} - {{ activeTheme.submitEndDate| date:'EEEE MMMM d, y' | capitalizeDate }}</p>
+    <p>{{themeService.activeTheme()?.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} - {{ themeService.activeTheme()?.submitEndDate| date:'EEEE MMMM d, y' | capitalizeDate }}</p>
 </div>
 }
 <div class="page-element">
-    @if(activeTheme$ | async; as activeTheme ){
-    <h2>Week {{(activeTheme$ | async)?.weekNumber}}: {{(activeTheme$ | async)?.name}}</h2>
+    @if(themeService.activeTheme()){
+    <h2>Week {{themeService.activeTheme()?.weekNumber}} : {{themeService.activeTheme()?.name}}</h2>
     <div class="content-container">
         <div class="image-container">
-            @if (photoForActiveTheme$ | async; as photo) {
+            @if (photoService.submittedPhoto() && !photoService.submittedPhoto()?.message) {
             <img src={{this.photoService.submittedPhoto()?.url}} alt="Submitted photo" class="theme-image">
             }@else if (!isLoading){
-            <img [src]="activeTheme.exampleUrl" alt="Image description" class="theme-image">
+            <img [src]="themeService.activeTheme()?.exampleUrl" alt="Image description" class="theme-image">
             }
         </div>
         <div class="page-right-container">
             <app-timer class="timer"></app-timer>
-            @if (photoForActiveTheme$ | async; as photo){
+            @if (photoService.submittedPhoto()){
             <button (click)="openModal()" class="btn btn-primary">Opnieuw indienen</button>
             <div class="submit-from-to-text-container">
                 <hr>
                 <h1>Opnieuw indienen kan tussen:<br></h1>
-                <p>{{ activeTheme.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} tot en met
-                    {{activeTheme.submitEndDate | date:'EEEE MMMM d, y' | capitalizeDate}} 18:00 uur</p>
+                <p>{{ themeService.activeTheme()?.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} tot en met
+                    {{themeService.activeTheme()?.submitEndDate | date:'EEEE MMMM d, y' | capitalizeDate}} 18:00 uur</p>
                 <hr>
             </div>
             }
@@ -34,8 +34,8 @@
             <div class="submit-from-to-text-container">
                 <hr>
                 <h1>Inzenden kan tussen:<br></h1>
-                <p>{{ activeTheme.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} tot en met
-                    {{activeTheme.submitEndDate | date:'EEEE MMMM d, y' | capitalizeDate}} 18:00 uur</p>
+                <p>{{ themeService.activeTheme()?.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} tot en met
+                    {{themeService.activeTheme()?.submitEndDate | date:'EEEE MMMM d, y' | capitalizeDate}} 18:00 uur</p>
                 <hr>
             </div>
             }

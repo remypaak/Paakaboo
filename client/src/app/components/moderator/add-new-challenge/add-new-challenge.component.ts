@@ -59,7 +59,7 @@ const MY_DATE_FORMAT = {
   templateUrl: './add-new-challenge.component.html',
   styleUrls: ['./add-new-challenge.component.scss'],
 })
-export class AddNewChallengeComponent implements OnInit, OnDestroy {
+export class AddNewChallengeComponent implements OnInit {
   private formBuilderService = inject(FormBuilder);
   private themeService = inject(ThemeService);
   private toastrService = inject(ToastrService);
@@ -84,13 +84,7 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
   }
 
   setHasActiveTheme() {
-    this.themeService.getActiveTheme().subscribe({
-      next: (response) => {
-        if (response != null) {
-          this.hasActiveTheme = true;
-        }
-      },
-    });
+    this.hasActiveTheme = !!this.themeService.activeTheme() 
   }
 
   onSubmit() {
@@ -115,7 +109,7 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: () => {
-            this.setHasActiveTheme();
+            this.hasActiveTheme = true;
             this.toastrService.success(
               'Het thema voor de volgende challenge is aangemaakt!'
             );
@@ -162,9 +156,5 @@ export class AddNewChallengeComponent implements OnInit, OnDestroy {
     ) {
       this.showImageError = true;
     }
-  }
-
-  ngOnDestroy(): void {
-    this.themeService.clearCache();
   }
 }

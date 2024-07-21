@@ -1,7 +1,7 @@
 <div class="right-side">
     <div class="theme-container" style="text-align: center;">
-        @if(activeTheme$ | async; as activeTheme){
-            <h1>Week {{activeTheme.weekNumber }} : {{activeTheme.name}}</h1>
+        @if(themeService.activeTheme()){
+            <h1>Week {{themeService.activeTheme()?.weekNumber }} : {{themeService.activeTheme()?.name}}</h1>
         }@else{
             <h1>Er is momenteel geen lopende challenge</h1>
         }

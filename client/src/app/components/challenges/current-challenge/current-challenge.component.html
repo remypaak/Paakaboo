@@ -1,7 +1,7 @@
-@if(activeTheme$ | async; as activeTheme){
-    @if(isBeforeSubmitEndDate(activeTheme)){
+@if(themeService.activeTheme()){
+    @if(isBeforeSubmitEndDate(themeService.activeTheme())){
         <app-submission-area></app-submission-area>
-    }@else if (isDuringVotingPeriod(activeTheme)){
+    }@else if (isDuringVotingPeriod(themeService.activeTheme())){
         <app-voting-gallery></app-voting-gallery>
     }
 }@else if (!isLoading){

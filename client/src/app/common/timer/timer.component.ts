@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CountdownTimerService } from '../../_services/countdown.service';
 import { ThemeService } from '../../_services/theme.service';
-import { Subscription, switchMap } from 'rxjs';
+import { Subscription, switchMap, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -9,24 +9,42 @@ import { AsyncPipe } from '@angular/common';
   standalone: true,
   imports: [AsyncPipe],
   templateUrl: './timer.component.html',
-  styleUrl: './timer.component.scss'
+  styleUrl: './timer.component.scss',
 })
-export class TimerComponent implements OnInit, OnDestroy{
-    public timeLeftService = inject(CountdownTimerService)
-    private themeService = inject(ThemeService);
-    countDownSubscription: Subscription | null = null;
+export class TimerComponent implements OnInit, OnDestroy {
+  public timeLeftService = inject(CountdownTimerService);
+  private themeService = inject(ThemeService);
+  countDownSubscription: Subscription | null = null;
+
+  ngOnInit(): void {
+    if (!this.themeService.activeTheme()) {
+      this.getActiveTheme().subscribe({
+        complete: () => this.countDown()
+      });
+    }
+    else{
+        this.countDown();
+    }
+  }
+
+  getActiveTheme() {
+    return this.themeService.getActiveTheme();
+  }
+
+  countDown() {
+    this.countDownSubscription = this.timeLeftService
+        .getTimeLeft(
+          this.themeService.activeTheme()?.submitEndDate,
+          this.themeService.activeTheme()?.voteEndDate
+        )
+        .subscribe();
     
+  }
 
-    ngOnInit(): void {
-        this.countDownSubscription = this.themeService.getActiveTheme().pipe(
-            switchMap(theme => this.timeLeftService.getTimeLeft(theme?.submitEndDate, theme?.voteEndDate))
-        ).subscribe()
+  ngOnDestroy(): void {
+    if (this.countDownSubscription) {
+      this.countDownSubscription.unsubscribe();
     }
-
-    ngOnDestroy(): void {
-        if (this.countDownSubscription){
-            this.countDownSubscription.unsubscribe()
-        }
-        this.themeService.clearCache()
-    }
+    this.themeService.clearCache();
+  }
 }
