@@ -3,7 +3,8 @@
 }
 @if(themeService.activeTheme()){
 <div class="challenge-from-to-date">
-    <p>{{themeService.activeTheme()?.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} - {{ themeService.activeTheme()?.submitEndDate| date:'EEEE MMMM d, y' | capitalizeDate }}</p>
+    <p>{{themeService.activeTheme()?.startDate | date:'EEEE MMMM d, y' | capitalizeDate}} - {{
+        themeService.activeTheme()?.submitEndDate| date:'EEEE MMMM d, y' | capitalizeDate }}</p>
 </div>
 }
 <div class="page-element">
@@ -19,7 +20,7 @@
         </div>
         <div class="page-right-container">
             <app-timer class="timer"></app-timer>
-            @if (photoService.submittedPhoto()){
+            @if (photoService.submittedPhoto() && !photoService.submittedPhoto()?.message){
             <button (click)="openModal()" class="btn btn-primary">Opnieuw indienen</button>
             <div class="submit-from-to-text-container">
                 <hr>

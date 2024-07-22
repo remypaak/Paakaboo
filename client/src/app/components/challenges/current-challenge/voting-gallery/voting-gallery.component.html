@@ -1,29 +1,30 @@
 <div class="container">
     <div class="header">
-      <h2>Stemmen kan beginnen!</h2>
-      <p>
-        Onder iedere foto kun je aangeven hoeveel punten je deze wilt geven. Je mag elke score slechts één keer gebruiken. Gebruik de knop hieronder om je scores door te sturen. Zolang je binnen de tijd bent, kun je je scores later altijd nog aanpassen.
-      </p>
-      <button class="btn btn-primary submit-button"
-      [disabled]="hasDuplicateScores()"
-      [attr.title]="hasDuplicateScores() ? 'Er kan niet twee keer dezelfde score aan een foto gegeven worden' : ''"
-       (click)="submitScores()">Scores indienen</button>
+        <h2>Stemmen kan beginnen!</h2>
+        <p>
+            Onder iedere foto kun je aangeven hoeveel punten je deze wilt geven. Je mag elke score slechts één keer
+            gebruiken. Gebruik de knop hieronder om je scores door te sturen. Zolang je binnen de tijd bent, kun je je
+            scores later altijd nog aanpassen.
+        </p>
+        <button class="btn btn-primary submit-button" [disabled]="hasDuplicateScores()"
+            [attr.title]="hasDuplicateScores() ? 'Er kan niet twee keer dezelfde score aan een foto gegeven worden' : ''"
+            (click)="submitScores()">Scores indienen</button>
     </div>
-<div class="gallery">
-    @for (photo of photosWithVotes(); track $index) {
-    <div class="card"
-        [class.duplicate]="duplicatePhotoIds().includes(photo.id)">
-      <img [src]="photo.url" [alt]="photo">
-      <h3>{{ photo.title }}</h3>
-      <div class="voting-buttons">
-        @for (vote of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track $index) {
-        <button class="btn btn-primary"
-        [class.active]="vote === photo.points"
-        [disabled]="photo.isUserPhoto"
-        (click)="votePhoto(photo.id, vote)">{{ vote }}</button>
+    <div class="gallery">
+        @for (photo of photosWithVotes(); track photo.id; let i = $index) {
+        <div class="card" [class.duplicate]="duplicatePhotoIds().includes(photo.id)">
+            <img [src]="photo.url" [alt]="photo" (click)="openImageModal(photo.url, photo.title, i)">
+            <h3>{{ photo.title }}</h3>
+            <div class="voting-buttons">
+                @for (vote of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track $index) {
+                <button class="btn btn-primary" [class.active]="vote === photo.points" [disabled]="photo.isUserPhoto"
+                    (click)="votePhoto(photo.id, vote)">{{ vote }} </button>
+                }
+            </div>
+        </div>
         }
-      </div>
     </div>
-}
-  </div>
-  </div>
+    <app-image-modal [imageUrl]="selectedImageUrl()" [imageTitle]="selectedImageTitle()" [photoList]="modalPhotoList()"
+        [currentIndex]="selectedPhotoIndex()" (closeModalEvent)="closeModal()">
+    </app-image-modal>
+</div>

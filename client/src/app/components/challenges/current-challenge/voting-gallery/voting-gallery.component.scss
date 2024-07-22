@@ -48,8 +48,9 @@
   
   .card img {
     width: 100%;
-    height: auto;
+    height: 400px;
     display: block;
+    object-fit: cover;
   }
   
   .card h3 {
