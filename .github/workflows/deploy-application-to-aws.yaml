@@ -22,7 +22,7 @@ jobs:
       working-directory: client
       run: npm install -g @angular/cli@17
 
-    - name: Install deps and builder angular app
+    - name: Install dependencies and builder angular app
       run: |
           cd client
           npm install
