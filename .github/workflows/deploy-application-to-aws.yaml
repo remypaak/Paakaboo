@@ -36,5 +36,5 @@ jobs:
         S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
       run: |
         npm install -g aws-cli
-        aws s3 sync ./build s3://$S3_BUCKET_NAME --delete
+        aws s3 sync ./dist/browser/ s3://$S3_BUCKET_NAME --delete
       working-directory: client
