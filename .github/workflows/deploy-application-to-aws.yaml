@@ -55,7 +55,7 @@ jobs:
       env:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
       run: |
-          cd api
+          cd API
           IMAGE_TAG=$(git rev-parse --short HEAD)
           docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REPOSITORY:$IMAGE_TAG
