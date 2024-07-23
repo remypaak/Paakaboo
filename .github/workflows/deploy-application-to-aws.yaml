@@ -39,7 +39,7 @@ jobs:
         aws s3 sync ./dist/client/browser/ s3://$S3_BUCKET_NAME --delete
       working-directory: client
 
-        # Backend deployment steps
+        # Backend deployment step
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
   
