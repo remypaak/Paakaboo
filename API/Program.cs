@@ -20,15 +20,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         ValidateLifetime = false,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"]))
-                        
+
 
                     };
                 });
+builder.Services.AddCors(options =>
+    {
+    options.AddPolicy("CorsPolicy",
+    builder => builder
+    .WithOrigins(["https://www.paakaboo.nl"])
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials());
+    });
 var app = builder.Build();
 
 
-    app.Logger.LogInformation("Applying Production CORS Policy");
-    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://www.paakaboo.nl"));
+app.Logger.LogInformation("Applying Production CORS Policy");
+app.UseCors("CorsPolicy");
 
 
 app.UseAuthentication();
