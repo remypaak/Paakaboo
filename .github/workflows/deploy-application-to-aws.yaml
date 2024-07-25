@@ -68,12 +68,13 @@ jobs:
         CLUSTER_NAME: ${{ secrets.ECS_CLUSTER_NAME }}
         SERVICE_NAME: ${{ secrets.ECS_SERVICE_NAME }}
         ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+        ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
       run: |
         IMAGE_TAG=$(git rev-parse --short HEAD)
-        ECS_TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition ${{ secrets.ECS_TASK_DEFINITION }} --region $AWS_REGION)
-        NEW_TASK_DEFINITION=$(echo $ECS_TASK_DEFINITION | jq --arg IMAGE "$ECR_REPOSITORY:$IMAGE_TAG" '.taskDefinition.containerDefinitions[0].image = $IMAGE | .taskDefinition')
-        NEW_TASK_DEFINITION=$(echo $NEW_TASK_DEFINITION | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy)')
-        echo $NEW_TASK_DEFINITION > new-task-def.json
+        ECS_TASK_DEFINITION_JSON=$(aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION --region $AWS_REGION | jq '.taskDefinition')
+        NEW_TASK_DEFINITION_JSON=$(echo $ECS_TASK_DEFINITION_JSON | jq --arg IMAGE "$ECR_REPOSITORY:$IMAGE_TAG" '.containerDefinitions[0].image = $IMAGE')
+        NEW_TASK_DEFINITION_JSON=$(echo $NEW_TASK_DEFINITION_JSON | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy)')
+        echo $NEW_TASK_DEFINITION_JSON > new-task-def.json
         aws ecs register-task-definition --cli-input-json file://new-task-def.json --region $AWS_REGION
         aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --region $AWS_REGION
 
