@@ -59,9 +59,6 @@ jobs:
           IMAGE_TAG=$(git rev-parse --short HEAD)
           docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REPOSITORY:$IMAGE_TAG
-
-    - name: Install jq
-      run: sudo apt-get install -y jq
     
     - name: Update ECS service with new image
       env:
@@ -76,7 +73,7 @@ jobs:
         IMAGE_TAG=$(git rev-parse --short HEAD)
         ECS_TASK_DEFINITION_JSON=$(aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION --region $AWS_REGION | jq '.taskDefinition')
         NEW_TASK_DEFINITION_JSON=$(echo $ECS_TASK_DEFINITION_JSON | jq --arg IMAGE "$ECR_REPOSITORY:$IMAGE_TAG" '.containerDefinitions[0].image = $IMAGE')
-        NEW_TASK_DEFINITION_JSON=$(echo $NEW_TASK_DEFINITION_JSON | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy)')
+        NEW_TASK_DEFINITION_JSON=$(echo $NEW_TASK_DEFINITION_JSON | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy, .compatibilities)')
         echo $NEW_TASK_DEFINITION_JSON > new-task-def.json
         aws ecs register-task-definition --cli-input-json file://new-task-def.json --region $AWS_REGION
         aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --region $AWS_REGION
