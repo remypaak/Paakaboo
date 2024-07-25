@@ -1,4 +1,4 @@
-name: Deploy Application to S3 and ECS
+name: Deploy Application to AWS
 
 on:
   push:
