@@ -26,7 +26,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 });
 var app = builder.Build();
 
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+}
+else
+{
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://www.paakaboo.nl"));
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapDefaultControllerRoute();
