@@ -29,10 +29,12 @@ var app = builder.Build();
 app.Logger.LogInformation("Current Environment: {Environment}", app.Environment.EnvironmentName);
 if (app.Environment.IsDevelopment())
 {
+    app.Logger.LogInformation("Applying Development CORS Policy");
     app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 }
 else
 {
+    app.Logger.LogInformation("Applying Production CORS Policy");
     app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://www.paakaboo.nl"));
 }
 
