@@ -36,7 +36,6 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 
-app.Logger.LogInformation("Applying Production CORS Policy");
 app.UseCors("CorsPolicy");
 
 
