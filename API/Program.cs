@@ -26,10 +26,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 });
 var app = builder.Build();
 
-app.Logger.LogInformation("Current Environment: {Environment}", app.Environment.EnvironmentName);
 
-app.Logger.LogInformation("Applying Production CORS Policy");
-app.UseCors("AllowAll");
+    app.Logger.LogInformation("Applying Production CORS Policy");
+    app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://www.paakaboo.nl"));
 
 
 app.UseAuthentication();
