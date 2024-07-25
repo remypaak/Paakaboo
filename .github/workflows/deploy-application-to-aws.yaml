@@ -60,21 +60,21 @@ jobs:
           docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REPOSITORY:$IMAGE_TAG
     
-    - name: Update ECS service with new images
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        CLUSTER_NAME: ${{ secrets.ECS_CLUSTER_NAME }}
-        SERVICE_NAME: ${{ secrets.ECS_SERVICE_NAME }}
-        ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-        ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
-      run: |
-        IMAGE_TAG=$(git rev-parse --short HEAD)
-        ECS_TASK_DEFINITION_JSON=$(aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION --region $AWS_REGION | jq '.taskDefinition')
-        NEW_TASK_DEFINITION_JSON=$(echo $ECS_TASK_DEFINITION_JSON | jq --arg IMAGE "$ECR_REPOSITORY:$IMAGE_TAG" '.containerDefinitions[0].image = $IMAGE')
-        NEW_TASK_DEFINITION_JSON=$(echo $NEW_TASK_DEFINITION_JSON | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy, .compatibilities)')
-        echo $NEW_TASK_DEFINITION_JSON > new-task-def.json
-        aws ecs register-task-definition --cli-input-json file://new-task-def.json --region $AWS_REGION
-        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --region $AWS_REGION
+    # - name: Update ECS service with new images
+    #   env:
+    #     AWS_REGION: ${{ secrets.AWS_REGION }}
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     CLUSTER_NAME: ${{ secrets.ECS_CLUSTER_NAME }}
+    #     SERVICE_NAME: ${{ secrets.ECS_SERVICE_NAME }}
+    #     ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+    #     ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
+    #   run: |
+    #     IMAGE_TAG=$(git rev-parse --short HEAD)
+    #     ECS_TASK_DEFINITION_JSON=$(aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION --region $AWS_REGION | jq '.taskDefinition')
+    #     NEW_TASK_DEFINITION_JSON=$(echo $ECS_TASK_DEFINITION_JSON | jq --arg IMAGE "$ECR_REPOSITORY:$IMAGE_TAG" '.containerDefinitions[0].image = $IMAGE')
+    #     NEW_TASK_DEFINITION_JSON=$(echo $NEW_TASK_DEFINITION_JSON | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy, .compatibilities)')
+    #     echo $NEW_TASK_DEFINITION_JSON > new-task-def.json
+    #     aws ecs register-task-definition --cli-input-json file://new-task-def.json --region $AWS_REGION
+    #     aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --region $AWS_REGION
 
