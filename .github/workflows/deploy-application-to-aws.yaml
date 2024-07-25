@@ -59,6 +59,9 @@ jobs:
           IMAGE_TAG=$(git rev-parse --short HEAD)
           docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Install jq
+      run: sudo apt-get install -y jq
     
     - name: Update ECS service with new image
       env:
