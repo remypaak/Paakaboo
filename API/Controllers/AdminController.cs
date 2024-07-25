@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-[Authorize]
+// [Authorize]
 public class AdminController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager) : BaseApiController
 {
 
