@@ -34,14 +34,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 });
 
 builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("CorsPolicy",
-        builder => builder
-        .WithOrigins(["https://www.paakaboo.nl/", "http://www.paakaboo.nl"])
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials());
-    });
+{
+    options.AddPolicy(name: "MyAllowSpecificOrigins",
+                      builder =>
+                      {
+                          builder.WithOrigins("https://www.paakaboo.nl", "https://paakaboo.nl");
+                      });
+});
+
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
@@ -58,7 +58,7 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(ex.Message);
     }
 }
-app.UseCors("CorsPolicy");
+app.UseCors("MyAllowSpecificOrigins");
 
 
 app.UseAuthentication();
