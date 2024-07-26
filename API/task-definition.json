@@ -17,23 +17,23 @@
             "secrets": [
                 {
                     "name": "CloudinarySettings__CloudName",
-                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__CloudName-2LaB9s"
+                    "valueFrom": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__CloudName-2LaB9s"
                 },
                 {
                     "name": "CloudinarySettings__ApiSecret",
-                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__ApiSecret-uFoyMd"
+                    "valueFrom": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__ApiSecret-uFoyMd"
                 },
                 {
                     "name": "TokenKey",
-                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:TokenKey-nanMwE"
+                    "valueFrom": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:TokenKey-nanMwE"
                 },
                 {
                     "name": "ConnectionStrings_DefaultConnection",
-                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:ConnectionStrings_DefaultConnection-Hppoif"
+                    "valueFrom": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:ConnectionStrings_DefaultConnection-Hppoif"
                 },
                 {
                     "name": "CloudinarySettings__ApiKey",
-                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__ApiKey-c2KPBd"
+                    "valueFrom": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__ApiKey-c2KPBd"
                 }
             ],
             "environmentFiles": [],
