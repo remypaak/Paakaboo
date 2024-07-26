@@ -9,8 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
- var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection") 
-                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection")
+                              ?? builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 32)));
@@ -34,15 +34,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddCors(options =>
     {
-    options.AddPolicy("CorsPolicy",
-    builder => builder
-    .WithOrigins("http://localhost:4200")
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .AllowCredentials());
+        options.AddPolicy("CorsPolicy",
+        builder => builder
+        .WithOrigins("http://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
     });
-var app = builder.Build();
 
+var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<DataContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        // Log or handle the error as needed
+        Console.WriteLine(ex.Message);
+    }
+}
 
 app.UseCors("CorsPolicy");
 
