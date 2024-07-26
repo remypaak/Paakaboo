@@ -12,7 +12,8 @@ env:
     ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}       
     ECS_SERVICE: ${{ secrets.ECS_SERVICE_NAME }}                
     ECS_CLUSTER: ${{ secrets.ECS_CLUSTER_NAME }}               
-    ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}  
+    ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
+    ECS_CONTAINER_NAME: ${{ secrets.ECS_CONTAINER_NAME }}  
     S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}  
                                             
     CONTAINER_NAME: MY_CONTAINER_NAME    
