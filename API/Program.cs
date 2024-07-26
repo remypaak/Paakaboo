@@ -38,7 +38,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "MyAllowSpecificOrigins",
                       builder =>
                       {
-                          builder.WithOrigins("https://www.paakaboo.nl", "https://paakaboo.nl");
+                          builder.WithOrigins("https://www.paakaboo.nl", "https://paakaboo.nl").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                       });
 });
 
