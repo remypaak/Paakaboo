@@ -5,6 +5,17 @@ on:
     branches:
       - main
 
+env:
+    AWS_REGION:  ${{ secrets.AWS_REGION }} 
+    AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}       
+    AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}                    
+    ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}       
+    ECS_SERVICE: ${{ secrets.ECS_SERVICE_NAME }}                
+    ECS_CLUSTER: ${{ secrets.ECS_CLUSTER_NAME }}               
+    ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}  
+    S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}  
+                                            
+    CONTAINER_NAME: MY_CONTAINER_NAME    
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -30,10 +41,10 @@ jobs:
 
     - name: Deploy to S3
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ env.AWS_REGION }}
+        S3_BUCKET_NAME: ${{ env.S3_BUCKET_NAME }}
       run: |
         npm install -g aws-cli
         aws s3 sync ./dist/client/browser/ s3://$S3_BUCKET_NAME --delete
@@ -43,38 +54,36 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
   
-    - name: Log in to Amazon ECR
-      env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
   
-    - name: Build and push Docker image to ECR
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
       env:
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
       run: |
-          cd API
-          IMAGE_TAG=$(git rev-parse --short HEAD)
-          docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REPOSITORY:$IMAGE_TAG
-    
-    - name: Update ECS service with new images
-      env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        CLUSTER_NAME: ${{ secrets.ECS_CLUSTER_NAME }}
-        SERVICE_NAME: ${{ secrets.ECS_SERVICE_NAME }}
-        ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-        ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
-      run: |
-        IMAGE_TAG=$(git rev-parse --short HEAD)
-        ECS_TASK_DEFINITION_JSON=$(aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION --region $AWS_REGION | jq '.taskDefinition')
-        NEW_TASK_DEFINITION_JSON=$(echo $ECS_TASK_DEFINITION_JSON | jq --arg IMAGE "$ECR_REPOSITORY:$IMAGE_TAG" '.containerDefinitions[0].image = $IMAGE')
-        NEW_TASK_DEFINITION_JSON=$(echo $NEW_TASK_DEFINITION_JSON | jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy, .compatibilities)')
-        echo $NEW_TASK_DEFINITION_JSON > new-task-def.json
-        aws ecs register-task-definition --cli-input-json file://new-task-def.json --region $AWS_REGION
-        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --region $AWS_REGION
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+      with:
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: ${{ env.CONTAINER_NAME }}
+        image: ${{ steps.build-image.outputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: ${{ env.ECS_SERVICE }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true
 
