@@ -10,6 +10,8 @@ using MySqlConnector;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString1 = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+Console.WriteLine($"Retrieved connection string (length {connectionString1?.Length ?? 0}): '{connectionString1}'");
 var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection")
                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DataContext>(opt =>
