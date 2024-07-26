@@ -37,7 +37,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy("CorsPolicy",
         builder => builder
-        .WithOrigins("https://www.paakaboo.nl/")
+        .WithOrigins(["https://www.paakaboo.nl/", "http://www.paakaboo.nl"])
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials());
