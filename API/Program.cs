@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,24 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
+        var configuration = services.GetRequiredService<IConfiguration>();
+        var rawConnectionString = configuration.GetConnectionString("DefaultConnection") 
+                                  ?? Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection");
+
+        var connectionStringBuilder = new MySqlConnectionStringBuilder(rawConnectionString);
+        var databaseName = connectionStringBuilder.Database;
+        connectionStringBuilder.Database = null; // Connect without specifying the database
+
+        using (var connection = new MySqlConnection(connectionStringBuilder.ConnectionString))
+        {
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{databaseName}`";
+                command.ExecuteNonQuery();
+            }
+        }
+
         var context = services.GetRequiredService<DataContext>();
         context.Database.Migrate();
     }
@@ -57,7 +76,6 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(ex.Message);
     }
 }
-
 app.UseCors("CorsPolicy");
 
 
