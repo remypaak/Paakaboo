@@ -1,14 +1,17 @@
 version: '3.8'
 
 services:
-  sql:
-    image: mcr.microsoft.com/azure-sql-edge
-    container_name: sql
+  mysql:
+    image: mysql:8.0.32
+    container_name: mysql
     environment:
-      ACCEPT_EULA: "1"
-      MSSQL_SA_PASSWORD: "Password@1"
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: "PaakabooDB"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: 'Password@1'
+      MYSQL_ROOT_PASSWORD: "Password@1"
     ports:
-      - "1433:1433"
+      - "3306:3306"
     networks:
       - app-network
 
@@ -23,7 +26,9 @@ services:
     networks:
       - app-network
     environment:
-      - DefaultConnection=Server=sql,1433;Database=DatingDB;User Id=SA;Password=Password@1;TrustServerCertificate=True
+      - ConnectionStrings_DefaultConnection=server=mysql;port=3306;database=PaakabooDB;user=root;password=Password@1;
+    depends_on:
+      - mysql
 
 networks:
   app-network:

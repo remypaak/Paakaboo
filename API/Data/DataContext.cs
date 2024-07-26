@@ -9,6 +9,7 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser>(
     public DbSet<Photo> Photos { get; set; }
     public DbSet<Theme> Themes { get; set; }
     public DbSet<Vote> Votes { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
