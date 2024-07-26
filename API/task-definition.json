@@ -14,26 +14,26 @@
                 }
             ],
             "essential": true,
-            "environment": [
+            "secrets": [
                 {
                     "name": "CloudinarySettings__CloudName",
-                    "value": "dfbqeto8t"
+                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__CloudName-2LaB9s"
                 },
                 {
                     "name": "CloudinarySettings__ApiSecret",
-                    "value": "CbqPuTlMb8RALSXaF37dg3W0N8M"
+                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__ApiSecret-uFoyMd"
                 },
                 {
                     "name": "TokenKey",
-                    "value": "super secret unguessable key super secret unguessable key super secret unguessable key"
+                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:TokenKey-nanMwE"
                 },
                 {
                     "name": "ConnectionStrings_DefaultConnection",
-                    "value": "server=paakaboodb.cxsiy8y06mc0.eu-west-2.rds.amazonaws.com;port=3306;database=paakaboodb;user=admin;password=Henrieisdik1994!;"
+                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:ConnectionStrings_DefaultConnection-Hppoif"
                 },
                 {
                     "name": "CloudinarySettings__ApiKey",
-                    "value": "635411375561395"
+                    "value": "arn:aws:secretsmanager:eu-west-2:698676289188:secret:CloudinarySettings__ApiKey-c2KPBd"
                 }
             ],
             "environmentFiles": [],
