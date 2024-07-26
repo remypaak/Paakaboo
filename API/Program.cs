@@ -14,6 +14,7 @@ var connectionString1 = Environment.GetEnvironmentVariable("ConnectionStrings_De
 Console.WriteLine($"Retrieved connection string (length {connectionString1?.Length ?? 0}): '{connectionString1}'");
 var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection")
                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
+                              
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 32)));
