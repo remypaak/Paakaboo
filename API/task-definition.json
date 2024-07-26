@@ -1,0 +1,106 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:eu-west-2:698676289188:task-definition/paakabooDefinition:34",
+    "containerDefinitions": [
+        {
+            "name": "paakabooContainer",
+            "image": "698676289188.dkr.ecr.eu-west-2.amazonaws.com/paakaboo:bf359c6",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "paakabooport8080",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "CloudinarySettings__CloudName",
+                    "value": "dfbqeto8t"
+                },
+                {
+                    "name": "CloudinarySettings__ApiSecret",
+                    "value": "CbqPuTlMb8RALSXaF37dg3W0N8M"
+                },
+                {
+                    "name": "TokenKey",
+                    "value": "super secret unguessable key super secret unguessable key super secret unguessable key"
+                },
+                {
+                    "name": "ConnectionStrings_DefaultConnection",
+                    "value": "server=paakaboodb.cxsiy8y06mc0.eu-west-2.rds.amazonaws.com;port=3306;database=paakaboodb;user=admin;password=Henrieisdik1994!;"
+                },
+                {
+                    "name": "CloudinarySettings__ApiKey",
+                    "value": "635411375561395"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/paakabooDefinition",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "eu-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "paakabooDefinition",
+    "executionRoleArn": "arn:aws:iam::698676289188:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 34,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-07-26T14:09:01.943Z",
+    "registeredBy": "arn:aws:iam::698676289188:user/github-actions-deploy",
+    "tags": []
+}
