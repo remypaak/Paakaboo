@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ThemeRequest } from '../_models/themeRequest';
-import { Observable, of, ReplaySubject, shareReplay, take, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ThemeResponse } from '../_models/themeResponse';
 
 @Injectable({
@@ -13,8 +13,6 @@ export class ThemeService {
   baseUrl = environment.apiUrl;
   activeTheme = signal<ThemeResponse | null>(null)
 
-  activeTheme$: Observable<ThemeResponse> | null = null;
-
 
   startNewThemeChallenges(photo: File,theme: ThemeRequest):  Observable<ThemeResponse> {
     const formData = new FormData();
@@ -24,24 +22,19 @@ export class ThemeService {
         formData.append('startDate', theme.startDate.toISOString())
         formData.append('submitEndDate', theme.submitEndDate.toISOString())
         formData.append('voteEndDate', theme.voteEndDate.toISOString())
+        formData.append('trophyEndDate', theme.trophyEndDate.toISOString())
     return this.http.post<ThemeResponse>(this.baseUrl + 'theme/add-theme', formData).pipe(
         tap((theme) => this.activeTheme.set(theme))
     );
   }
 
   getActiveTheme(): Observable<ThemeResponse> {
-    if (!this.activeTheme$) {
-      return this.activeTheme$ = this.http.get<ThemeResponse>(`${this.baseUrl}theme/get-active-theme`).pipe(
-        tap((theme) => this.activeTheme.set(theme)),
-        shareReplay(1)
+      return this.http.get<ThemeResponse>(`${this.baseUrl}theme/get-active-theme`).pipe(
+        tap((theme) => this.activeTheme.set(theme))
       )
-    }
-    return this.activeTheme$
   }
 
 
-  clearCache() {
-    this.activeTheme$ = null;
-  }
+
 }
 

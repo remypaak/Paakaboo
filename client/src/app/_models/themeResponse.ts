@@ -7,4 +7,5 @@ export type ThemeResponse = {
     startDate: Date;
     submitEndDate: Date;
     voteEndDate: Date;
+    trophyEndDate: Date;
 }

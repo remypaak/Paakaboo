@@ -98,6 +98,8 @@ export class AddNewChallengeComponent implements OnInit {
       const voteEndDate = new Date(endDateObj);
       voteEndDate.setDate(voteEndDate.getDate() + 1);
       voteEndDate.setHours(voteEndDate.getHours() - 6);
+      const trophyEndDate = new Date(voteEndDate);
+      trophyEndDate.setHours(trophyEndDate.getHours() + 12);
 
       this.themeService
         .startNewThemeChallenges(this.selectedFile, {
@@ -106,6 +108,7 @@ export class AddNewChallengeComponent implements OnInit {
           startDate: new Date(),
           submitEndDate: endDateObj,
           voteEndDate: voteEndDate,
+          trophyEndDate: trophyEndDate
         })
         .subscribe({
           next: () => {

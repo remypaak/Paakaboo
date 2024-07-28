@@ -34,8 +34,8 @@ export class PhotoService {
         )
     }
 
-    getAllPhotosForActiveTheme(theme: string){
-        return this.http.get<Photo[]>(this.baseUrl + 'photo/all/' + theme)
+    getAllPhotosForActiveTheme(themeId: number){
+        return this.http.get<Photo[]>(this.baseUrl + 'photo/all/' + themeId)
     }
 
     getPhotosWithVotes(themeId: number){

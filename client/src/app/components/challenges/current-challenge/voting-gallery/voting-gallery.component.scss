@@ -101,3 +101,24 @@
   .card.duplicate {
     border: 10px solid var(--color-error);
   }
+
+  .total-points-container{
+    background-color: var(--color-accent);
+  }
+
+  .total-points-container h1{
+    font-size: 1rem;
+  }
+
+  .gold-border {
+    border: 10px solid #bf9d34;
+  }
+  
+  .silver-border {
+    border: 10px solid #afb1ad;
+  }
+  
+  .bronze-border {
+    border: 10px solid #804A00;
+  }
+  

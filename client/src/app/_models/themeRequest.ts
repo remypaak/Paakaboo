@@ -4,4 +4,5 @@ export type ThemeRequest = {
     startDate: Date;
     submitEndDate: Date;
     voteEndDate: Date;
+    trophyEndDate: Date;
 }

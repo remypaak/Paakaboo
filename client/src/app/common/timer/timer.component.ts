@@ -45,6 +45,5 @@ export class TimerComponent implements OnInit, OnDestroy {
     if (this.countDownSubscription) {
       this.countDownSubscription.unsubscribe();
     }
-    this.themeService.clearCache();
   }
 }

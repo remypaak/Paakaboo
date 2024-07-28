@@ -27,9 +27,7 @@ export class AddModeratorComponent implements OnInit {
   selectedUser: string | null = null;
 
   ngOnInit(): void {
-    if (this.moderatorService.usersWithoutModeratorRole().length === 0){
-        this.moderatorService.getUsersWithoutModeratorRole().subscribe()
-    }
+    this.moderatorService.getUsersWithoutModeratorRole().subscribe()
     this.initializeForm();
   }
 

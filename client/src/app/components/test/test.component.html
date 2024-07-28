@@ -1,0 +1,27 @@
+<div class="test-text">
+    <h1>Test paneel</h1>
+    <p>Welkom op het tijdige testpaneel en allereerst bedankt dat je mijn website wilt testen! 
+        Via de onderstaande knoppen zal het testen een stuk vergemakkelijkt worden.<br><br>Nadat je jezelf moderator hebt gemaakt moet je even in en uitloggen. Vanwege de veiligheid wordt rolleninformatie namelijk vanuit de backend meegestuurd tijdens inloggen.<br><br> Wanneer je op een knop hebt gedrukt is het aangeraden om even een refresh (f5) te doen zodat de cache van de frontend code geleegd wordt.
+        <br>Caching wordt voornamelijk gebruikt om het huidige actieve thema te onthouden. Aangezien deze informatie een week lang hetzelfde blijft zou het zonde zijn daarvoor telkens requests naar de backend te sturen.
+    </p>
+</div>
+<div class="button-container">
+    <button (click)="endCurrentSubmitPeriod()" class="btn btn-primary">
+        Eindig de huidige inzendperiode
+    </button>
+    <button (click)="endCurrentVotePeriod()" class="btn btn-primary">
+        Eindig de huidige stemmingperiode
+    </button>
+    <button (click)="endCurrentChallenge()" class="btn btn-primary">
+        Eindig de huidige challenge
+    </button>
+    <button (click)="assignModerator()" class="btn btn-primary">
+        Maak jezelf moderator
+    </button>
+    <button (click)="generateSubmissions()" class="btn btn-primary">
+        Genereer 12 inzendingen
+    </button>
+    <button (click)="generateVotes()" class="btn btn-primary">
+        Genereer random stemmen
+    </button>
+</div>

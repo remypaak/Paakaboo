@@ -2,36 +2,40 @@
     <div class="navbar-left">
         <img routerLink="/" src="../../../assets/logo__2_-removebg-preview.png" alt="Photo Logo" class="logo-img">
         @if(menuOpen || !loginSmallSize){
-            <ul class="nav-links">
+        <ul class="nav-links">
+            @if (this.accountService.currentUser()){
             <li><a routerLink="/challenges">Challenges</a></li>
             <li *appHasRole="['Moderator']"><a routerLink="/moderator">Moderator</a></li>
+            <li><a routerLink="/test">Test</a></li>
+            }
             @if(loginSmallSize && !this.accountService.currentUser()){
-                <li (toggleMenu)="toggleMenu()" (click)="openLoginModal()"><a>Login</a></li>
+            <li (toggleMenu)="toggleMenu()" (click)="openLoginModal()"><a>Login</a></li>
             }@else if(loginSmallSize && this.accountService.currentUser()){
-                <li (click)="logout()"><a>Uitloggen</a></li>
+            <li (click)="logout()"><a>Uitloggen</a></li>
             }
         </ul>
         }
-        
+
     </div>
     <div class="navbar-right">
         <div class="menu-icon" (click)="toggleMenu($event)">
             <div></div>
             <div></div>
             <div></div>
-          </div>
+        </div>
         @if (!this.accountService.currentUser()) {
-            <form class="form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
-                <mat-form-field appearance="fill" class="dense-4 encapsulate">
-                    <input matInput formControlName="username" placeholder="Gebruikersnaam" autocomplete="username">
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="dense-4 encapsulate">
-                    <input matInput type="password" formControlName="password" placeholder="Wachtwoord" autocomplete="new-password">
-                </mat-form-field>
-                <button class="btn btn-primary" [disabled]="!loginForm.valid" type="submit">Login</button>
-            </form>
+        <form class="form" [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
+            <mat-form-field appearance="fill" class="dense-4 encapsulate">
+                <input matInput formControlName="username" placeholder="Gebruikersnaam" autocomplete="username">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="dense-4 encapsulate">
+                <input matInput type="password" formControlName="password" placeholder="Wachtwoord"
+                    autocomplete="new-password">
+            </mat-form-field>
+            <button class="btn btn-primary" [disabled]="!loginForm.valid" type="submit">Login</button>
+        </form>
         } @else {
-            <button routerLink="/" class="btn btn-primary" (click)="logout()">Uitloggen</button>
+        <button routerLink="/" class="btn btn-primary" (click)="logout()">Uitloggen</button>
         }
     </div>
 </nav>

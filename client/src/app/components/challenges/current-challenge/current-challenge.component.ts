@@ -38,7 +38,7 @@ export class CurrentChallengeComponent implements OnInit {
 
   isDuringVotingPeriod(theme: any): boolean {
     const submitEndDate = new Date(theme.submitEndDate);
-    const voteEndDate = new Date(theme.voteEndDate);
-    return this.currentDate >= submitEndDate && this.currentDate <= voteEndDate;
+    const trophyEndDate = new Date(theme.trophyEndDate);
+    return this.currentDate >= submitEndDate && this.currentDate <= trophyEndDate;
   }
 }

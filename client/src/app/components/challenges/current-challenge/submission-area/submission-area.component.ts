@@ -1,4 +1,4 @@
-import { Component, inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, LOCALE_ID, OnInit } from '@angular/core';
 import { TimerComponent } from '../../../../common/timer/timer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,10 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { SubmitModalComponent } from './submit-modal/submit-modal.component';
 import { ThemeService } from '../../../../_services/theme.service';
 import { CapitalizeDatePipe } from '../../../../pipe/capitalize-date.pipe';
-import { distinctUntilChanged, finalize, map, shareReplay, switchMap, tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { PhotoService } from '../../../../_services/photo.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { ThemeResponse } from '../../../../_models/themeResponse';
 
 @Component({
   selector: 'app-submission-area',
@@ -32,7 +31,7 @@ import { ThemeResponse } from '../../../../_models/themeResponse';
   templateUrl: './submission-area.component.html',
   styleUrl: './submission-area.component.scss',
 })
-export class SubmissionAreaComponent implements OnInit, OnDestroy {
+export class SubmissionAreaComponent implements OnInit {
   public themeService = inject(ThemeService);
   public photoService = inject(PhotoService);
   public datepipe = inject(DatePipe);
@@ -71,23 +70,11 @@ export class SubmissionAreaComponent implements OnInit, OnDestroy {
 
   }
 
-
-
-//   onPhotoSubmit(theme: ThemeResponse) {
-//     this.photoService.getPhotoForActiveTheme(
-//       theme.name
-//     ).subscribe();
-//   }
-
   openModal() {
     this.isModalOpen = true;
   }
 
   closeModal() {
     this.isModalOpen = false;
-  }
-
-  ngOnDestroy(): void {
-    this.themeService.clearCache();
   }
 }

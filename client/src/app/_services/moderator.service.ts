@@ -21,6 +21,7 @@ export class ModeratorService {
     }
 
     public assignRole(username: string, role: string) : Observable<void>{
+        console.log(username, role)
         return this.http.post<any>(this.baseUrl + 'admin/assign-role', {username, role})
     }
 

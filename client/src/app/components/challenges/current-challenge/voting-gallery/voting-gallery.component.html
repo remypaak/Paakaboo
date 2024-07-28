@@ -1,5 +1,6 @@
 <div class="container">
     <div class="header">
+        @if(isVotingPeriodActive()){
         <h2>Stemmen kan beginnen!</h2>
         <p>
             Onder iedere foto kun je aangeven hoeveel punten je deze wilt geven. Je mag elke score slechts één keer
@@ -9,9 +10,18 @@
         <button class="btn btn-primary submit-button" [disabled]="hasDuplicateScores()"
             [attr.title]="hasDuplicateScores() ? 'Er kan niet twee keer dezelfde score aan een foto gegeven worden' : ''"
             (click)="submitScores()">Scores indienen</button>
+        }@else {
+        <h2>Uitslag van de Stemming</h2>
+        <p>
+            Hier zijn de resultaten van de stemming. Gefeliciteerd aan de top drie winnaars! Bekijk hieronder de
+            volledige uitslag.
+        </p>
+        }
+
     </div>
+    @if (isVotingPeriodActive()){
     <div class="gallery">
-        @for (photo of photosWithVotes(); track photo.id; let i = $index) {
+        @for (photo of photosWithUserVotes(); track photo.id; let i = $index) {
         <div class="card" [class.duplicate]="duplicatePhotoIds().includes(photo.id)">
             <img [src]="photo.url" [alt]="photo" (click)="openImageModal(photo.url, photo.title, i)">
             <h3>{{ photo.title }}</h3>
@@ -24,6 +34,20 @@
         </div>
         }
     </div>
+    }@else {
+    <div class="gallery">
+        @for (photo of photosWithAllVotes(); track photo.id; let i = $index) {
+        <div class="card" [ngClass]="getBorderClass(photo, getTopPhotos(photosWithAllVotes()))"> <img [src]="photo.url"
+                [alt]="photo" (click)="openImageModal(photo.url, photo.title, i)">
+            <h3>{{ photo.title }}</h3>
+            <div class="total-points-container">
+                <h1>{{photo.userName}} : {{photo.totalScore}} punten</h1>
+            </div>
+        </div>
+        }
+    </div>
+    }
+
     <app-image-modal [imageUrl]="selectedImageUrl()" [imageTitle]="selectedImageTitle()" [photoList]="modalPhotoList()"
         [currentIndex]="selectedPhotoIndex()" (closeModalEvent)="closeModal()">
     </app-image-modal>

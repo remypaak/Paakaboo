@@ -44,6 +44,8 @@ export class ImageModalComponent implements OnInit {
   }
 
   updateImage() {
+    console.log(this.currentIndex)
+    console.log(this.photoList)
     const currentPhoto = this.photoList[this.currentIndex];
     this.imageUrl = currentPhoto.url;
     this.imageTitle = currentPhoto.title;
