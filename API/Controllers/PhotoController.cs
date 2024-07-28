@@ -123,9 +123,9 @@ public class PhotoController(IUnitOfWork unitOfWork, IPhotoService photoService,
 
         return Ok(photoDto);
     }
-
+    
     [HttpGet("all/{theme}")]
-    public async Task<ActionResult<IEnumerable<PhotoDto>>> GetAllPhotosFromTheme(string theme)
+    public async Task<ActionResult<IEnumerable<PhotoDto>>> GetAllPhotosFromTheme(int theme)
     {
         var photos = await unitOfWork.PhotoRepository.GetAllPhotosFromTheme(theme);
 
@@ -136,9 +136,11 @@ public class PhotoController(IUnitOfWork unitOfWork, IPhotoService photoService,
 
         var photoDtos = photos.Select(photo => new PhotoDto
         {
+            Id = photo.Id,
             Title = photo.Title,
-
-            Url = photo.Url
+            Url = photo.Url,
+            TotalScore = photo.TotalScore,
+            UserName = photo.AppUser?.UserName
         }).ToList();
 
         return Ok(photoDtos);

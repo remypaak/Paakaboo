@@ -37,7 +37,7 @@ public class AccountController(UserManager<AppUser> userManager, RoleManager<Ide
         var token = await tokenService.CreateToken(user);
 
         return Ok(new UserDto {
-            Username = user.UserName,
+            UserName = user.UserName,
             Token = token
         });
 
@@ -64,7 +64,7 @@ public class AccountController(UserManager<AppUser> userManager, RoleManager<Ide
 
         return new UserDto
         {
-            Username = user.UserName,
+            UserName = user.UserName,
             Token = await tokenService.CreateToken(user)
         };
     }

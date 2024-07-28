@@ -26,6 +26,11 @@ public class AdminController(UserManager<AppUser> userManager, RoleManager<Ident
             var roleResult = await roleManager.CreateAsync(new IdentityRole(assignRoleDto.Role));
             if (!roleResult.Succeeded) return BadRequest("Failed to create role");
         }
+        var userRoles = await userManager.GetRolesAsync(user);
+        if (userRoles.Contains(assignRoleDto.Role))
+        {
+            return BadRequest(new {message = "User already has the role"});
+        }
 
         var result = await userManager.AddToRoleAsync(user, assignRoleDto.Role);
         if (!result.Succeeded) return BadRequest("Failed to add as admin");

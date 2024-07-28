@@ -33,6 +33,7 @@ public class ThemeController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoServi
                 StartDate = themeDto.StartDate.ToUniversalTime(),
                 SubmitEndDate = themeDto.SubmitEndDate.ToUniversalTime(),
                 VoteEndDate = themeDto.VoteEndDate.ToUniversalTime(),
+                TrophyEndDate = themeDto.TrophyEndDate.ToUniversalTime(),
                 ExampleUrl = result.SecureUrl.AbsoluteUri,
                 ExamplePublicId = result.PublicId,
             };

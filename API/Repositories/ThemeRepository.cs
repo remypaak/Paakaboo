@@ -26,7 +26,7 @@ public class ThemeRepository(DataContext context) : IThemeRepository
     public async Task<Theme?> GetActiveTheme()
 {
     var activeTheme = await context.Themes
-                                   .FirstOrDefaultAsync(t => t.VoteEndDate >= DateTime.UtcNow);
+                                   .FirstOrDefaultAsync(t => t.TrophyEndDate >= DateTime.UtcNow);
     if (activeTheme == null)
         {
             return null;
@@ -39,5 +39,35 @@ public class ThemeRepository(DataContext context) : IThemeRepository
     {
         context.Themes.Remove(theme);
     }
+
+    // Remove after testing period
+    public async Task SetSubmitEndDateToNow(int themeId)
+        {
+            var theme = await context.Themes.FindAsync(themeId);
+            if (theme != null)
+            {
+                theme.SubmitEndDate = DateTime.UtcNow;
+            }
+        }
+
+    // Remove after testing period
+    public async Task SetVoteEndDateToNow(int themeId)
+        {
+            var theme = await context.Themes.FindAsync(themeId);
+            if (theme != null)
+            {
+                theme.VoteEndDate = DateTime.UtcNow;
+            }
+        }
+    
+    // Remove after testing period
+    public async Task SetTrophyEndDateToNow(int themeId)
+        {
+            var theme = await context.Themes.FindAsync(themeId);
+            if (theme != null)
+            {
+                theme.TrophyEndDate = DateTime.UtcNow;
+            }
+        }
 
 }

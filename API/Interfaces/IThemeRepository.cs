@@ -14,4 +14,8 @@ public interface IThemeRepository
 
     void DeleteTheme(Theme theme);
 
+    Task SetSubmitEndDateToNow(int themeId);
+    Task SetVoteEndDateToNow(int themeId);
+    Task SetTrophyEndDateToNow(int themeId);
+
 } 

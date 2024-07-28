@@ -13,12 +13,12 @@ public class PhotoRepository(DataContext context) : IPhotoRepository
     }
 
     public async Task<IEnumerable<Photo>> GetPhotosWithVotesByTheme(int themeId)
-{
-    return await context.Photos
-        .Include(p => p.Votes)
-        .Where(p => p.ThemeId == themeId)
-        .ToListAsync();
-}
+    {
+        return await context.Photos
+            .Include(p => p.Votes)
+            .Where(p => p.ThemeId == themeId)
+            .ToListAsync();
+    }
 
     public async Task UpdatePhotoScore(int photoId)
     {
@@ -26,6 +26,16 @@ public class PhotoRepository(DataContext context) : IPhotoRepository
         if (photo != null)
         {
             photo.TotalScore = photo.Votes.Sum(v => v.Points);
+            context.Photos.Update(photo);
+        }
+    }
+
+    public async Task SetPhotoScoreToZero(int photoId)
+    {
+        var photo = await context.Photos.Include(p => p.Votes).FirstOrDefaultAsync(p => p.Id == photoId);
+        if (photo != null)
+        {
+            photo.TotalScore = 0;
             context.Photos.Update(photo);
         }
     }
@@ -44,10 +54,12 @@ public class PhotoRepository(DataContext context) : IPhotoRepository
         context.Photos.Remove(photo);
     }
 
-    public async Task<IEnumerable<Photo>> GetAllPhotosFromTheme(string theme)
+    public async Task<IEnumerable<Photo>> GetAllPhotosFromTheme(int themeId)
     {
         return await context.Photos
-                        .Include(p => p.Theme)
-                        .Where(p => p.Theme.Name == theme).ToListAsync();
+                            .Include(p => p.Theme)
+                            .Include(p => p.AppUser)
+                            .Where(p => p.Theme.Id == themeId)
+                            .ToListAsync();
     }
 }

@@ -8,6 +8,7 @@ public interface IPhotoRepository
     void DeletePhoto(Photo photo);
     Task<IEnumerable<Photo>> GetPhotosWithVotesByTheme(int themeId);
     Task<Photo?> GetPhotoByUserAndTheme(string userId, string theme);
-    Task<IEnumerable<Photo>> GetAllPhotosFromTheme(string theme);
     Task UpdatePhotoScore(int photoId);
+    Task<IEnumerable<Photo>> GetAllPhotosFromTheme(int theme);
+    Task SetPhotoScoreToZero(int photoId);
 }
