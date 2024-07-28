@@ -1,8 +1,8 @@
 <div class="home-container">
     <img src="../../../assets/hero-background.jpg" fetchpriority="high" alt="Background Image" class="background-image">
     <div class="foreground">
-        <app-hero (scrollToBottom)="scrollToFooter()"></app-hero>
-        <app-right-side></app-right-side>
+        <app-hero class="hero" (scrollToBottom)="scrollToFooter()"></app-hero>
+        <app-right-side [moveTopText]="moveTopText"></app-right-side>
     </div>
 </div>
 

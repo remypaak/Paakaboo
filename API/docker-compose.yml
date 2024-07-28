@@ -26,6 +26,7 @@ services:
     networks:
       - app-network
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings_DefaultConnection=server=mysql;port=3306;database=PaakabooDB;user=root;password=Password@1;
     depends_on:
       - mysql

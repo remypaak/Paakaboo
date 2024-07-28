@@ -2,10 +2,10 @@
 
 .sign-up-title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--color-secondary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     font-family: "Sans";
 }
 
@@ -50,12 +50,13 @@
 }
 
 .field-spacing {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .btn{
     width: 50%;
-    height: 3rem;
+    height: 2rem;
+    font-size: 0.75rem;
 }
 
 .mat-mdc-form-field-subscript-wrapper {
@@ -73,14 +74,14 @@
 }
 
 ::ng-deep .field-spacing .mat-mdc-form-field-error {
-    font-size: 1rem;
+    font-size: 0.666rem;
 }
 
 ::ng-deep .field-spacing .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
     caret-color: var(--color-accent);
     text-align: center;
     color: var(--color-primary);
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 ::ng-deep .mdc-text-field--filled.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::before {

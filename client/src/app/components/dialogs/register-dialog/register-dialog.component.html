@@ -11,9 +11,9 @@
                     <mat-label>Gebruikersnaam</mat-label>
                     <input matInput formControlName="username" autocomplete="off" (focus)="onFocus('username')">
                     @if(registerForm.controls['username'].hasError('required')){
-                        <mat-error>Gerbuikersnaam is verplicht</mat-error>
+                        <mat-error>Gebruikersnaam is verplicht</mat-error>
                     }@else if(registerForm.controls['username'].hasError('usernameTaken')){
-                        <mat-error>Gerbuikersnaam is al in gebruik</mat-error>
+                        <mat-error>Gebruikersnaam is al in gebruik</mat-error>
                     }
                 </mat-form-field>
 

@@ -9,7 +9,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { TextInputComponent } from '../../forms/text-input/text-input.component';
 import { User } from '../../../_models/user';
 import { AccountService } from '../../../_services/account.service';
 import { map, switchMap, timer } from 'rxjs';
@@ -20,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register-dialog',
   standalone: true,
-  imports: [MatDialogModule, ReactiveFormsModule, TextInputComponent, MatFormFieldModule, MatInputModule],
+  imports: [MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './register-dialog.component.html',
   styleUrl: './register-dialog.component.scss',
 })

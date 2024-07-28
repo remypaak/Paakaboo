@@ -7,7 +7,7 @@
 }
 
 .container {
-    border-radius: 2rem;
+    border-radius: 20px;
     flex: 1;
     width: 100%;
     height: 55%;
@@ -17,7 +17,7 @@
 }
 
 .form-container {
-    border-radius: 2rem;
+    border-radius: 1.5rem;
     background-color: rgba(232, 238, 242, 0.8);
     color: var(--color-secondary);
     display: flex;
@@ -37,13 +37,14 @@
 }
 
 .form-container h2 {
-    font-size: 3rem;
+    font-size: 2rem;
     text-align: center;
     color: var(--color-secondary);
 }
 
 .form-field {
     width: 50%;
+    min-width: 220px;
 }
 
 .form-group {
@@ -66,6 +67,7 @@ select {
 }
 
 button {
+    margin-bottom: 20px;
     width: 50%;
     padding: 10px;
     border: none;

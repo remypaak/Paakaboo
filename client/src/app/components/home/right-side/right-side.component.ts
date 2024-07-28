@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HeroComponent } from '../hero/hero.component';
 import { HowToInstructionComponent } from '../how-to-instruction/how-to-instruction.component';
@@ -17,9 +17,11 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './right-side.component.scss'
 })
 export class RightSideComponent implements OnInit{
-    
     public themeService = inject(ThemeService);
     public dialog = inject(MatDialog);
+
+    public moveTopText = input();
+
     
     
     ngOnInit(): void {
@@ -33,8 +35,8 @@ export class RightSideComponent implements OnInit{
     }
     openRegisterDialog(): void {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = '70rem';
-        dialogConfig.height = '30rem';
+        dialogConfig.width = '47rem';
+        dialogConfig.height = '20rem';
         dialogConfig.autoFocus = true;
         dialogConfig.panelClass = 'custom-dialog-container';
     

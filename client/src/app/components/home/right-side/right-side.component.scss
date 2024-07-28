@@ -1,40 +1,85 @@
-.right-side {
-  width: 50vw;
+:host{
+    flex: 1;
 }
 
-.right-side .theme-container,
-.right-side .button-container {
-  padding: 1.4rem;
-  border-radius: 5px;
-  box-sizing: border-box;
+.right-side {
+  height: 84%;
+  width: 50vw;
+  flex: 1;
+  
+}
+
+.content-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 65%;
+  min-width: 450px;
+  margin-left: 3rem;
 }
 
 .theme-container {
   background-color: rgba(22, 23, 23, 0.65);
-  margin-top: 10rem;
-  width: 65%;
-}
-
-.theme-container h1 {
-  color: var(--color-primary);
-}
-.timer-container {
-    width: 65%;
-    border-radius: 5px;
-    
-}
-
-.button-container {
-    padding: 1.4rem;
-  margin-top: 0.75;
-  background: transparent;
-  width: 65%;
-}
-
-.registration-button {
-  padding: 15px 30px;
-  font-size: 1.5rem;
-  border: none;
+  border-radius: 5px;
   width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  
 }
 
+.theme-container h1{
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-primary);
+}
+
+.timer-container{
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.button-container{
+    margin-top: 1rem;
+    width: 95%;
+}
+
+.registration-button{
+    width: 100%;
+    font-size: clamp(1rem, 1vw, 1.5rem);
+}
+
+
+
+@media (max-width: 1000px) { 
+    .right-side {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+    }
+
+    .content-container{
+        height: auto;
+        margin-inline: auto;
+        min-width: 300px;
+    }
+
+    .top-text{
+        width: 65%;
+        min-width: 300px;
+        margin-inline: auto;
+        align-items: flex-start;
+
+        h3{
+            text-align: start;
+            margin-bottom: 0;
+        }
+        p{
+            margin-top:0;
+            text-align: start;
+        }
+    }
+  }

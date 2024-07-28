@@ -10,11 +10,9 @@ using MySqlConnector;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString1 = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection");
-Console.WriteLine($"Retrieved connection string (length {connectionString1?.Length ?? 0}): '{connectionString1}'");
 var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection")
                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
-                              
+
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 32)));
@@ -36,13 +34,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     };
                 });
 
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "MyAllowSpecificOrigins",
+    var environment = builder.Environment;
+    if (environment.IsDevelopment()){
+        options.AddPolicy(name: "MyAllowSpecificOrigins",
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                      });
+    }
+    else{
+       options.AddPolicy(name: "MyAllowSpecificOrigins",
                       builder =>
                       {
                           builder.WithOrigins("https://www.paakaboo.nl", "https://paakaboo.nl").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                       });
+    }
+    
 });
 
 
@@ -52,6 +62,24 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
+        var configuration = services.GetRequiredService<IConfiguration>();
+        var rawConnectionString = configuration.GetConnectionString("DefaultConnection") 
+                                  ?? Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection");
+
+        var connectionStringBuilder = new MySqlConnectionStringBuilder(rawConnectionString);
+        var databaseName = connectionStringBuilder.Database;
+        connectionStringBuilder.Database = null; // Connect without specifying the database
+
+        using (var connection = new MySqlConnection(connectionStringBuilder.ConnectionString))
+        {
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = $"CREATE DATABASE IF NOT EXISTS `{databaseName}`";
+                command.ExecuteNonQuery();
+            }
+        }
+
         var context = services.GetRequiredService<DataContext>();
         context.Database.Migrate();
     }

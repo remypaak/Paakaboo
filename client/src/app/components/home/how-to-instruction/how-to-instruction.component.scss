@@ -13,18 +13,14 @@
 }
 
 .how-it-works h2 {
-    font-size: 4rem;
+    font-size: 2.7rem;
+    margin-bottom: 0;
 }
 
 .how-it-works h3 {
-    font-size: 3rem;
-    
+    font-size: 2rem;
 }
 
-.how-it-works p {
-    padding: 10px;
-    text-align: center;    
-}
 
 .steps-container {
     display: flex;
@@ -38,11 +34,18 @@
     text-align: center;
 }
 
+.step p {
+    font-weight: 500;
+    padding: 10px;
+    font-size: 1rem;
+    text-align: center;   
+}
+
 .svg-icon {
     display: block;
     margin: 0 auto 20px auto; 
-    max-width: 200px;
-    height: auto;
+    width: auto;
+    height: 200px;
 }
 
 .step:nth-child(3) .svg-icon {
@@ -51,12 +54,20 @@
 }
 
 .step:nth-child(4) .svg-icon {
-    padding-top: 1.5rem;
-    display: block;
+
+    transform: translateY(12px);
 }
 
-@media (max-width: 1000px) {
+
+@media (max-width: 1300px) {
     .step {
         width: 50%;
+    }
+}
+
+
+@media (max-width: 760px) {
+    .step {
+        width: 100%;
     }
 }

@@ -1,15 +1,24 @@
 <div class="right-side">
-    <div class="theme-container" style="text-align: center;">
-        @if(themeService.activeTheme()){
-            <h1>Week {{themeService.activeTheme()?.weekNumber }} : {{themeService.activeTheme()?.name}}</h1>
-        }@else{
-            <h1>Er is momenteel geen lopende challenge</h1>
+    @if (moveTopText()) {
+        <div class="top-text">
+            <h3>PAAKABOO</h3>
+            <p>Iedere week een nieuwe challenge</p>
+        </div>
         }
-    </div>
-    <div class="timer-container">
-        <app-timer class="timer"></app-timer>
-    </div>
-    <div class="button-container">
-        <button class="registration-button btn btn-primary" (click)="openRegisterDialog()">Schrijf je in!</button>
+    <div class="content-container">
+        
+        <div class="theme-container" style="text-align: center;">
+            @if(themeService.activeTheme()){
+            <h1>Week {{themeService.activeTheme()?.weekNumber }} : {{themeService.activeTheme()?.name}}</h1>
+            }@else{
+            <h1>Er is momenteel geen lopende challenge</h1>
+            }
+        </div>
+        <div class="timer-container">
+            <app-timer class="timer"></app-timer>
+        </div>
+        <div class="button-container">
+            <button class="registration-button btn btn-primary" (click)="openRegisterDialog()">Schrijf je in!</button>
+        </div>
     </div>
 </div>

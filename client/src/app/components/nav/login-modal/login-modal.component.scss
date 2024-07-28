@@ -1,0 +1,35 @@
+.dense-2 {
+    margin-bottom: 1rem;
+  }
+  
+  .encapsulate {
+    width: 100%;
+  }
+h2{
+    color: var(--color-secondary);
+    text-align: center;
+    margin-bottom: 0;
+}
+.btn-group{
+    display: flex;
+}
+.btn{
+    padding: 10x 20px;
+    flex : 1;
+    font-size: 1.5rem;
+}
+  ::ng-deep .mdc-dialog__surface {
+    overflow-y: hidden !important;
+    background-color: var(--color-primary) !important;
+    border-radius: 20px !important;
+    min-height: 300px !important;
+
+}
+
+::ng-deep .field-spacing .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    caret-color: var(--color-accent);
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+  

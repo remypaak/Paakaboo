@@ -3,7 +3,7 @@
         <div class="timer-segment">
             <div class="timer-numbers">
                 <div class="timer-block">
-                    <p>{{ ('0' + this.timeLeftService.timeLeft()?.daysToDday).slice(-2)[0] }}</p>
+                    <p class="singular-number">{{ ('0' + this.timeLeftService.timeLeft()?.daysToDday).slice(-2)[0] }}</p>
                 </div>
                 <div class="timer-block">
                     <p>{{ ('0' + this.timeLeftService.timeLeft()?.daysToDday).slice(-2)[1] }}</p>

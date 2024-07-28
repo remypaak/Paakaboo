@@ -1,0 +1,15 @@
+<h2>Login</h2>
+<mat-dialog-content>
+  <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
+    <mat-form-field appearance="fill" class="dense-2 encapsulate">
+      <input matInput formControlName="username" placeholder="Gebruikersnaam" autocomplete="username">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="dense-2 encapsulate">
+      <input matInput type="password" formControlName="password" placeholder="Wachtwoord" autocomplete="new-password">
+    </mat-form-field>
+    <div class="btn-group">
+        <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>  
+    </div>
+      
+  </form>
+</mat-dialog-content>

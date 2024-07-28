@@ -1,36 +1,38 @@
 .container {
     text-align: center;
-    padding: 1rem;
+    padding: 0.666rem;
     background-color: var(--color-primary);
   }
   
   .header {
     margin-bottom: 20px;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 0.666rem auto;
     max-width: 75%;
   }
   
   .header h2 {
     margin: 0;
-    font-size: 2em;
+    font-size: 1.35em;
     color: var(--color-secondary);
   }
   
   .header p {
     margin: 10px 0;
     color: var(--color-secondary);
+    font-size: 0.6666em;
   }
   
   .header .btn {
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 0.66667em;
+    padding: 0.4em 0.8em;
   }
   
 
 .gallery {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
     margin: 0;
     padding: 20px;
   }
@@ -55,7 +57,7 @@
   
   .card h3 {
     margin: 15px 0;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--color-secondary);
     font-weight: 400;
     padding: 0.1rem;
@@ -64,15 +66,15 @@
   .voting-buttons {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    padding: 1rem;
+    padding: 0.6667rem;
   }
   
   .voting-buttons .btn {
     border: none;
     border-radius: 5px;
-    margin: 0.1rem;
+    margin: 0.06667rem;
     padding: 10px 0;
-    font-size: 1em;
+    font-size: 0.66667em;
     transition: background-color 0.3s ease;
   }
 

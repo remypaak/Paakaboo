@@ -32,7 +32,7 @@
     top: -20px;
     right: 25px;
     color: var(--color-error);
-    font-size: 5rem;
+    font-size: 3.3333rem;
     font-weight: bold;
     cursor: pointer;
   }
@@ -64,6 +64,7 @@
   }
   
   .caption {
+    font-size: 1rem;
     display: block;
     width: 100%;
     font-weight: 700;

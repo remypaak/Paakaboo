@@ -30,7 +30,7 @@
   }
 
   .modal-header {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: left;
     
   }
@@ -43,11 +43,11 @@
 
   .close {
     color: var(--color-error);
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
     position: absolute;
-    top: -1.5rem;
-    right: -0.5rem;
+    top: -1rem;
+    right: -0.333rem;
     cursor: pointer;
 }
   
@@ -63,6 +63,11 @@
     padding: 20px;
     cursor: pointer;
   }
+
+  .drop-zone h1 {
+    font-size: 2rem;
+  }
+  
   
   .drop-zone p {
     margin: 0;
@@ -89,6 +94,7 @@
   }
   
   .form-container label {
+    font-size: 1rem;
     margin-bottom: 10px;
   }
   
@@ -130,11 +136,14 @@
     caret-color: var(--color-accent) !important;
     text-align: center !important;
     color: var(--color-primary) !important;
-    font-size: 2rem !important;
+    font-size: 1.4rem !important;
 }
 ::ng-deep .mdc-floating-label {
     color: var(--color-primary) !important;
     margin: 0 auto !important;
   }
 
+  ::ng-deep  .mat-mdc-form-field {
+    width: 100%;
+}
 
