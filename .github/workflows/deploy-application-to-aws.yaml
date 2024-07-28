@@ -15,8 +15,8 @@ env:
     ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
     ECS_CONTAINER_NAME: ${{ secrets.ECS_CONTAINER_NAME }}  
     S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}  
-                                            
-    CONTAINER_NAME: MY_CONTAINER_NAME    
+    CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}                               
+          
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -52,6 +52,15 @@ jobs:
         aws s3 sync ./dist/client/browser/ s3://$S3_BUCKET_NAME --delete
       working-directory: client
 
+    - name: Invalidate CloudFront Cache
+      env:
+        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ env.AWS_REGION }}
+        CLOUDFRONT_DISTRIBUTION_ID: ${{ env.CLOUDFRONT_DISTRIBUTION_ID }}
+
+      run: |
+        aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
       # Backend deployment
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
