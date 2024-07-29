@@ -37,6 +37,25 @@
     padding: 20px;
   }
   
+  @media (max-width: 1500px) {
+    .gallery {
+        grid-template-columns: repeat(3, 1fr);
+        padding:0.5rem;
+    }
+}
+@media (max-width: 1050px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        padding:0.33333rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
+}
   .card {
     background-color: var(--color-primary-gradient);
     border-radius: 10px;

@@ -36,7 +36,7 @@ export class RightSideComponent implements OnInit{
     openRegisterDialog(): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '47rem';
-        dialogConfig.height = '20rem';
+        dialogConfig.height = 'auto';
         dialogConfig.autoFocus = true;
         dialogConfig.panelClass = 'custom-dialog-container';
     

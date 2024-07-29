@@ -28,6 +28,7 @@
 .sign-up-image {
     height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 
 .form-container {
@@ -54,9 +55,10 @@
 }
 
 .btn{
+    margin-bottom: 2em;
     width: 50%;
-    height: 2rem;
-    font-size: 0.75rem;
+    min-width: 200px;
+    font-size: clamp(16px,0.75rem, 28px);
 }
 
 .mat-mdc-form-field-subscript-wrapper {
@@ -94,4 +96,10 @@
 
 ::ng-deep .mdc-line-ripple::after {
     border-bottom-color: var(--color-accent) !important;
+}
+
+@media (max-width: 1000px) {
+    .image-container {
+        display: none;
+    }
 }

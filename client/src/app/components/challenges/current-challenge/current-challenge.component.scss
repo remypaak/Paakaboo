@@ -1,19 +1,19 @@
 .page-element {
-    position: fixed;
+    position: absolute;
     top: 18%;
     left: 10%;
     right: 10%;
-    height: 100%;
     background-color: var(--color-primary-gradient);
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1), 0 -2px 5px rgba(0, 0, 0, 0.15), 2px 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 3rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    height: auto; 
   }
 
 .no-challenge{
-    height: 75vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,9 +25,21 @@
   }
   .no-challenge img{
     display: block;
-    width: 75%;
-    min-width: 260px;
+    width: 100%;
     height: auto;
     aspect-ratio: 1280 / 720;
     
+  }
+  @media (max-width: 1000px) {
+    .page-element {
+      top: 12%;
+      left: 5%;
+      right: 5%;
+      padding:2rem;
+    }
+  
+    .no-challenge img {
+      width: 100%; 
+      min-width: unset;
+    }
   }

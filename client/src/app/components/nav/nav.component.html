@@ -4,9 +4,9 @@
         @if(menuOpen || !loginSmallSize){
         <ul class="nav-links">
             @if (this.accountService.currentUser()){
-            <li><a routerLink="/challenges">Challenges</a></li>
-            <li *appHasRole="['Moderator']"><a routerLink="/moderator">Moderator</a></li>
-            <li><a routerLink="/test">Test</a></li>
+            <li (click)="toggleMenu()"><a routerLink="/challenges">Challenges</a></li>
+            <li (click)="toggleMenu()" *appHasRole="['Moderator']"><a routerLink="/moderator">Moderator</a></li>
+            <li (click)="toggleMenu()"><a routerLink="/test">Test</a></li>
             }
             @if(loginSmallSize && !this.accountService.currentUser()){
             <li (toggleMenu)="toggleMenu()" (click)="openLoginModal()"><a>Login</a></li>

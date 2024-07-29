@@ -11,7 +11,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { loadingInterceptor } from './_interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideHttpClient(withInterceptors([jwtInterceptor, loadingInterceptor])), provideAnimationsAsync(),provideAnimations(), provideToastr({
+  providers: [provideRouter(routes), provideHttpClient(withInterceptors([jwtInterceptor, loadingInterceptor])) ,provideAnimationsAsync(),provideAnimations(), provideToastr({
     positionClass: 'toast-bottom-right',
   }),
   provideNativeDateAdapter(),

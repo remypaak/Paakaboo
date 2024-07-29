@@ -45,7 +45,7 @@
                         </svg>
                     <input type="file" #fileInput class="file-input" (change)="onFileChange($event)">
                     <h1>Of</h1>
-                    <button class=" btn btn-primary" (click)="fileInput.click()">Kies een foto om te uploaden</button>
+                    <button class=" btn btn-primary " (click)="fileInput.click()">Kies een foto om te uploaden</button>
             
 
           </div>}@else {
@@ -63,7 +63,7 @@
                   <img [src]="uploadedImage" alt="Uploaded Image" class="uploaded-image">
                 </div>
                 <div class="button-container">
-                  <button [disabled]="!titleForm.valid || isSubmitting" class="btn btn-primary">Post je foto!</button>
+                  <button [disabled]="!titleForm.valid || isSubmitting" class="btn btn-primary post-image-button">Post je foto!</button>
                 </div>
             </form>
               </div>

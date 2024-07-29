@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, ExtraOptions } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ModeratorComponent } from './components/moderator/moderator.component';
 import { moderatorGuard } from './_guards/moderator.guard';
@@ -7,7 +7,7 @@ import { TestComponent } from './components/test/test.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'moderator', component: ModeratorComponent, canActivate: [moderatorGuard]},
+    {path: 'moderator', component: ModeratorComponent,canActivate: [moderatorGuard]},
     {path: 'challenges', component: CurrentChallengeComponent},
     {path: 'test', component: TestComponent}
 ];
