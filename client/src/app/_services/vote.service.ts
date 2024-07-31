@@ -14,4 +14,8 @@ export class VoteService {
     {
         return this.http.post<Vote[]>(this.baseUrl + 'vote/submit-votes', votes)
     }
+
+    GetVotesForPhoto(photoId: number){
+        return this.http.get<Vote[]>(this.baseUrl + 'vote/' + photoId + '/votes')
+    }
 }

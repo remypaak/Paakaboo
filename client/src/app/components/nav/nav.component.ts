@@ -41,6 +41,7 @@ export class NavComponent implements OnInit, OnDestroy {
   loginForm: FormGroup = new FormGroup({});
   loginSmallSize = false;
   menuOpen = false;
+  submenuOpen = false;
   subscription = new Subscription();
 
   ngOnInit(): void {
@@ -64,7 +65,11 @@ export class NavComponent implements OnInit, OnDestroy {
     if (this.menuOpen && !clickedInsideNavLinks) {
       this.toggleMenu();
     }
+    if (this.submenuOpen && !clickedInsideNavLinks){
+        this.toggleSubMenu()
+    }
   }
+
 
   checkWindowSize() {
     this.loginSmallSize = window.innerWidth < 1000;
@@ -97,6 +102,15 @@ export class NavComponent implements OnInit, OnDestroy {
         event.stopPropagation()
     }
     this.menuOpen = !this.menuOpen;
+    this.submenuOpen = false;
+  }
+
+  toggleSubMenu(event?: MouseEvent) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.submenuOpen = !this.submenuOpen;
+    console.log(this.submenuOpen)
   }
 
   openLoginModal() {

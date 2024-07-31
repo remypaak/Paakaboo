@@ -24,15 +24,24 @@ public class ThemeRepository(DataContext context) : IThemeRepository
 
 
     public async Task<Theme?> GetActiveTheme()
-{
-    var activeTheme = await context.Themes
-                                   .FirstOrDefaultAsync(t => t.TrophyEndDate >= DateTime.UtcNow);
-    if (activeTheme == null)
+    {
+        var activeTheme = await context.Themes
+                                       .FirstOrDefaultAsync(t => t.TrophyEndDate >= DateTime.UtcNow);
+        if (activeTheme == null)
         {
             return null;
         }
 
-    return activeTheme;
+        return activeTheme;
+    }
+    public async Task<List<Theme>> GetPastThemes()
+{
+    return await context.Themes
+                        .Where(t => t.TrophyEndDate < DateTime.UtcNow)
+                        .Include(t => t.Photos)
+                        .ThenInclude(p => p.AppUser)
+                        .OrderByDescending(t => t.TrophyEndDate)
+                        .ToListAsync();
 }
 
     public void DeleteTheme(Theme theme)
@@ -42,32 +51,32 @@ public class ThemeRepository(DataContext context) : IThemeRepository
 
     // Remove after testing period
     public async Task SetSubmitEndDateToNow(int themeId)
+    {
+        var theme = await context.Themes.FindAsync(themeId);
+        if (theme != null)
         {
-            var theme = await context.Themes.FindAsync(themeId);
-            if (theme != null)
-            {
-                theme.SubmitEndDate = DateTime.UtcNow;
-            }
+            theme.SubmitEndDate = DateTime.UtcNow;
         }
+    }
 
     // Remove after testing period
     public async Task SetVoteEndDateToNow(int themeId)
+    {
+        var theme = await context.Themes.FindAsync(themeId);
+        if (theme != null)
         {
-            var theme = await context.Themes.FindAsync(themeId);
-            if (theme != null)
-            {
-                theme.VoteEndDate = DateTime.UtcNow;
-            }
+            theme.VoteEndDate = DateTime.UtcNow;
         }
-    
+    }
+
     // Remove after testing period
     public async Task SetTrophyEndDateToNow(int themeId)
+    {
+        var theme = await context.Themes.FindAsync(themeId);
+        if (theme != null)
         {
-            var theme = await context.Themes.FindAsync(themeId);
-            if (theme != null)
-            {
-                theme.TrophyEndDate = DateTime.UtcNow;
-            }
+            theme.TrophyEndDate = DateTime.UtcNow;
         }
+    }
 
 }

@@ -52,5 +52,23 @@ public class VoteRepository(DataContext context) : IVoteRepository
     var votes = await context.Votes.Where(v => v.PhotoId == photoId).ToListAsync();
     context.Votes.RemoveRange(votes);
 }
+public async Task<IEnumerable<Vote>> GetVotesForPhoto(int photoId)
+{
+    
+        return  await context.Votes
+            .Where(v => v.PhotoId == photoId)
+            .Include(v => v.AppUser)
+            .Include(v => v.Photo)
+            .ToListAsync();
+
+    
+}
+
+public async Task<IEnumerable<Vote>> GetVotesByThemeAndUsers(int themeId, List<string> userNames)
+{
+    return await context.Votes
+        .Where(v => v.Photo.ThemeId == themeId && userNames.Contains(v.AppUser.UserName))
+        .ToListAsync();
+}
 
 }

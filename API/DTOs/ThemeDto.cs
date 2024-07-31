@@ -11,4 +11,5 @@ public class ThemeDto
     public required DateTime SubmitEndDate { get; set; }
     public required DateTime VoteEndDate { get; set; }
     public required DateTime TrophyEndDate { get; set; }
+    public WinnerDto? Winner { get; set; }
 }

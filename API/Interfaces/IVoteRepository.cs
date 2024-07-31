@@ -16,4 +16,6 @@ public interface IVoteRepository
 
     Task DeleteVotesByUser(string userid);
     Task DeleteVotesByPhotoId(int photoId);
+    Task<IEnumerable<Vote>> GetVotesForPhoto(int photoId);
+    Task<IEnumerable<Vote>> GetVotesByThemeAndUsers(int themeId, List<string> userNames);
 }

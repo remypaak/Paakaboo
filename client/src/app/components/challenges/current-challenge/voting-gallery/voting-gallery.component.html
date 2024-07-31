@@ -4,7 +4,7 @@
         <h2>Stemmen kan beginnen!</h2>
         <p>
             Onder iedere foto kun je aangeven hoeveel punten je deze wilt geven. Je mag elke score slechts één keer
-            gebruiken. Gebruik de knop hieronder om je scores door te sturen. Zolang je binnen de tijd bent, kun je je
+            gebruiken.<br> Gebruik de knop hieronder om je scores door te sturen. Zolang je binnen de tijd bent, kun je je
             scores later altijd nog aanpassen.
         </p>
         <button class="btn btn-primary submit-button" [disabled]="hasDuplicateScores()"
@@ -40,8 +40,9 @@
         <div class="card" [ngClass]="getBorderClass(photo, getTopPhotos(photosWithAllVotes()))"> <img [src]="photo.url"
                 [alt]="photo" (click)="openImageModal(photo.url, photo.title, i)">
             <h3>{{ photo.title }}</h3>
-            <div class="total-points-container">
+            <div class="winner-info">
                 <h1>{{photo.userName}} : {{photo.totalScore}} punten</h1>
+                <svg (click)="openVotesModal(photo.id)" fill="#37393a" height="40px" width="40px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 413.842 413.842" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M401.395,341.29l-69.568-69.568c-4.731-4.732-12.402-4.732-17.134,0l-7.343,7.343l-28.907-28.908 c20.261-26.247,32.335-59.122,32.335-94.769C310.777,69.707,241.07,0,155.389,0C69.707,0,0,69.707,0,155.388 c0,85.682,69.707,155.389,155.389,155.389c35.646,0,68.521-12.073,94.769-32.335l28.907,28.908l-7.343,7.343 c-4.731,4.731-4.731,12.402,0,17.134l69.569,69.568c16.597,16.597,43.507,16.597,60.104,0 C417.992,384.797,417.992,357.887,401.395,341.29z M155.389,79.34c-41.934,0-76.049,34.115-76.049,76.049c0,11.046-8.954,20-20,20 s-20-8.954-20-20C39.339,91.4,91.399,39.34,155.389,39.34c11.046,0,20,8.954,20,20S166.435,79.34,155.389,79.34z"></path> </g></svg>
             </div>
         </div>
         }
@@ -52,3 +53,6 @@
         [currentIndex]="selectedPhotoIndex()" (closeModalEvent)="closeModal()">
     </app-image-modal>
 </div>
+
+
+<app-votes-details [votes]="votes" [isOpen]="isVotesModalOpen" (closeModal)="closeVotesModal()"></app-votes-details>

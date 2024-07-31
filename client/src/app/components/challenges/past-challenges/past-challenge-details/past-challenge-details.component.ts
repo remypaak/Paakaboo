@@ -1,139 +1,55 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { ThemeResponse } from '../../../../_models/themeResponse';
 import { ThemeService } from '../../../../_services/theme.service';
 import { PhotoService } from '../../../../_services/photo.service';
-import { switchMap } from 'rxjs';
-import { AsyncPipe, NgClass } from '@angular/common';
-import { PhotoWithVotes } from '../../../../_models/photoWithVotes';
-import { VoteService } from '../../../../_services/vote.service';
-import { ToastrService } from 'ngx-toastr';
-import { ImageModalComponent } from './image-modal/image-modal.component';
+import { Observable } from 'rxjs';
 import { Photo } from '../../../../_models/photo';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { ImageModalComponent } from "../../current-challenge/voting-gallery/image-modal/image-modal.component";
 import { Vote } from '../../../../_models/vote';
+import { VoteService } from '../../../../_services/vote.service';
 import { VotesDetailsComponent } from "../../../../common/votes-details/votes-details.component";
 
 @Component({
-  selector: 'app-voting-gallery',
+  selector: 'app-past-challenge-details',
   standalone: true,
   imports: [AsyncPipe, ImageModalComponent, NgClass, VotesDetailsComponent],
-  templateUrl: './voting-gallery.component.html',
-  styleUrl: './voting-gallery.component.scss',
+  templateUrl: './past-challenge-details.component.html',
+  styleUrl: './past-challenge-details.component.scss',
 })
-export class VotingGalleryComponent implements OnInit {
-  private themeService = inject(ThemeService);
-  public photoService = inject(PhotoService);
-  public voteService = inject(VoteService);
-  private toastrService = inject(ToastrService);
-
-  photosWithUserVotes = signal<PhotoWithVotes[]>([]);
-  photosWithAllVotes = signal<Photo[]>([]);
-  duplicatePhotoIds = computed(() => this.getDuplicatePhotoIds());
-
+export class PastChallengeDetailsComponent implements OnInit {
+  router = inject(Router);
+  photoService = inject(PhotoService);
+  voteService = inject(VoteService)
+  theme?: ThemeResponse;
+  photos = signal<Photo[]>([]);
   selectedImageUrl = signal<string>('');
   selectedImageTitle = signal<string>('');
   selectedPhotoIndex = signal<number>(0);
   modalPhotoList = computed(() => {
-    if (this.isVotingPeriodActive()) {
-      return this.photosWithUserVotes().map((photo) => ({
+      return this.photos().map((photo) => ({
         url: photo.url,
         title: photo.title,
       }));
-    } else {
-      return this.photosWithAllVotes().map((photo) => ({
-        url: photo.url,
-        title: photo.title,
-      }));
-    }
+    
   });
 
   votes: Vote[] = [];
   isVotesModalOpen = false;
 
-
-  isVotingPeriodActive = computed(() => {
-    const activeTheme = this.themeService.activeTheme();
-    const now = new Date();
-    return activeTheme && now <= new Date(activeTheme.voteEndDate);
-  });
-
   ngOnInit(): void {
-    if (this.isVotingPeriodActive()) {
-      this.getPhotosWithUserVotes();
-    } else {
-      this.getPhotosWithAllVotes();
-    }
-  }
-
-  getPhotosWithUserVotes() {
-    const activeTheme = this.themeService.activeTheme();
-    if (activeTheme) {
-      this.photoService.getPhotosWithVotes(activeTheme.id).subscribe({
-        next: (photosWithVotes) => {
-          const sortedPhotos = photosWithVotes.sort(
-            (a, b) => b.points - a.points
-          );
-          this.photosWithUserVotes.set(sortedPhotos);
-        },
+    this.theme = history.state.theme;
+    if (this.theme) {
+      this.photoService.getAllPhotosForTheme(this.theme?.id).subscribe({
+        next: (photos) => {
+            const sortedPhotos = photos.sort(
+                (a, b) => b.totalScore - a.totalScore
+              );
+              this.photos.set(sortedPhotos);
+        }
       });
     }
-  }
-
-  getPhotosWithAllVotes() {
-    const activeTheme = this.themeService.activeTheme();
-    if (activeTheme) {
-      this.photoService.getAllPhotosForTheme(activeTheme.id).subscribe({
-        next: (photosWithAllVotes) => {
-          const sortedPhotos = photosWithAllVotes.sort(
-            (a, b) => b.totalScore - a.totalScore
-          );
-          this.photosWithAllVotes.set(sortedPhotos);
-        },
-      });
-    }
-  }
-
-  votePhoto(photoId: number, vote: number) {
-    const updatedPhotos = this.photosWithUserVotes().map((photo) =>
-      photo.id === photoId
-        ? { ...photo, points: photo.points === vote ? 0 : vote }
-        : photo
-    );
-    this.photosWithUserVotes.set(updatedPhotos);
-  }
-
-  submitScores() {
-    const votes = this.photosWithUserVotes().map((photo) => ({
-      photoId: photo.id,
-      points: photo.points || 0,
-    }));
-    this.voteService.submitVotes(votes).subscribe({
-      next: () => {
-        this.toastrService.success('Jouw stemmen zijn correct verwerkt!');
-      },
-      error: () => {
-        this.toastrService.error(
-          'Er ging iets mis tijdens het verwerken van de stemmen'
-        );
-      },
-    });
-  }
-
-  hasDuplicateScores(): boolean {
-    const scores = this.photosWithUserVotes()
-      .map((photo) => photo.points)
-      .filter((points) => points !== 0);
-    return new Set(scores).size !== scores.length;
-  }
-
-  getDuplicatePhotoIds(): number[] {
-    const scores = this.photosWithUserVotes().map((photo) => photo.points);
-    const duplicates = scores.filter(
-      (score, index, array) => array.indexOf(score) !== index
-    );
-    return this.photosWithUserVotes()
-      .filter(
-        (photo) => duplicates.includes(photo.points) && photo.points !== 0
-      )
-      .map((photo) => photo.id);
   }
 
   openImageModal(imageUrl: string, imageTitle: string, index: number) {

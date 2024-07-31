@@ -21,7 +21,7 @@ public class TestController(IUnitOfWork unitOfWork) : BaseApiController
         await unitOfWork.ThemeRepository.SetSubmitEndDateToNow(activeTheme.Id);
         if (await unitOfWork.Complete())
         {
-            return Ok(new { message = "Submit period ended successfully"});
+            return Ok(new { message = "Submit period ended successfully" });
         }
 
         return BadRequest(new { message = "Something went wrong while submitting the new enddate" });
@@ -44,7 +44,7 @@ public class TestController(IUnitOfWork unitOfWork) : BaseApiController
         await unitOfWork.ThemeRepository.SetVoteEndDateToNow(activeTheme.Id);
         if (await unitOfWork.Complete())
         {
-            return Ok(new { message = "Vote period ended successfully"});
+            return Ok(new { message = "Vote period ended successfully" });
         }
 
         return BadRequest(new { message = "Something went wrong while submitting the new enddate" });
@@ -59,41 +59,14 @@ public class TestController(IUnitOfWork unitOfWork) : BaseApiController
             return Ok(new { message = "There is no active theme" });
         }
 
-        var testUsers = new List<string>
-    {
-        "Tester1",
-        "Tester2",
-        "Tester3",
-        "Tester4",
-        "Tester5",
-        "Tester6",
-        "Tester7",
-        "Tester8",
-        "Tester9",
-        "Tester10",
-        "Tester11",
-        "Tester12",
-    };
-
         // Get the photos from test users for the active theme
-        var testPhotos = await unitOfWork.PhotoRepository.GetAllPhotosFromTheme(activeTheme.Id);
-        testPhotos = testPhotos.Where(p => testUsers.Contains(p.AppUser.UserName)).ToList();
-
-        if (testPhotos.Any())
-        {
-            foreach (var photo in testPhotos)
-            {
-                await unitOfWork.VoteRepository.DeleteVotesByPhotoId(photo.Id);
-            }
-        }
-
         await unitOfWork.ThemeRepository.SetSubmitEndDateToNow(activeTheme.Id);
         await unitOfWork.ThemeRepository.SetVoteEndDateToNow(activeTheme.Id);
         await unitOfWork.ThemeRepository.SetTrophyEndDateToNow(activeTheme.Id);
 
         if (await unitOfWork.Complete())
         {
-            return Ok(new { message = "Challenge ended successfully"});
+            return Ok(new { message = "Challenge ended successfully" });
         }
         return BadRequest(new { message = "Something went wrong while ending the challenge" });
     }
@@ -132,10 +105,25 @@ public class TestController(IUnitOfWork unitOfWork) : BaseApiController
         {
             var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
 
-            foreach (var photo in user.Photos)
+
+
+            var existingPhoto = user.Photos.FirstOrDefault(p => p.ThemeId == activeTheme.Id);
+            if (existingPhoto != null)
             {
-                photo.ThemeId = activeTheme.Id;
+                return Ok(new { message = "Submissions are already generated" });
             }
+
+            var photo = user.Photos.FirstOrDefault();
+            var newPhoto = new Photo
+            {
+                Title = photo.Title,
+                Url = photo.Url,
+                PublicId = photo.PublicId,
+                ThemeId = activeTheme.Id,
+                TotalScore = 0,
+                Theme = activeTheme
+            };
+            user.Photos.Add(newPhoto);
         }
 
         if (await unitOfWork.Complete())
@@ -178,23 +166,12 @@ public class TestController(IUnitOfWork unitOfWork) : BaseApiController
             return Ok(new { message = "Cannot generate votes before the submission period is over" });
         }
 
-        foreach (var userName in users)
-        {
-            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(userName);
-            if (user != null)
-            {
-                await unitOfWork.VoteRepository.DeleteVotesByUser(user.Id);
-            }
-        }
-
         var photos = await unitOfWork.PhotoRepository.GetAllPhotosFromTheme(activeTheme.Id);
-        foreach (var photo in photos)
-        {
-            if (users.Contains(photo.AppUser.UserName))
-            {
-                photo.TotalScore = 0;
 
-            }
+        var existingVotes = await unitOfWork.VoteRepository.GetVotesByThemeAndUsers(activeTheme.Id, users);
+        if (existingVotes.Any())
+        {
+            return Ok(new { message = "Votes are already generated" });
         }
 
         var random = new Random();

@@ -80,6 +80,8 @@ export class TestComponent {
           this.toastrService.error(
             'Inzendingen kunnen niet gegenereerd worden als de inzendperiode al is verstreken'
           );
+        }else if (response.message === 'Submissions are already generated'){
+            this.toastrService.error("De inzendingen zijn al gegenereerd")
         } else {
           this.toastrService.success(
             'Inzendingen zijn gegenereerd voor het huidige thema'
@@ -95,12 +97,13 @@ export class TestComponent {
         if (response.message === 'There is no active theme') {
           this.toastrService.error('Er is nog geen actief thema');
         } else if (
-          response.message ===
-          'Cannot generate votes before the submission period is over'
+          response.message ==='Cannot generate votes before the submission period is over'
         ) {
           this.toastrService.error(
             'Kan geen inzendingen genereren als de inzendperiode nog niet over is'
           );
+        }else if(response.message === "Votes are already generated"){
+            this.toastrService.error("De stemmen zijn al gegenereerd")
         } else {
           this.toastrService.success('Stemmen zijn gegenereerd');
         }

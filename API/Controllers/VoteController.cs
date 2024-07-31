@@ -64,4 +64,20 @@ public class VoteController(IUnitOfWork unitOfWork) : BaseApiController
 
         return Ok(voteDtos);
     }
+
+    [HttpGet("{photoId}/votes")]
+    public async Task<ActionResult<List<VoteDto>>> GetVotesForPhoto(int photoId)
+    {
+        var votes = await unitOfWork.VoteRepository.GetVotesForPhoto(photoId);
+
+        var voteDtos = votes.Select(v => new VoteDto
+        {
+            PhotoId = v.PhotoId,
+            Points = v.Points,
+            UserName = v.AppUser.UserName
+        }).ToList();
+
+        return Ok(voteDtos);
+
+    }
 }

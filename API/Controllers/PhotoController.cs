@@ -145,4 +145,6 @@ public class PhotoController(IUnitOfWork unitOfWork, IPhotoService photoService,
 
         return Ok(photoDtos);
     }
+
+    
 }

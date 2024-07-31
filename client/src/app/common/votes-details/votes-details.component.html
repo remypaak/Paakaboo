@@ -1,0 +1,18 @@
+<div class="modal" [ngClass]="{'is-active': isOpen}">
+    <div class="modal-content">
+        <div class="content-container">
+            <h2 class="title">Stemmen</h2>
+            <ul class="vote-list">
+                @for (vote of votes(); track $index) {
+                    <li class="vote">
+                        {{ vote.userName }} : <span class="points">{{ vote.points }} punten</span>
+                      </li>
+                }
+            </ul>
+        </div>
+        <div class="image-container">
+            <img src="../../../assets/voting.jpg" alt="">
+        </div>
+        
+    </div>
+  </div>

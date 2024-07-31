@@ -34,6 +34,10 @@ export class ThemeService {
       )
   }
 
+  getPastThemes(): Observable<ThemeResponse[]> {
+    return this.http.get<ThemeResponse[]>(`${this.baseUrl}theme/get-past-themes`)
+  }
+
 
 
 }

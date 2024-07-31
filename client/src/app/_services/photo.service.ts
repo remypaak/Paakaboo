@@ -34,7 +34,7 @@ export class PhotoService {
         )
     }
 
-    getAllPhotosForActiveTheme(themeId: number){
+    getAllPhotosForTheme(themeId: number){
         return this.http.get<Photo[]>(this.baseUrl + 'photo/all/' + themeId)
     }
 

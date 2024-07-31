@@ -9,6 +9,7 @@ public interface IThemeRepository
     Task<Theme?> GetThemeByName(string name);
 
     Task<Theme?> GetActiveTheme();
+    Task<List<Theme>> GetPastThemes();
 
     Task AddTheme(Theme theme);
 

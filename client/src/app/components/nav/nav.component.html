@@ -4,7 +4,20 @@
         @if(menuOpen || !loginSmallSize){
         <ul class="nav-links">
             @if (this.accountService.currentUser()){
-            <li (click)="toggleMenu()"><a routerLink="/challenges">Challenges</a></li>
+            @if(!loginSmallSize){
+            <li (click)="toggleSubMenu()"><a>Challenges</a>
+                @if(submenuOpen){
+                <ul class="submenu">
+                    <li ><a routerLink="/current-challenge">Huidige challenge</a></li>
+                    <li ><a routerLink="/past-challenges">Vorige challenges</a></li>
+                </ul>
+                }
+                }
+                @else if(loginSmallSize){
+            <li (click)="toggleMenu()"><a routerLink="/current-challenge">Huidige challenge</a></li>
+            <li (click)="toggleMenu()"><a routerLink="/past-challenges">Vorige challenges</a></li>
+            }
+
             <li (click)="toggleMenu()" *appHasRole="['Moderator']"><a routerLink="/moderator">Moderator</a></li>
             <li (click)="toggleMenu()"><a routerLink="/test">Test</a></li>
             }

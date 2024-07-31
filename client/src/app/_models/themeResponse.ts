@@ -8,4 +8,11 @@ export type ThemeResponse = {
     submitEndDate: Date;
     voteEndDate: Date;
     trophyEndDate: Date;
+    winner?: Winner;
+}
+
+export type Winner = {
+    name: string;
+    photoUrl: string
+    totalScore: number;
 }

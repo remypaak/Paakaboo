@@ -1,0 +1,21 @@
+<div class="container">
+    @if (pastThemes$ | async; as pastThemes) {
+        <div>
+            <div class="grid-container">
+                @for (theme of pastThemes; track $index) {
+                    <div class="grid-item" (click)="viewPastChallengeDetails(theme)">
+                        <h3>Week {{theme.weekNumber}} : {{ theme.name }}</h3>
+                        @if (theme.winner) {
+                        <img [src]="theme.winner.photoUrl" alt="Winning Photo">
+                        <div class="winner-container">
+                            <h1>Winner: {{ theme.winner.name }}</h1>
+                        </div>
+                        
+                        }
+                    </div>
+                }
+                
+            </div>
+        </div>
+        }
+    </div>
