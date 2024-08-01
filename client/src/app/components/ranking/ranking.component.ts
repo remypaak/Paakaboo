@@ -28,7 +28,6 @@ export class RankingComponent implements OnInit, OnDestroy{
         this.rankingService.getRankings().subscribe({
             next: (ranking) => {
                 this.ranking.set(ranking);
-                console.log(this.ranking())
             }
         })
     }

@@ -13,7 +13,7 @@ public class RankingController(IUnitOfWork unitOfWork) : BaseApiController
         var themesWithPoints = await unitOfWork.ThemeRepository.GetPastThemes();
         var activeTheme = await unitOfWork.ThemeRepository.GetActiveTheme();
         
-        if (activeTheme.VoteEndDate < DateTime.UtcNow && activeTheme.TrophyEndDate > DateTime.UtcNow)
+        if (activeTheme != null && activeTheme.VoteEndDate < DateTime.UtcNow && activeTheme.TrophyEndDate > DateTime.UtcNow)
         {
             themesWithPoints.Add(activeTheme);
         }
