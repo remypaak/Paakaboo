@@ -19,6 +19,7 @@
             }
 
             <li (click)="toggleMenu()" *appHasRole="['Moderator']"><a routerLink="/moderator">Moderator</a></li>
+            <li (click)="toggleMenu()"><a routerLink="/ranking">Ranking</a></li>
             <li (click)="toggleMenu()"><a routerLink="/test">Test</a></li>
             }
             @if(loginSmallSize && !this.accountService.currentUser()){

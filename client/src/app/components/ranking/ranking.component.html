@@ -1,0 +1,43 @@
+<div class="ranking-container">
+    <img src="../../../assets/ranking-background.webp" alt="ranking-background" class="background-image">
+    <div class="top-three">
+        <div class="three-bars">
+            <div class="bar bar-1">
+                <div class="username username-1">{{ ranking()?.userPoints?.[1]?.userName ?? '' }}</div>
+            </div>
+            <div class="bar bar-2">
+                <div class="username username-2">{{ ranking()?.userPoints?.[0]?.userName ?? '' }}</div>
+            </div>
+            <div class="bar bar-3">
+                <div class="username username-3">{{ ranking()?.userPoints?.[2]?.userName ?? '' }}</div>
+            </div>
+        </div>
+        <div class="mountain-container">
+            <div class="mountain">
+                @if (isSmallScreen){
+                    <div class="all-ranks">
+                        @for (userPoints of ranking()?.userPoints; track userPoints.userName; let i = $index) {
+                            <div class="ranking-item">
+                                <span class="rank">{{i + 1}}</span>
+                                <span class="username-rank">{{ ranking()?.userPoints?.[i]?.userName ?? ''}}</span>
+                                <span class="points">{{ranking()?.userPoints?.[i]?.points ?? ''}}</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if(!isSmallScreen){
+        <div class="all-ranks">
+            @for (userPoints of ranking()?.userPoints; track userPoints.userName; let i = $index) {
+                <div class="ranking-item">
+                    <span class="rank">{{i + 1}}</span>
+                    <span class="username-rank">{{ userPoints.userName}}</span>
+                    <span class="points">{{userPoints.points}}</span>
+                </div>
+            }
+        </div>
+    }
+
+</div>
