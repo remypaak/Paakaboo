@@ -37,7 +37,7 @@ public class RankingController(IUnitOfWork unitOfWork) : BaseApiController
            .ThenByDescending(photo => photo.Votes.Count(v => v.Points == 1))
            .ToList();
 
-            for (int i = 0; i < sortedPhotos.Count && i < 8; i++)
+            for (int i = 0; i < sortedPhotos.Count; i++)
             {
                 var points = 0;
                 switch (i)
@@ -62,6 +62,10 @@ public class RankingController(IUnitOfWork unitOfWork) : BaseApiController
                     {
                         userPoints[sortedPhotos[i].AppUser.UserName] = points;
                     }
+                }
+                if (!userPoints.ContainsKey(sortedPhotos[i].AppUser.UserName))
+                {
+                    userPoints[sortedPhotos[i].AppUser.UserName] = 0;
                 }
             }
         }
