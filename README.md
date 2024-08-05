@@ -2,7 +2,9 @@
 Welcome to Paakaboo! This is a website designed for photo challenges with friends. Each week, participants submit a photo based on a specific theme. After the submission period, everyone gets to vote on the photos, and a weekly winner is determined. An overall ranking is maintained, culminating in an ultimate winner at the end of 8 weeks.
 
 **Tech Stack**
+
 **Frontend**
+
 **Framework**: Angular
 **Technologies**: HTML, CSS, TypeScript
 **Hosting**: AWS S3 (static files), AWS CloudFront (CDN and HTTPS)
