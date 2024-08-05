@@ -7,7 +7,9 @@ Welcome to Paakaboo! This is a website designed for photo challenges with friend
 **Frontend**
 
 **Framework**: Angular
+
 **Technologies**: HTML, CSS, TypeScript
+
 **Hosting**: AWS S3 (static files), AWS CloudFront (CDN and HTTPS)
 
 **Backend**
@@ -23,13 +25,20 @@ Welcome to Paakaboo! This is a website designed for photo challenges with friend
 **Infrastructure**
 
 **Cloud Provider**: AWS
+
 **Frontend Hosting:**
 **Static Files:** S3
+
 **CDN:** CloudFront
+
 **DNS:** Route 53
+
 **Backend Hosting:**
+
 **Container Orchestration:** ECS (Elastic Container Service)
+
 **Serverless Compute:** Fargate
+
 **Load Balancer**: ALB (Application Load Balancer)
 
 **Detailed Explanation**
