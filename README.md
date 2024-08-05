@@ -25,6 +25,7 @@ Welcome to **Paakaboo**! This is a website designed for photo challenges with fr
   - **Container Orchestration**: ECS (Elastic Container Service)
   - **Serverless Compute**: Fargate
   - **Load Balancer**: ALB (Application Load Balancer)
+  - **Database**: RDS (Relational Database Service)
 
 ### CICD
 - **CI/CD Tool**: GitHub Actions
