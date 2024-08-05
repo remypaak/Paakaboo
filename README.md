@@ -44,6 +44,7 @@ For the backend, I chose .NET Core due to its cross-platform capabilities. MySQL
 To delve deeper into AWS, I structured the infrastructure using several AWS services:
 
 **Frontend**: The Angular application is hosted as static files in an S3 bucket. CloudFront, a popular CDN, serves these files, providing HTTPS support and caching for improved performance. Route 53 manages DNS, routing traffic to the appropriate resources.
+
 **Backend**: The backend runs in Docker containers orchestrated by ECS. Using Fargate, a serverless compute engine, eliminates the need to manage EC2 instances. The Application Load Balancer (ALB) distributes incoming API requests to the ECS containers. The database is hosted on an RDS instance running MySQL.
 **Conclusion**
 Paakaboo combines various technologies and services to provide a robust, scalable, and secure platform for weekly photo challenges. This project has been a great learning experience, allowing me to explore Angular, .NET Core, AWS services, and container orchestration with ECS.
