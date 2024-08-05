@@ -12,6 +12,7 @@ Welcome to Paakaboo! This is a website designed for photo challenges with friend
 
 **Hosting**: AWS S3 (static files), AWS CloudFront (CDN and HTTPS)
 
+
 **Backend**
 
 **Framework**: .NET Core
@@ -21,6 +22,7 @@ Welcome to Paakaboo! This is a website designed for photo challenges with friend
 **Authentication**: Identity with JWT Bearer tokens
 
 **ORM**: Entity Framework (code-first approach with migrations)
+
 
 **Infrastructure**
 
@@ -40,6 +42,7 @@ Welcome to Paakaboo! This is a website designed for photo challenges with friend
 **Serverless Compute:** Fargate
 
 **Load Balancer**: ALB (Application Load Balancer)
+
 
 **Detailed Explanation**
 
