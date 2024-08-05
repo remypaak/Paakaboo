@@ -7,9 +7,7 @@ Welcome to Paakaboo! This is a website designed for photo challenges with friend
 **Frontend**
 
 **Framework**: Angular
-
 **Technologies**: HTML, CSS, TypeScript
-
 **Hosting**: AWS S3 (static files), AWS CloudFront (CDN and HTTPS)
 
 **Backend**
