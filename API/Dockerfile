@@ -22,4 +22,5 @@ RUN dotnet publish "API.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 FROM base as final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY Services /app/Services
 ENTRYPOINT [ "dotnet", "API.dll" ]

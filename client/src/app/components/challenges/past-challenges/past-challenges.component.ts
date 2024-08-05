@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ThemeService } from '../../../_services/theme.service';
 import { CommonModule } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ThemeResponse } from '../../../_models/themeResponse';
 import { Router } from '@angular/router';
 
@@ -21,7 +21,9 @@ export class PastChallengesComponent implements OnInit {
   >();
 
   ngOnInit(): void {
-    this.pastThemes$ = this.themeService.getPastThemes();
+    this.pastThemes$ = this.themeService.getPastThemes().pipe(
+      map(themes => themes.sort((a, b) => b.weekNumber - a.weekNumber))
+    );
   }
 
   viewPastChallengeDetails(theme: ThemeResponse) {

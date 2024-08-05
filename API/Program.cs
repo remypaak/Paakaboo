@@ -1,6 +1,7 @@
 using System.Text;
 using API.Data;
 using API.Extensions;
+using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -71,6 +72,7 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(ex.Message);
     }
 }
+
 app.UseCors("MyAllowSpecificOrigins");
 
 
@@ -79,5 +81,10 @@ app.UseAuthorization();
 app.MapDefaultControllerRoute();
 app.MapControllers();
 app.MapIdentityApi<IdentityUser>();
+var scope2 = app.Services.CreateScope().ServiceProvider;
+var csvService = scope2.GetRequiredService<CsvService>();
+ var dbContext = scope2.GetRequiredService<DataContext>();
+        var dataSeeder = new DataSeeder(dbContext, csvService);
+        dataSeeder.SeedData().Wait();
 
 app.Run();
