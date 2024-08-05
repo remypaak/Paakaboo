@@ -26,6 +26,11 @@ Welcome to **Paakaboo**! This is a website designed for photo challenges with fr
   - **Serverless Compute**: Fargate
   - **Load Balancer**: ALB (Application Load Balancer)
 
+### CICD
+- **CI/CD Tool**: GitHub Actions
+- **Deployment**:
+  - Automatically deploys frontend and backend to AWS on code push to the main repository.
+
 ## Detailed Explanation
 
 ### Frontend
@@ -38,6 +43,9 @@ For the backend, I chose **.NET Core** due to its cross-platform capabilities. M
 To delve deeper into AWS, I structured the infrastructure using several AWS services:
 - **Frontend**: The Angular application is hosted as static files in an S3 bucket. CloudFront, a popular CDN, serves these files, providing HTTPS support and caching for improved performance. Route 53 manages DNS, routing traffic to the appropriate resources.
 - **Backend**: The backend runs in Docker containers orchestrated by ECS. Using **Fargate**, a serverless compute engine, eliminates the need to manage EC2 instances. The **Application Load Balancer (ALB)** distributes incoming API requests to the ECS containers. The database is hosted on an **RDS instance** running MySQL.
+
+### CICD
+To ensure seamless and automated deployment, I used **GitHub Actions** as the CI/CD tool. Whenever code is pushed to the main repository, GitHub Actions automatically deploys the frontend and backend to AWS. This ensures that any new changes are promptly reflected in the live environment without manual intervention.
 
 ## Conclusion
 **Paakaboo** combines various technologies and services to provide a robust, scalable, and secure platform for weekly photo challenges. This project has been a great learning experience, allowing me to explore Angular, .NET Core, AWS services, and container orchestration with ECS.
