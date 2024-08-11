@@ -68,9 +68,15 @@ export class VotingGalleryComponent implements OnInit {
     if (activeTheme) {
       this.photoService.getPhotosWithVotes(activeTheme.id).subscribe({
         next: (photosWithVotes) => {
-          const sortedPhotos = photosWithVotes.sort(
-            (a, b) => b.points - a.points
-          );
+            let sortedPhotos: PhotoWithVotes[];
+            if (photosWithVotes.every(photo => photo.points === 0)){
+                sortedPhotos = photosWithVotes.sort(() => Math.random() - 0.5);
+            }
+            else{
+                sortedPhotos = photosWithVotes.sort(
+                    (a, b) => b.points - a.points
+                  );
+            }
           this.photosWithUserVotes.set(sortedPhotos);
         },
       });

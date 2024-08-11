@@ -41,10 +41,10 @@ html {
 }
 
 @media only screen and (min-width: 500px) {
-    html {
-      font-size: 17px;
-    }
+  html {
+    font-size: 17px;
   }
+}
 
 @media only screen and (min-width: 720px) {
   html {
@@ -65,8 +65,8 @@ html {
 }
 
 body {
-    overscroll-behavior: none;
-    height: 100%;
+  overscroll-behavior: none;
+  height: 100%;
   font-family: "Sans";
   margin: 0;
   padding: 0;
@@ -118,14 +118,13 @@ h6 {
 }
 
 .toast-error {
-  
   font-size: 1.2rem;
   background-color: var(--color-error) !important;
   color: var(--color-primary) !important;
 }
 
 .toast-success {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
   background-color: var(--color-light-green) !important;
   color: var(--color-secondary) !important;
 }
